@@ -28,8 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
+# Application definition (do not touch this)
 INSTALLED_APPS = [
     'logisticstart.apps.LogisticstartConfig',
     'django.contrib.admin',

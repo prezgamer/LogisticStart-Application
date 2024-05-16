@@ -17,6 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+handler404 = 'logisticstart.views.custom_page_not_found_view'
+handler500 = 'logisticstart.views.custom_error_view'
+handler403 = 'logisticstart.views.custom_permission_denied_view'
+handler400 = 'logisticstart.views.custom_bad_request_view'
+
 urlpatterns = [
     path('', include('logisticstart.urls')),
 ]
