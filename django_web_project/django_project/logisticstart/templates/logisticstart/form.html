@@ -1,9 +1,39 @@
 <!DOCTYPE html>
 <head>
-    <title>
-
-    </title>
+    <title>Add New Item</title>
 </head>
 <body>
-    <h1>Please fill up the form</h1>
+    <header>
+        <h1>Add New Item</h1>
+    </header>
+
+    <section>
+        <p>Enter a new item to be shipped:</p>
+        <form>
+            <label>Item name:</label><br>
+            <input type="text" id="item_name"><br>
+            <label>Item type:</label><br>
+            <input type="text" id="item_type"><br>
+            <label>Delivery Date:</label><br>
+            <input type="date" id="delivery_date"><br>
+            <p>Sender Details</p>
+            <label>Name:</label>
+            <input type="text" id="sender_name"><br>
+            <label>Phone:</label>
+            <input type="number" id="sender_phone"><br>
+            <label>Email:</label>
+            <input type="email" id="sender_email"><br>
+            <p>Recepient Details</p>
+            <label>Name:</label>
+            <input type="text" id="recepient_name"><br>
+            <label>Phone:</label>
+            <input type="number" id="recepient_phone"><br>
+            <label>Email:</label>
+            <input type="email" id="recepient_email"><br>
+            <p></p>
+            <input type="submit" value="Add Item">
+            <input type="reset" value="Reset">
+        </form>
+    </section>
+    
 </body>
