@@ -4,7 +4,7 @@ from django.shortcuts import render
 def logistichome(request):
     return render(request, 'logisticstart/home.html') #return logisticstart/templates/logisticstart/home.html
 
-def logisticstart(request):
+def logisticform(request):
     return render(request, 'logisticstart/form.html') #return logisticstart/templates/logisticstart/form.html
 
 def logisticlogin(request):
