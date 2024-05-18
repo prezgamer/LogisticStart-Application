@@ -11,4 +11,5 @@ urlpatterns = [
     path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
     path('form/', views.logisticstart, name='logisticstart-startform'), #look for logisticstart function
     path('login/', views.logisticlogin, name='logisticlogin-login'), #look for logisticlogin function
+    path('items/', views.logisticitems_list, name='logisticitems-list'), #look for logisticitems_list function
 ]
