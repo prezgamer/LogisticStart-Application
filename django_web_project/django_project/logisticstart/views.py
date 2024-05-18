@@ -10,6 +10,9 @@ def logisticstart(request):
 def logisticlogin(request):
     return render(request, 'logisticstart/login.html') #return logisticstart/templates/logisticstart/login.html
 
+def logisticitems_list(request):
+    return render(request, 'logisticstart/items_list.html') #return logisticstart/templates/logisticstart/items_list.html
+
 def custom_page_not_found_view(request, exception):
     return render(request, "errors/404.html", {})
 
