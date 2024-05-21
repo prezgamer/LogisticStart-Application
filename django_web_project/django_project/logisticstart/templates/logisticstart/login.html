@@ -1,9 +1,23 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
+<html>
 <head>
-    <title>
-
-    </title>
+    <title>Login Page</title>
 </head>
 <body>
-    <h1>Welcome to the Login Page - New</h1>
+    <h1>Welcome to the Login Page</h1>
+    <form method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Log in">
+    </form>
 </body>
+</html> -->
+<h1>Login</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+    <a href="{% url 'logisticstart-signup' %}">Dont have Account Create</a>
+</form>

@@ -9,7 +9,9 @@ handler400 = 'logisticstart.views.custom_bad_request_view'
 
 urlpatterns = [
     path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
+    path('login/', views.logisticlogin, name='logisticstart-login'), #login page
+    path('test/', views.logistictest, name = 'logisticstart-test'), #testing page
+    path('signup/', views.logisticsignup, name='logisticstart-signup'), #signup page
     path('form/', views.logisticform, name='logisticstart-form'), #look for logisticstart function
-    path('login/', views.logisticlogin, name='logisticstart-login'), #look for logisticlogin function
     path('items/', views.logisticitems_list, name='logisticstart-list'), #look for logisticitems_list function
 ]
