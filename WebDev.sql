@@ -82,8 +82,8 @@ DROP TABLE IF EXISTS `parcel`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `parcel` (
   `Parcel_ID` int(11) NOT NULL,
-  `Content_Type` varchar(45) NOT NULL,
-  `Content_Description` varchar(100) NOT NULL,
+  `Item_Type` varchar(45) NOT NULL,
+  `Item_Name` varchar(100) NOT NULL,
   PRIMARY KEY (`Parcel_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -1,16 +1,22 @@
 from django.shortcuts import render,redirect 
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignupForm, LoginForm
+from .models import NewListing
+from .forms import SignupForm, LoginForm, CreateListingForm
 
 # Create your views here.
 def logistichome(request):
     return render(request, 'logisticstart/home.html') #return logisticstart/templates/logisticstart/home.html
 
-def logisticform(request):
-    return render(request, 'logisticstart/form.html') #return logisticstart/templates/logisticstart/form.html
-
-# def logisticlogin(request):
-#     return render(request, 'logisticstart/login.html') #return logisticstart/templates/logisticstart/login.html
+def logisticform(request): #return logisticstart/templates/logisticstart/form.html
+    if request.method == 'POST':
+        form = CreateListingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            items = NewListing.objects.all()
+            return render(request, 'logisticstart/items_list.html', {'items': items})
+    else:
+        form = CreateListingForm()
+    return render(request, 'logisticstart/form.html', {'form': form})
 
 def logisticitems_list(request):
     return render(request, 'logisticstart/items_list.html') #return logisticstart/templates/logisticstart/items_list.html

@@ -19,13 +19,16 @@
         <button>Edit Listing</button>
     </div>
 
+    <h1>All Logistics Data</h1>
     <table border="1">
         <thead>
             <tr>
-                <th>Goods Name</th>
-                <th>Goods Type</th>
-                <th>Goods Delivery Date</th>
-                <th>Goods Listing Date</th>
+                <th>Item Name</th>
+                <th>Item Type</th>
+                <th>Delivery Date</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
+                <th>Customer Phone Number</th>
                 <th>Sender Name</th>
                 <th>Sender Email</th>
                 <th>Sender Phone Number</th>
@@ -36,18 +39,22 @@
         </thead>
         <tbody>
             <!-- Example data, this will be dynamically generated -->
+            {% for item in items %}
             <tr>
-                <td>Soap</td>
-                <td>Dishwashing Product</td>
-                <td>2024-05-01</td>
-                <td>2024-05-08</td>
-                <td>P&C</td>
-                <td>PC@delivery.com</td>
-                <td>9137 9211</td>
-                <td>A&B Co</td>
-                <td>AB@delivery.com</td>
-                <td>9137 9211</td>
+                <td>{{item.item_name}}</td>
+                <td>{{ item.item_type }}</td>
+                <td>{{ item.delivery_date }}</td>
+                <td>{{ item.customer_name }}</td> 
+                <td>{{ item.customer_email }}</td>
+                <td>{{ item.customer_phone }}</td>
+                <td>{{ item.sender_name }}</td>
+                <td>{{ item.sender_email }}</td>
+                <td>{{ item.sender_phone }}</td>
+                <td>{{ item.recipient_name }}</td>
+                <td>{{ item.recipient_email }}</td>
+                <td>{{ item.recipient_phone }}</td>
             </tr>
+            {% endfor %}
             <!-- More rows will be added here from the database -->
         </tbody>
     </table>

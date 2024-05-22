@@ -23,5 +23,6 @@ handler403 = 'logisticstart.views.custom_permission_denied_view'
 handler400 = 'logisticstart.views.custom_bad_request_view'
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include('logisticstart.urls')),
 ]

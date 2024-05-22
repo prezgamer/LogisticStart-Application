@@ -17,9 +17,9 @@ INSERT INTO Customer (Account_ID, Name, Email, Contact_No) VALUES
 (9, 'Henry White', 'henry.white@example.com', 9012345678),
 (10, 'Ivy King', 'ivy.king@example.com', 1234567891);
 
-INSERT INTO Parcel (Parcel_ID, Content_Type, Content_Description) VALUES
-(50000001, 'Electronics', 'Smartphone with accessories'),
-(50000002, 'Books', 'Fiction novel collection'),
+INSERT INTO Parcel (Parcel_ID, Item_Type, Item_Name) VALUES
+(50000001, 'Electronics', 'Smartphone'),
+(50000002, 'Books', 'Fiction novel'),
 (50000003, 'Clothing', 'Men’s winter jacket'),
 (50000004, 'Toys', 'Lego building set'),
 (50000005, 'Groceries', 'Organic vegetables and fruits');
