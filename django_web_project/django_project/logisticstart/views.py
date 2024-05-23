@@ -16,10 +16,11 @@ def logisticform(request): #return logisticstart/templates/logisticstart/form.ht
             return render(request, 'logisticstart/items_list.html', {'items': items})
     else:
         form = CreateListingForm()
-    return render(request, 'logisticstart/form.html', {'form': form})
+        return render(request, 'logisticstart/form.html', {'form': form})
 
 def logisticitems_list(request):
-    return render(request, 'logisticstart/items_list.html') #return logisticstart/templates/logisticstart/items_list.html
+    items = NewListing.objects.all()
+    return render(request, 'logisticstart/items_list.html', {'items': items})
 
 # signup page
 def logisticsignup(request):
