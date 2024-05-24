@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        tr {
+          border-bottom: 1px solid #ddd;
+        }
+        th {
+            text-align: left
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+    </style>
+
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <div style="background-color:#D9EEE1;">
+            <table style="width:100%">
+                <tr>
+                    <th>List Of Senders</th>
+                </tr>
+                <tr>
+                    <td>
+                        {% for i in distinct_senders %}
+                            <li>{{ i.sender_name }}</li>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="background-color:#FFC0C7;">
+            <table style="width:100%">
+                <tr>
+                    <th>Catergories</th>
+                </tr>
+                <tr>
+                    <td>
+                        {% for i in distinct_types %}
+                        <li>{{ i.item_type }}</li>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div style="background-color:#D9EEE1;">
+            <table style="width:100%">
+                <tr>
+                    <th>Total Inventory</th>
+                </tr>
+                <tr>
+                    <td>
+                        <li>{{ total_listing }}</li>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="background-color:#FFC0C7;">
+            <table style="width:100%">
+                <tr>
+                    <th>Total Inventory Value</th>
+                </tr>
+                <tr>
+                    <td>TBC</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </form>
+</body>

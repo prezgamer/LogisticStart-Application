@@ -48,6 +48,19 @@ def logisticlogin(request):
         form = LoginForm()
     return render(request, 'logisticstart/login.html', {'form': form})
 
+def logisticdashboard(request):
+    distinct_senders = NewListing.objects.values('sender_name').distinct()
+    distinct_types = NewListing.objects.values('item_type').distinct()
+    total_listing = NewListing.objects.count()
+    
+    dashboard ={
+        'distinct_senders': distinct_senders,
+        'distinct_types' : distinct_types,
+        'total_listing' : total_listing
+    }
+    
+    return render(request, 'logisticstart/dashboard.html', dashboard)
+
 def logistictest(request):
     return render(request, 'logisticstart/test.html')
     
@@ -62,3 +75,5 @@ def custom_permission_denied_view(request, exception=None):
 
 def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
+
+
