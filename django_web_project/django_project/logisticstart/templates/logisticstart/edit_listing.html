@@ -1,0 +1,40 @@
+<!-- logisticstart/templates/logisticstart/edit_listing.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Listing</title>
+</head>
+<body>
+    <h1>Editing Listing</h1>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Item Details:</legend>
+            {{ form.item_name.label_tag }}: {{ form.item_name }} <br>
+            {{ form.item_type.label_tag }}: {{ form.item_type }} <br>
+            {{ form.delivery_date.label_tag }}: {{ form.delivery_date }} <br>
+        </fieldset>
+        <fieldset>
+            <legend>Sender Details:</legend>
+            {{ form.sender_name.label_tag }}: {{ form.sender_name }} <br>
+            {{ form.sender_email.label_tag }}: {{ form.sender_email }} <br>
+            {{ form.sender_phone.label_tag }}: {{ form.sender_phone }} <br>
+        </fieldset>
+        <fieldset>
+            <legend>Recipient Details:</legend>
+            {{ form.recipient_name.label_tag }}: {{ form.recipient_name }} <br>
+            {{ form.recipient_email.label_tag }}: {{ form.recipient_email }} <br>
+            {{ form.recipient_phone.label_tag }}: {{ form.recipient_phone }} <br>
+        </fieldset>
+        <fieldset>
+            <legend>Customer Details:</legend>
+            {{ form.customer_name.label_tag }}: {{ form.customer_name }} <br>
+            {{ form.customer_email.label_tag }}: {{ form.customer_email }} <br>
+            {{ form.customer_phone.label_tag }}: {{ form.customer_phone }} <br>
+        </fieldset>
+        <button type="submit">Update Listing</button>
+        <button type="reset">Reset</button>
+    </form>
+</body>
+</html>

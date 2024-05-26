@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import NewListing
 from .forms import SignupForm, LoginForm, CreateListingForm
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 def logistichome(request):
@@ -77,3 +78,14 @@ def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
 
 
+# Edit listing view
+def edit_listing(request, pk):
+    listing = get_object_or_404(NewListing, pk=pk)
+    if request.method == 'POST':
+        form = CreateListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticitems_list')  # Adjust this redirect as necessary
+    else:
+        form = CreateListingForm(instance=listing)
+    return render(request, 'logisticstart/edit_listing.html', {'form': form})
