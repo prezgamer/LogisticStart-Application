@@ -54,10 +54,18 @@ def logisticdashboard(request):
     distinct_types = NewListing.objects.values('item_type').distinct()
     total_listing = NewListing.objects.count()
     
+    #Adding sublist that contains DISTINCT item names in types
+    typesofproductswithnames = []
+    for item_type in distinct_types:
+        item_name = NewListing.objects.filter(item_type=item_type['item_type']).values('item_name').distinct()
+        typesofproductswithnames.append({
+            'distinct_types' : item_type['item_type'],
+            'distinct_names' : item_name
+        })
     dashboard ={
         'distinct_senders': distinct_senders,
-        'distinct_types' : distinct_types,
-        'total_listing' : total_listing
+        'total_listing' : total_listing,
+        'item_types_name' : typesofproductswithnames
     }
     
     return render(request, 'logisticstart/dashboard.html', dashboard)

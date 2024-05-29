@@ -21,6 +21,8 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <h1>Dashboard</h1>
+
     <div class="container">
         <div style="background-color:#D9EEE1;">
             <table style="width:100%">
@@ -44,8 +46,15 @@
                 </tr>
                 <tr>
                     <td>
-                        {% for i in distinct_types %}
-                        <li>{{ i.item_type }}</li>
+                        {% for i in item_types_name %}
+                        <li>{{ i.distinct_types }}</li>
+                            <ul>
+                                <li>
+                                {%for type in i.distinct_names %}
+                                    {{type.item_name}}
+                                {% endfor %}
+                                </li>
+                            </ul>
                         {% endfor %}
                     </td>
                 </tr>
