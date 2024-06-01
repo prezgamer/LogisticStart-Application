@@ -51,5 +51,5 @@ class CreateWarehouseListingForm(forms.ModelForm):
 
 class WarehouseForm(forms.ModelForm):
     class Meta:
-        model = Warehouse
+        model = NewWarehouseListing
         fields = ['name', 'postal_code', 'phone_number', 'status']

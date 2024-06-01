@@ -100,3 +100,13 @@ def custom_permission_denied_view(request, exception=None):
 
 def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
+
+def add_warehouse(request):
+    if request.method == 'POST':
+        form = WarehouseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('warehouse_list')  # Replace with your redirect URL
+    else:
+        form = WarehouseForm()
+    return render(request, 'add_warehouse.html', {'form': form})
