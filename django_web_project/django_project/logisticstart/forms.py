@@ -49,7 +49,3 @@ class CreateWarehouseListingForm(forms.ModelForm):
             'warehouse_status',
         ]
 
-class WarehouseForm(forms.ModelForm):
-    class Meta:
-        model = NewWarehouseListing
-        fields = ['name', 'postal_code', 'phone_number', 'status']
