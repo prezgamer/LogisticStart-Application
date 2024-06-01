@@ -106,7 +106,7 @@ def add_warehouse(request):
         form = WarehouseForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('warehouse_list')  # Replace with your redirect URL
+            return render(request, 'logisticstart/add_warehouse.html', {'form': form})
     else:
         form = WarehouseForm()
     return render(request, 'add_warehouse.html', {'form': form})
