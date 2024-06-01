@@ -23,6 +23,7 @@ class CreateItemListingForm(forms.ModelForm):
             'sender_phone',
             'recipient_name',
             'recipient_phone',
+            'delivery_status',
         ]
 
 class CreateWorkerListingForm(forms.ModelForm):
@@ -45,5 +46,6 @@ class CreateWarehouseListingForm(forms.ModelForm):
             'warehouse_name',
             'warehouse_postalcode',
             'warehouse_phonenumber',
+            'warehouse_status',
         ]
 

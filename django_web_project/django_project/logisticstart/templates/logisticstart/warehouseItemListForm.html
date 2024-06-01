@@ -66,6 +66,13 @@
                 <div class="error">{{ form.recipient_phone.errors }}</div>
             {% endif %}
         </div>
+        <div>
+            <label for="{{ form.delivery_status.id_for_label }}">{{ form.delivery_status.label }}:</label>
+            {{ form.delivery_status }}
+            {% if form.delivery_status.errors %}
+                <div class="error">{{ form.delivery_status.errors }}</div>
+            {% endif %}
+        </div>
         <button type="submit" value="NewItemLising">Submit</button>
         <button type="reset">Reset</button>
     </form>
