@@ -13,9 +13,9 @@
 
     <div>
         <button>Filter</button>
-        <button>
+        <!-- <button>
             <a href="{% url 'logisticstart-form' %}">New Listing</a>
-        </button>
+        </button> -->
         <button>Edit Listing</button>
     </div>
 
@@ -37,26 +37,21 @@
                 <th>Receiver Phone Number</th>
             </tr>
         </thead>
-        <tbody>
+        <!-- <tbody> -->
             <!-- Example data, this will be dynamically generated -->
-            {% for item in items %}
-            <tr>
+            <!-- {% for item in items %} -->
+            <!-- <tr>
                 <td>{{item.item_name}}</td>
-                <td>{{ item.item_type }}</td>
+                <td>{{ item.weight }}</td>
                 <td>{{ item.delivery_date }}</td>
-                <td>{{ item.customer_name }}</td> 
-                <td>{{ item.customer_email }}</td>
-                <td>{{ item.customer_phone }}</td>
                 <td>{{ item.sender_name }}</td>
-                <td>{{ item.sender_email }}</td>
                 <td>{{ item.sender_phone }}</td>
                 <td>{{ item.recipient_name }}</td>
-                <td>{{ item.recipient_email }}</td>
-                <td>{{ item.recipient_phone }}</td>
-            </tr>
-            {% endfor %}
+                <td>{{ item.recipient_phone }}</td> -->
+            <!-- </tr>
+            {% endfor %} -->
             <!-- More rows will be added here from the database -->
-        </tbody>
+        <!-- </tbody> -->
     </table>
 </body>
 

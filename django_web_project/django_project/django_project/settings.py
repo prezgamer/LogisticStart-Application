@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'logisticsdb', # change to your own
         'USER': 'root', # change to your own
-        'PASSWORD': 'comSCI2023', # change to your own
+        'PASSWORD': '090500', # change to your own
         'HOST':'localhost',
         'PORT':'3306',
     }

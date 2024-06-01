@@ -1,26 +1,15 @@
 from django.shortcuts import render,redirect 
 from django.contrib.auth import authenticate, login, logout
-from .models import NewListing
-from .forms import SignupForm, LoginForm, CreateListingForm
+from .models import NewItemListing, NewWarehouseListing, NewWorkerListing
+from .forms import SignupForm, LoginForm, CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 def logistichome(request):
     return render(request, 'logisticstart/home.html') #return logisticstart/templates/logisticstart/home.html
 
-def logisticform(request): #return logisticstart/templates/logisticstart/form.html
-    if request.method == 'POST':
-        form = CreateListingForm(request.POST)
-        if form.is_valid():
-            form.save()
-            items = NewListing.objects.all()
-            return render(request, 'logisticstart/items_list.html', {'items': items})
-    else:
-        form = CreateListingForm()
-        return render(request, 'logisticstart/form.html', {'form': form})
-
 def logisticitems_list(request):
-    items = NewListing.objects.all()
+    items = NewItemListing.objects.all()
     return render(request, 'logisticstart/items_list.html', {'items': items})
 
 # signup page
@@ -49,10 +38,28 @@ def logisticlogin(request):
         form = LoginForm()
     return render(request, 'logisticstart/login.html', {'form': form})
 
+# logistic warehouse item form (Will need to update this)
+def logisticWarehouseItemForm(request):
+    if request.method == 'POST':
+        form = CreateItemListingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            items = NewItemListing.objects.all()
+            #return render(request, 'logisticstart/warehouseItemListForm.html', {'items': items}) #Will change this
+    else:
+        form = CreateItemListingForm()
+        return render(request, 'logisticstart/warehouseItemListForm.html', {'form': form})
+    
+# logistic warehouse list
+def logisticWarehouseList(request):
+    warehouses = NewWarehouseListing.objects.all()
+    return render(request, 'logisticstart/warehouseList.html', {'warehouses': warehouses})
+
+#Help me change, will have more fields
 def logisticdashboard(request):
-    distinct_senders = NewListing.objects.values('sender_name').distinct()
-    distinct_types = NewListing.objects.values('item_type').distinct()
-    total_listing = NewListing.objects.count()
+    distinct_senders = NewItemListing.objects.values('item_name').distinct() #I change to another item for now
+    distinct_types = NewItemListing.objects.values('weight').distinct() #I change to another item for now
+    total_listing = NewItemListing.objects.count()
     
     #Adding sublist that contains DISTINCT item names in types
     typesofproductswithnames = []
@@ -67,12 +74,21 @@ def logisticdashboard(request):
         'total_listing' : total_listing,
         'item_types_name' : typesofproductswithnames
     }
-    
     return render(request, 'logisticstart/dashboard.html', dashboard)
 
-def logistictest(request):
-    return render(request, 'logisticstart/test.html')
-    
+
+# Edit listing view
+def edit_listing(request, pk):
+    listing = get_object_or_404(NewItemListing, pk=pk)
+    if request.method == 'POST':
+        form = CreateItemListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticitems_list')  # Adjust this redirect as necessary
+    else:
+        form = CreateItemListingForm(instance=listing)
+    return render(request, 'logisticstart/edit_listing.html', {'form': form})
+
 def custom_page_not_found_view(request, exception):
     return render(request, "errors/404.html", {})
 
@@ -84,16 +100,3 @@ def custom_permission_denied_view(request, exception=None):
 
 def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
-
-
-# Edit listing view
-def edit_listing(request, pk):
-    listing = get_object_or_404(NewListing, pk=pk)
-    if request.method == 'POST':
-        form = CreateListingForm(request.POST, instance=listing)
-        if form.is_valid():
-            form.save()
-            return redirect('logisticitems_list')  # Adjust this redirect as necessary
-    else:
-        form = CreateListingForm(instance=listing)
-    return render(request, 'logisticstart/edit_listing.html', {'form': form})

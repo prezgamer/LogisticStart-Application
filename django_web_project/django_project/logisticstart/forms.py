@@ -1,7 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import NewListing
+from .models import NewItemListing, NewWarehouseListing, NewWorkerListing
 
 class SignupForm(UserCreationForm):
     class Meta:
@@ -12,20 +12,38 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-class CreateListingForm(forms.ModelForm):
+class CreateItemListingForm(forms.ModelForm):
     class Meta:
-        model = NewListing
+        model = NewItemListing
         fields = [
             'item_name',
-            'item_type',
+            'weight',
             'delivery_date',
             'sender_name',
             'sender_phone',
-            'sender_email',
             'recipient_name',
             'recipient_phone',
-            'recipient_email',
-            'customer_name',
-            'customer_email',
-            'customer_phone'
         ]
+
+class CreateWorkerListingForm(forms.ModelForm):
+    class Meta:
+        model = NewWorkerListing
+        fields = [
+            'worker_name',
+            'worker_age',
+            'worker_gender',
+            'worker_driving_license',
+            'worker_phonenumber',
+            'worker_NOK',
+            'worker_NOK_phonenumber',
+        ]
+
+class CreateWarehouseListingForm(forms.ModelForm):
+    class Meta:
+        model = NewWarehouseListing
+        fields = [
+            'warehouse_name',
+            'warehouse_postalcode',
+            'warehouse_phonenumber',
+        ]
+

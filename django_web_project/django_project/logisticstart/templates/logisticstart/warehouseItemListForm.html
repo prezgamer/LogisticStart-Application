@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New Listing</title>
+    <title>New Item Information</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -14,7 +14,7 @@
     </script>
 </head>
 <body>
-    <h1>New Listing Form</h1>
+    <h1>New Item Information</h1>
     <form method="post">
         {% csrf_token %}
         <div>
@@ -25,10 +25,10 @@
             {% endif %}
         </div>
         <div>
-            <label for="{{ form.item_type.id_for_label }}">{{ form.item_type.label }}:</label>
-            {{ form.item_type }}
-            {% if form.item_type.errors %}
-                <div class="error">{{ form.item_type.errors }}</div>
+            <label for="{{ form.weight.id_for_label }}">{{ form.weight.label }}:</label>
+            {{ form.weight }}
+            {% if form.weight.errors %}
+                <div class="error">{{ form.weight.errors }}</div>
             {% endif %}
         </div>
         <div>
@@ -53,13 +53,6 @@
             {% endif %}
         </div>
         <div>
-            <label for="{{ form.sender_email.id_for_label }}">{{ form.sender_email.label }}:</label>
-            {{ form.sender_email }}
-            {% if form.sender_email.errors %}
-                <div class="error">{{ form.sender_email.errors }}</div>
-            {% endif %}
-        </div>
-        <div>
             <label for="{{ form.recipient_name.id_for_label }}">{{ form.recipient_name.label }}:</label>
             {{ form.recipient_name }}
             {% if form.recipient_name.errors %}
@@ -73,35 +66,7 @@
                 <div class="error">{{ form.recipient_phone.errors }}</div>
             {% endif %}
         </div>
-        <div>
-            <label for="{{ form.recipient_email.id_for_label }}">{{ form.recipient_email.label }}:</label>
-            {{ form.recipient_email }}
-            {% if form.recipient_email.errors %}
-                <div class="error">{{ form.recipient_email.errors }}</div>
-            {% endif %}
-        </div>
-        <div>
-            <label for="{{ form.customer_name.id_for_label }}">{{ form.customer_name.label }}:</label>
-            {{ form.customer_name }}
-            {% if form.customer_name.errors %}
-                <div class="error">{{ form.customer_name.errors }}</div>
-            {% endif %}
-        </div>
-        <div>
-            <label for="{{ form.customer_email.id_for_label }}">{{ form.customer_email.label }}:</label>
-            {{ form.customer_email }}
-            {% if form.customer_email.errors %}
-                <div class="error">{{ form.customer_email.errors }}</div>
-            {% endif %}
-        </div>
-        <div>
-            <label for="{{ form.customer_phone.id_for_label }}">{{ form.customer_phone.label }}:</label>
-            {{ form.customer_phone }}
-            {% if form.customer_phone.errors %}
-                <div class="error">{{ form.customer_phone.errors }}</div>
-            {% endif %}
-        </div>
-        <button type="submit" value="NewListing">Submit</button>
+        <button type="submit" value="NewItemLising">Submit</button>
         <button type="reset">Reset</button>
     </form>
 </body>
