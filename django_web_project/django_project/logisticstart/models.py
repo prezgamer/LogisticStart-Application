@@ -30,3 +30,17 @@ class NewWorkerListing(models.Model):
     worker_phonenumber = models.IntegerField()
     worker_NOK = models.CharField(max_length=100)
     worker_NOK_phonenumber = models.IntegerField()
+
+class Warehouse(models.Model):
+    STATUS_CHOICES = [
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+    ]
+    
+    name = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=15)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
+    def __str__(self):
+        return self.name
