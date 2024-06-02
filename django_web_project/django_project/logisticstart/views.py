@@ -62,6 +62,17 @@ def warehouse_item_list(request, id):
     items = warehouse.items.all()
     return render(request, 'logisticstart/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
 
+# new worker page
+def logisticNewWorker(request):
+    if request.method == 'POST':
+        form = CreateWorkerListingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-newworker')
+    else:
+        form = CreateWorkerListingForm()
+    return render(request, 'logisticstart/new_worker.html', {'form': form})
+
 # #Help me change, will have more fields
 # def logisticdashboard(request):
 #     distinct_senders = NewItemListing.objects.values('item_name').distinct() #I change to another item for now
