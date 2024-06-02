@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ warehouse.warehouse_name }} - Item List</title>
+</head>
+<body>
+    <h1>Item List ({{ warehouse.warehouse_name }})</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Weight</th>
+                <th>Delivery Date</th>
+                <th>Sender Name</th>
+                <th>Sender Phone</th>
+                <th>Recipient Name</th>
+                <th>Recipient Phone</th>
+                <th>Delivery Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.weight }}</td>
+                <td>{{ item.delivery_date }}</td>
+                <td>{{ item.sender_name }}</td>
+                <td>{{ item.sender_phone }}</td>
+                <td>{{ item.recipient_name }}</td>
+                <td>{{ item.recipient_phone }}</td>
+                <td>{{ item.delivery_status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No items found for this warehouse.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'add_item_to_warehouse' warehouse.id %}"><button>Add Item</button></a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warehouse Listings</title>
+</head>
+<body>
+    <h1>Warehouse Listings</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Warehouse Name</th>
+                <th>Postal Code</th>
+                <th>Phone Number</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for warehouse in warehouses %}
+            <tr>
+                <td>{{ warehouse.warehouse_name }}</td>
+                <td>{{ warehouse.warehouse_postalcode }}</td>
+                <td>{{ warehouse.warehouse_phonenumber }}</td>
+                <td>{{ warehouse.warehouse_status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

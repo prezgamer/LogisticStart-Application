@@ -13,8 +13,10 @@ urlpatterns = [
     path('signup/', views.logisticsignup, name='logisticstart-signup'), #signup page
     # path('form/', views.logisticform, name='logisticstart-form'), #look for logisticstart function
     path('items/', views.logisticitems_list, name='logisticstart-list'), #look for logisticitems_list function
-    path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
-    path('warehouseadditem/', views.logisticWarehouseItemForm, name='logisticstart-warehouseitemform'), #look for logisticWarehouseItemForm function
+    # path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
+    path('warehouses/<int:id>/add-item/', views.logisticWarehouseItemForm, name='logisticstart-warehouseitemform'), #look for logisticWarehouseItemForm function
     # path('edit/<int:pk>/', views.edit_listing, name='edit_listing'),  # add this line for the edit view
-    path('add-warehouse/', views.add_warehouse, name='add_warehouse'),
+    path('add-warehouse/', views.add_warehouse, name='logisticstart-addwarehouse'),
+    path('warehouses/', views.warehouse_list, name='logisticstart-warehouselist'),
+    path('warehouses/<int:id>/', views.warehouse_item_list, name='warehouse_item_list'),
 ]
