@@ -88,7 +88,8 @@ def add_warehouse(request):
         form = CreateWarehouseListingForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'logisticstart/add_warehouse.html', {'form': form})
+            warehouses = NewWarehouseListing.objects.all()
+            return render(request, 'logisticstart/warehouseList.html', {'warehouses': warehouses})
     else:
         form = CreateWarehouseListingForm()
     return render(request, 'logisticstart/add_warehouse.html', {'form': form})
