@@ -1,13 +1,11 @@
 from django.db import models
 
-# New Warehouse Listing Model
 class NewWarehouseListing(models.Model):
     warehouse_name = models.CharField(max_length=100)
-    warehouse_postalcode = models.CharField(max_length=20)  # Use CharField for postal codes
-    warehouse_phonenumber = models.CharField(max_length=15)  # Use CharField for phone numbers
+    warehouse_postalcode = models.CharField(max_length=20)
+    warehouse_phonenumber = models.CharField(max_length=15)
     warehouse_status = models.CharField(max_length=100, default='Pending')
 
-# New Item Listing Model
 class NewItemListing(models.Model):
     item_name = models.CharField(max_length=100)
     weight = models.CharField(max_length=100)

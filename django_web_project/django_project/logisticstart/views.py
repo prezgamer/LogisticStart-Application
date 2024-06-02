@@ -45,9 +45,9 @@ def logisticWarehouseItemForm(request, id):
         form = CreateItemListingForm(request.POST)
         if form.is_valid():
             new_item = form.save(commit=False)
-            new_item.warehouse = warehouse
+            new_item.warehouse = warehouse  
             new_item.save()
-            return redirect('warehouse_item_list', warehouse_id=id)
+            return redirect('warehouse_item_list', id=warehouse.id)
     else:
         form = CreateItemListingForm()
     return render(request, 'logisticstart/warehouseitemlistform.html', {'form': form, 'warehouse': warehouse})

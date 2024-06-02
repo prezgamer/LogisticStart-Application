@@ -18,5 +18,5 @@ urlpatterns = [
     # path('edit/<int:pk>/', views.edit_listing, name='edit_listing'),  # add this line for the edit view
     path('add-warehouse/', views.add_warehouse, name='logisticstart-addwarehouse'),
     path('warehouses/', views.warehouse_list, name='logisticstart-warehouselist'),
-    path('warehouses/<int:id>/', views.warehouse_item_list, name='warehouse_item_list'),
+    path('warehouse/<int:id>/items/', views.warehouse_item_list, name='warehouse_item_list'),
 ]
