@@ -15,9 +15,8 @@ urlpatterns = [
     path('items/', views.logisticitems_list, name='logisticstart-list'), #look for logisticitems_list function
     # path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
     path('warehouses/<int:id>/add-item/', views.logisticWarehouseItemForm, name='logisticstart-warehouseitemform'), #look for logisticWarehouseItemForm function
-    # path('edit/<int:pk>/', views.edit_listing, name='edit_listing'),  # add this line for the edit view
-    path('add-warehouse/', views.add_warehouse, name='logisticstart-addwarehouse'),
+    path('warehouses/add-warehouse/', views.add_warehouse, name='logisticstart-addwarehouse'),
+    path('warehouses/<int:id>/items/', views.warehouse_item_list, name='logisticstart-warehouseitemlist'),
     path('warehouses/', views.warehouse_list, name='logisticstart-warehouselist'),
-    path('warehouse/<int:id>/items/', views.warehouse_item_list, name='warehouse_item_list'),
     path('new-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
 ]

@@ -17,7 +17,7 @@
         <tbody>
             {% for warehouse in warehouses %}
             <tr>
-                <td>{{ warehouse.warehouse_name }}</td>
+                <td><a href="{% url 'logisticstart-warehouseitemlist' id=warehouse.id %}">{{ warehouse.warehouse_name }}</a></td>
                 <td>{{ warehouse.warehouse_postalcode }}</td>
                 <td>{{ warehouse.warehouse_phonenumber }}</td>
                 <td>{{ warehouse.warehouse_status }}</td>
