@@ -20,4 +20,6 @@ urlpatterns = [
     path('worker/add-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
     #Dashboard Path
     path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
+    #worker Path
+    path('worker/', views.workerpage, name='worker'),  
 ]
