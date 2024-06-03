@@ -38,9 +38,8 @@ class CreateWorkerListingForm(forms.ModelForm):
             'worker_NOK',
             'worker_NOK_phonenumber',
         ]
-
         widgets = {
-            'gender': forms.RadioSelect()
+            'worker_gender': forms.RadioSelect(choices=NewWorkerListing.GENDER_CHOICES)
         }
 
 class CreateWarehouseListingForm(forms.ModelForm):
