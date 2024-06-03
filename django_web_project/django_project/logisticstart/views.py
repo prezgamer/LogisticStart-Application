@@ -73,27 +73,6 @@ def logisticNewWorker(request):
         form = CreateWorkerListingForm()
     return render(request, 'logisticstart/Worker/new_worker.html', {'form': form})
 
-# #Help me change, will have more fields
-# def logisticdashboard(request):
-#     distinct_senders = NewItemListing.objects.values('item_name').distinct() #I change to another item for now
-#     distinct_types = NewItemListing.objects.values('weight').distinct() #I change to another item for now
-#     total_listing = NewItemListing.objects.count()
-    
-#     #Adding sublist that contains DISTINCT item names in types
-#     typesofproductswithnames = []
-#     for item_type in distinct_types:
-#         item_name = NewListing.objects.filter(item_type=item_type['item_type']).values('item_name').distinct()
-#         typesofproductswithnames.append({
-#             'distinct_types' : item_type['item_type'],
-#             'distinct_names' : item_name
-#         })
-#     dashboard ={
-#         'distinct_senders': distinct_senders,
-#         'total_listing' : total_listing,
-#         'item_types_name' : typesofproductswithnames
-#     }
-#     return render(request, 'logisticstart/dashboard.html', dashboard)
-
 def add_warehouse(request):
     if request.method == 'POST':
         form = CreateWarehouseListingForm(request.POST)
@@ -132,3 +111,16 @@ def custom_permission_denied_view(request, exception=None):
 
 def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
+
+#Dashboard
+def logisticdashboard(request):
+    
+    #Queries
+    workers = NewWorkerListing.objects.all().values('id', 'worker_name', 'worker_phonenumber')
+    warehouses = NewWarehouseListing.objects.all().values('warehouse_name', 'warehouse_postalcode', 'warehouse_phonenumber')
+    
+    dashboard = {
+        'warehouses': warehouses,
+        'workers': workers
+    }
+    return render(request, 'logisticstart/dashboard.html', dashboard)

@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <head>
     <style>
+        *{
+            box-sizing: border-box;
+        }
         table {
           border-collapse: collapse;
           width: 100%;
-        }
-        tr {
-          border-bottom: 1px solid #ddd;
-        }
-        th {
-            text-align: left
         }
         .container {
             display: flex;
             flex-direction: column;
             gap: 50px;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            
+        }  
+        tr:nth-child(even) {
+            background-color: #dddddd;
         }
     </style>
 
@@ -24,45 +30,45 @@
     <h1>Dashboard</h1>
 
     <div class="container">
-        <div style="background-color:#D9EEE1;">
+        <div style="background-color:#FFFFFF;">
             <table style="width:100%">
-                <tr>
-                    <th>List Of Senders</th>
-                </tr>
-                <tr>
-                    <td>
-                        {% for i in distinct_senders %}
-                            <li>{{ i.sender_name }}</li>
-                        {% endfor %}
-                    </td>
-                </tr>
+                <h3>Workers</h3>
+                    <tr>
+                        <th><h5>ID</h5></th>
+                        <th><h5>Name</h5></th>
+                        <th><h5>Phone Number</h5></th> 
+                    </tr>
+                    {% for worker in workers %}
+                        <tr>
+                            <td>{{ worker.id }}</td>
+                            <td>{{ worker.worker_name }}</td>
+                            <td>{{ worker.worker_phonenumber }}</td>
+                        </tr>
+                    {% endfor %}
             </table>
         </div>
 
-        <div style="background-color:#FFC0C7;">
+        <div style="background-color:#FFFFFF;">
             <table style="width:100%">
-                <tr>
-                    <th>Catergories</th>
-                </tr>
-                <tr>
-                    <td>
-                        {% for i in item_types_name %}
-                        <li>{{ i.distinct_types }}</li>
-                            <ul>
-                                <li>
-                                {%for type in i.distinct_names %}
-                                    {{type.item_name}}
-                                {% endfor %}
-                                </li>
-                            </ul>
+                <h3>Warehouses</h3>
+                    <tr>
+                        <th><h5>Name</h5></th>
+                        <th><h5>Postal Code</h5></th>
+                        <th><h5>Phone Number</h5></th> 
+                    </tr>
+                        {% for warehouse in warehouses %}
+                            <tr>
+                                <td>{{ warehouse.warehouse_name }}</td>
+                                <td>{{ warehouse.warehouse_postalcode }}</td>
+                                <td>{{ warehouse.warehouse_phonenumber }}</td>
+                            </tr>
                         {% endfor %}
-                    </td>
-                </tr>
+                    </tr>
             </table>
         </div>
 
 
-        <div style="background-color:#D9EEE1;">
+        {% comment %} <div style="background-color:#D9EEE1;">
             <table style="width:100%">
                 <tr>
                     <th>Total Inventory</th>
@@ -84,7 +90,7 @@
                     <td>TBC</td>
                 </tr>
             </table>
-        </div>
+        </div> {% endcomment %}
     </div>
     </form>
 </body>

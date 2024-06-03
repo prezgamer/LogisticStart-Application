@@ -79,8 +79,8 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'logisticsdb', # change to your own
-        'USER': 'root', # change to your own
-        'PASSWORD': '090500', # change to your own
+        'USER': 'Jk', # change to your own
+        'PASSWORD': '123', # change to your own
         'HOST':'localhost',
         'PORT':'3306',
     }
