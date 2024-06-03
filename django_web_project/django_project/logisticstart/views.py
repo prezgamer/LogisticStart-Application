@@ -47,20 +47,20 @@ def logisticWarehouseItemForm(request, id):
             new_item = form.save(commit=False)
             new_item.warehouse = warehouse  
             new_item.save()
-            return redirect('warehouse_item_list', id=warehouse.id)
+            return redirect('logisticstart-warehouseitemlist', id=warehouse.id)
     else:
         form = CreateItemListingForm()
-    return render(request, 'logisticstart/warehouseitemlistform.html', {'form': form, 'warehouse': warehouse})
+    return render(request, 'logisticstart/WarehouseItems/warehouseitemlistform.html', {'form': form, 'warehouse': warehouse})
     
 # logistic warehouse list
 def logisticWarehouseList(request):
     warehouses = NewWarehouseListing.objects.all()
-    return render(request, 'logisticstart/warehouseList.html', {'warehouses': warehouses})
+    return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
 
 def warehouse_item_list(request, id):
     warehouse = get_object_or_404(NewWarehouseListing, id=id)
     items = warehouse.items.all()
-    return render(request, 'logisticstart/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
+    return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
 
 # new worker page
 def logisticNewWorker(request):
@@ -71,7 +71,7 @@ def logisticNewWorker(request):
             return redirect('logisticstart-newworker')
     else:
         form = CreateWorkerListingForm()
-    return render(request, 'logisticstart/new_worker.html', {'form': form})
+    return render(request, 'logisticstart/Worker/new_worker.html', {'form': form})
 
 # #Help me change, will have more fields
 # def logisticdashboard(request):
@@ -100,14 +100,14 @@ def add_warehouse(request):
         if form.is_valid():
             form.save()
             warehouses = NewWarehouseListing.objects.all()
-            return render(request, 'logisticstart/warehouseList.html', {'warehouses': warehouses})
+            return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
     else:
         form = CreateWarehouseListingForm()
-    return render(request, 'logisticstart/add_warehouse.html', {'form': form})
+    return render(request, 'logisticstart/Warehouse/add_warehouse.html', {'form': form})
 
 def warehouse_list(request):
     warehouses = NewWarehouseListing.objects.all()
-    return render(request, 'logisticstart/warehouseList.html', {'warehouses': warehouses})
+    return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
 
 # Edit listing view 
 def edit_listing(request, pk):

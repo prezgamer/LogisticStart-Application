@@ -18,5 +18,5 @@ urlpatterns = [
     path('warehouses/add-warehouse/', views.add_warehouse, name='logisticstart-addwarehouse'),
     path('warehouses/<int:id>/items/', views.warehouse_item_list, name='logisticstart-warehouseitemlist'),
     path('warehouses/', views.warehouse_list, name='logisticstart-warehouselist'),
-    path('new-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
+    path('worker/add-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
 ]
