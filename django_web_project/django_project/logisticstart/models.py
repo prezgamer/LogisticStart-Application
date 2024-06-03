@@ -19,6 +19,10 @@ class NewItemListing(models.Model):
 
 # New Worker Listing Model
 class NewWorkerListing(models.Model):
+    GENDER_CHOICES = (
+    ('M', 'Male'),
+    ('F', 'Female')
+    )
     worker_name = models.CharField(max_length=100)
     worker_age = models.IntegerField() 
     worker_gender = models.IntegerField() 
