@@ -23,6 +23,11 @@
     </style>
   </head>
   <body>
+    <button><a href="/dashboard">Dashboard</a></button>
+    <button><a href="/workers">Workers</a></button>
+    <button><a href="/">Delivery Schedule</a></button>
+    <button><a href="/warehouses">Warehouse Details</a></button>
+
     <h1>Worker Information</h1>
     <table class="table table-striped table-bordered">
       <thead class="thead-dark">
@@ -44,10 +49,10 @@
           <td>{{worker.worker_name}}</td>
           <td>{{worker.worker_age}}</td>
           <td>{{worker.worker_gender}}</td>
-          <td>{{worker.driving_license}}</td>
-          <td>{{worker.worker_phone_number}}</td>
+          <td>{{worker.worker_driving_license}}</td>
+          <td>{{worker.worker_phonenumber}}</td>
           <td>{{worker.worker_NOK}}</td>
-          <td>{{worker.NOK_Phone_Number}}</td>
+          <td>{{worker_NOK_phonenumber}}</td>
         </tr>
         {% endfor %}
       </tbody>

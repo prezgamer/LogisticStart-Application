@@ -17,9 +17,9 @@ urlpatterns = [
     path('warehouses/add-warehouse/', views.add_warehouse, name='logisticstart-addwarehouse'),
     path('warehouses/<int:id>/items/', views.warehouse_item_list, name='logisticstart-warehouseitemlist'),
     path('warehouses/', views.warehouse_list, name='logisticstart-warehouselist'),
-    path('worker/add-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
+    path('workers/add-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
     #Dashboard Path
     path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
     #worker Path
-    path('worker/', views.workerpage, name='worker'),  
+    path('workers/', views.workerpage, name='worker'),  
 ]
