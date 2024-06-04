@@ -64,6 +64,7 @@
                                 <th>Worker Phone Number</th>
                                 <th>Next of Kin (NOK)</th>
                                 <th>NOK Phone Number</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,6 +78,13 @@
                                 <td>{{ worker.worker_phonenumber }}</td>
                                 <td>{{ worker.worker_NOK }}</td>
                                 <td>{{ worker.worker_NOK_phonenumber }}</td>
+                                <td>
+                                  <a href= "{% url 'worker-edit' id=worker.id %}" class="btn"><button>Edit</button></a>
+                                  <form method="post" action="{% url 'worker-delete' id=worker.id %}" style="display:inline;">
+                                      {% csrf_token %}
+                                      <button type="submit" class="btn delete-btn" onclick="return confirm('Are you sure you want to delete this worker?')">Delete</button>
+                                  </form>
+                              </td>
                             </tr>
                             {% endfor %}
                         </tbody>
