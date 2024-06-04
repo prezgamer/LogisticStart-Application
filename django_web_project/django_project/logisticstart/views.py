@@ -87,6 +87,12 @@ def add_warehouse(request):
 def warehouse_list(request):
     warehouses = NewWarehouseListing.objects.all()
     return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
+# worker page
+def workerpage(request):
+    if request.method == 'GET':
+        worker = NewWorkerListing.objects.all()
+        return render(request, template_name='logisticstart/Worker/worker.html', context={'worker': worker})
+
 
 # Edit listing view 
 def edit_listing(request, pk):
