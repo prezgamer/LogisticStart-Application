@@ -1,0 +1,27 @@
+<!-- logisticstart/templates/logisticstart/edit_listing.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Warehouse Items</title>
+</head>
+<body>
+    <h1>Editing Listing</h1>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Item Details:</legend>
+            {{ form.item_name.label }}: {{ form.item_name }} <br>
+            {{ form.weight.label }}: {{ form.weight }} <br>
+            {{ form.delivery_date.label }}: {{ form.delivery_date }} <br>
+            {{ form.sender_name.label }}: {{ form.sender_name }} <br>
+            {{ form.sender_phone.label }}: {{ form.sender_phone }} <br>
+            {{ form.recipient_name.label }}: {{ form.recipient_name }} <br>
+            {{ form.recipient_phone.label }}: {{ form.recipient_phone }} <br>
+            {{ form.delivery_status.label }}: {{ form.delivery_status }} <br>
+        </fieldset>
+        <button type="submit">Update Listing</button>
+        <button type="reset">Reset</button>
+    </form>
+</body>
+</html>
