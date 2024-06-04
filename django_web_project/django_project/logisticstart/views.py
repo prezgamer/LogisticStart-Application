@@ -95,7 +95,59 @@ def warehouse_list(request):
 def workerpage(request):
     workers = NewWorkerListing.objects.all()
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
+def edit_warehouse_item(request, id):
+    listing = get_object_or_404(NewItemListing, id=id)
+    if request.method == 'POST':
+        form = CreateItemListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id) 
+    else:
+        form = CreateItemListingForm(instance=listing)
+    return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', {'form': form})
 
+def delete_warehouse_item(request, id):
+    listing = get_object_or_404(NewItemListing, id=id)
+    if request.method == 'POST':
+        listing.delete()
+        return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id)
+    return render(request, 'delete_listing', {'listing': listing})
+
+def edit_warehouse_listing(request, id):
+    listing = get_object_or_404(NewWarehouseListing, id=id)
+    if request.method == 'POST':
+        form = CreateWarehouseListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-warehouselist') 
+    else:
+        form = CreateWarehouseListingForm(instance=listing)
+    return render(request, 'logisticstart/Warehouse/edit_warehouse.html', {'form': form})
+
+def delete_warehouse_listing(request, id):
+    warehouse = get_object_or_404(NewWarehouseListing, id=id)
+    if request.method == 'POST':
+        warehouse.delete()
+        return redirect('logisticstart-warehouselist')
+    return render(request, 'delete_warehouse_listing', {'warehouse': warehouse})
+
+def edit_worker_listing(request, id):
+    listing = get_object_or_404(NewWorkerListing, id=id)
+    if request.method == 'POST':
+        form = CreateWorkerListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('worker') 
+    else:
+        form = CreateWorkerListingForm(instance=listing)
+    return render(request, 'logisticstart/Worker/edit_worker.html', {'form': form})
+
+def delete_worker_listing(request, id):
+    worker = get_object_or_404(NewWorkerListing, id=id)
+    if request.method == 'POST':
+        worker.delete()
+        return redirect('worker')
+    return render(request, 'worker-delete', {'worker': worker})
 
 # # Edit listing view 
 # def edit_listing(request, pk):
@@ -137,6 +189,7 @@ def add_deliveryschedule(request):
 def delivery_schedule(request):
     schedules = NewDeliverySchedule.objects.all()
     return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
+
 
 
 def custom_page_not_found_view(request, exception):
