@@ -1,0 +1,26 @@
+<!-- logisticstart/templates/logisticstart/edit_listing.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Worker Information</title>
+</head>
+<body>
+    <h1>Editing Listing</h1>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Item Details:</legend>
+            {{ form.worker_name.label }}: {{ form.worker_name }} <br>
+            {{ form.worker_age }}: {{ form.worker_age }} <br>
+            {{ form.worker_gender.label }}: {{ form.worker_gender }} <br>
+            {{ form.worker_driving_license.label }}: {{ form.worker_driving_license }} <br>
+            {{ form.worker_phonenumber.label }}: {{ form.worker_phonenumber }} <br>
+            {{ form.worker_NOK.label }}: {{ form.worker_NOK }} <br>
+            {{ form.worker_NOK_phonenumber.label }}: {{ form.worker_NOK_phonenumber }} <br>
+        </fieldset>
+        <button type="submit">Update Listing</button>
+        <button type="reset">Reset</button>
+    </form>
+</body>
+</html>
