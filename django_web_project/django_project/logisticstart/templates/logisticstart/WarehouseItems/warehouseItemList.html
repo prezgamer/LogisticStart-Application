@@ -4,6 +4,12 @@
     <title>{{ warehouse.warehouse_name }} - Item List</title>
 </head>
 <body>
+    <button><a href="/dashboard">Dashboard</a></button>
+    <button href="{% url ''}">Workers</button>
+    <button href="{% url ''}">Delivery Schedule</button>
+    <button><a href="/warehouses">Warehouse Details</a></button>
+
+
     <h1>Item List ({{ warehouse.warehouse_name }})</h1>
     <table border="1">
         <thead>

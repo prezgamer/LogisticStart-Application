@@ -123,4 +123,4 @@ def logisticdashboard(request):
         'warehouses': warehouses,
         'workers': workers
     }
-    return render(request, 'logisticstart/dashboard.html', dashboard)
+    return render(request, 'logisticstart/Dashboard/dashboard.html', dashboard)

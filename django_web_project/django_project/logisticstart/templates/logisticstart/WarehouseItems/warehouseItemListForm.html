@@ -14,6 +14,12 @@
     </script>
 </head>
 <body>
+    <button><a href="/dashboard">Dashboard</a></button>
+    <button href="{% url ''}">Workers</button>
+    <button href="{% url ''}">Delivery Schedule</button>
+    <button><a href="/warehouses">Warehouse Details</a></button>
+
+
     <h1>New Item Information</h1>
     <form method="post">
         {% csrf_token %}

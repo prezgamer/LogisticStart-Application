@@ -7,6 +7,11 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
     <body>
+        <button><a href="/dashboard">Dashboard</a></button>
+        <button href="{% url ''}">Workers</button>
+        <button href="{% url ''}">Delivery Schedule</button>
+        <button><a href="/warehouses">Warehouse Details</a></button>
+
         <h1>New Worker</h1>
         <form method="post">
             {% csrf_token %}
