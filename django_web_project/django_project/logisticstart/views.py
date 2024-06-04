@@ -137,7 +137,7 @@ def edit_worker_listing(request, id):
         form = CreateWorkerListingForm(request.POST, instance=listing)
         if form.is_valid():
             form.save()
-            return redirect('worker') 
+            return redirect('logisticstart-worker') 
     else:
         form = CreateWorkerListingForm(instance=listing)
     return render(request, 'logisticstart/Worker/edit_worker.html', {'form': form})
@@ -146,7 +146,7 @@ def delete_worker_listing(request, id):
     worker = get_object_or_404(NewWorkerListing, id=id)
     if request.method == 'POST':
         worker.delete()
-        return redirect('worker')
+        return redirect('logisticstart-worker')
     return render(request, 'worker-delete', {'worker': worker})
 
 # # Edit listing view 
