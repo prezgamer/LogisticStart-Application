@@ -8,9 +8,9 @@ handler400 = 'logisticstart.views.custom_bad_request_view'
 
 
 urlpatterns = [
-    path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
-    path('login/', views.logisticlogin, name='logisticstart-login'), #login page
-    path('signup/', views.logisticsignup, name='logisticstart-signup'), #signup page
+    # path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
+    # path('login/', views.logisticlogin, name='logisticstart-login'), #login page
+    # path('signup/', views.logisticsignup, name='logisticstart-signup'), #signup page
     # path('form/', views.logisticform, name='logisticstart-form'), #look for logisticstart function
     path('items/', views.logisticitems_list, name='logisticstart-list'), #look for logisticitems_list function
     path('warehouses/<int:id>/add-item/', views.logisticWarehouseItemForm, name='logisticstart-warehouseitemform'), #look for logisticWarehouseItemForm function
@@ -19,11 +19,12 @@ urlpatterns = [
     path('warehouses/', views.warehouse_list, name='logisticstart-warehouselist'),
     path('workers/add-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
     #Dashboard Path
+    path('', views.logisticdashboard, name='logisticstart-dashboard'),
     path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
     #Adding of Delivery Schedule Path
     path('deliveryschedule/add-schedule/', views.add_deliveryschedule, name='logisticstart-add_deliveryschedule'),
     #Displaying of Delivery Schedule Path
     path('deliveryschedule/schedule/', views.delivery_schedule, name='logisticstart-delivery_schedule'),
     #worker Path
-    path('workers/', views.workerpage, name='worker'),  
+    path('workers/', views.workerpage, name='logisticstart-worker'),  
 ]

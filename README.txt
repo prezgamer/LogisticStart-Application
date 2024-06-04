@@ -1,16 +1,29 @@
-1. Download Python
-2. Download Django (python -m pip install Django)
+First:
+go to settings.py in django_project folder
 
-To Create a new webpage:
-1. Write new function in logisticstart/views.py, follow steps from there
+Create new database in mysql or mariadb
 
-Example: 
-def logisticlogin(request):
-    return render(request, 'logisticstart/login.html') #return logisticstart/templates/logisticstart/login.html
+In mariadb or mysql:
+Login to account
+CREATE DATABASE logisticsdb;
 
-2. Write new html code in the logisticstart/templates/logisticstart as nameoffile.html
-3. Replace name with appropriate name for the logisticstart/views.py
-4. Write new webpage source in logisticstart/urls.py
+django_project/settings.py: Line 76
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'logisticsdb', # change to your own
+        'USER': '', # your own user name
+        'PASSWORD': '', # change to your own password for account
+        'HOST':'localhost', # no need to change
+        'PORT':'3306', # change if nessary
+    }
+}
 
-Example:
-path('newpage/', views.functionname, name='functionname-type'), 
+To run: 
+cd django_web_project
+cd django_project
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver

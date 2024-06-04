@@ -74,6 +74,7 @@ def logisticNewWorker(request):
         form = CreateWorkerListingForm()
     return render(request, 'logisticstart/Worker/new_worker.html', {'form': form})
 
+# add warehouses
 def add_warehouse(request):
     if request.method == 'POST':
         form = CreateWarehouseListingForm(request.POST)
@@ -85,6 +86,7 @@ def add_warehouse(request):
         form = CreateWarehouseListingForm()
     return render(request, 'logisticstart/Warehouse/add_warehouse.html', {'form': form})
 
+# warehouse list
 def warehouse_list(request):
     warehouses = NewWarehouseListing.objects.all()
     return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
@@ -95,29 +97,17 @@ def workerpage(request):
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
 
 
-# Edit listing view 
-def edit_listing(request, pk):
-    listing = get_object_or_404(NewItemListing, pk=pk)
-    if request.method == 'POST':
-        form = CreateItemListingForm(request.POST, instance=listing)
-        if form.is_valid():
-            form.save()
-            return redirect('logisticstart-list')  # Adjust this redirect as necessary
-    else:
-        form = CreateItemListingForm(instance=listing)
-    return render(request, 'logisticstart/edit_listing.html', {'form': form})
-
-def custom_page_not_found_view(request, exception):
-    return render(request, "errors/404.html", {})
-
-def custom_error_view(request, exception=None):
-    return render(request, "errors/500.html", {})
-
-def custom_permission_denied_view(request, exception=None):
-    return render(request, "errors/403.html", {})
-
-def custom_bad_request_view(request, exception=None):
-    return render(request, "errors/400.html", {})
+# # Edit listing view 
+# def edit_listing(request, pk):
+#     listing = get_object_or_404(NewItemListing, pk=pk)
+#     if request.method == 'POST':
+#         form = CreateItemListingForm(request.POST, instance=listing)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('logisticstart-list')  # Adjust this redirect as necessary
+#     else:
+#         form = CreateItemListingForm(instance=listing)
+#     return render(request, 'logisticstart/edit_listing.html', {'form': form})
 
 #Dashboard
 def logisticdashboard(request):
@@ -142,7 +132,21 @@ def add_deliveryschedule(request):
     else:
         form = CreateDeliveryScheduleForm()
     return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', {'form': form})
+
 #Displaying of Delivery Schedule
 def delivery_schedule(request):
     schedules = NewDeliverySchedule.objects.all()
     return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
+
+
+def custom_page_not_found_view(request, exception):
+    return render(request, "errors/404.html", {})
+
+def custom_error_view(request, exception=None):
+    return render(request, "errors/500.html", {})
+
+def custom_permission_denied_view(request, exception=None):
+    return render(request, "errors/403.html", {})
+
+def custom_bad_request_view(request, exception=None):
+    return render(request, "errors/400.html", {})
