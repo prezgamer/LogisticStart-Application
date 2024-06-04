@@ -60,6 +60,7 @@
                                 <th>Recipient Name</th>
                                 <th>Recipient Phone</th>
                                 <th>Delivery Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,6 +74,13 @@
                                 <td>{{ item.recipient_name }}</td>
                                 <td>{{ item.recipient_phone }}</td>
                                 <td>{{ item.delivery_status }}</td>
+                                <td>
+                                    <a href= "{% url 'logisticstart-editwarehouseitem' id=item.id %}" class="btn"><button>Edit</button></a>
+                                    <form method="post" action="{% url 'delete_listing' id=item.id %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn delete-btn" onclick="return confirm('Are you sure you want to delete this warehouse?')">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                             {% empty %}
                             <tr>
