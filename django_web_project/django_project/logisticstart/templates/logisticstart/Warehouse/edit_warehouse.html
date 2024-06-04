@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Warehouse Items</title>
+</head>
+<body>
+    <h1>Editing Listing</h1>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Warehouse Details:</legend>
+            {{ form.warehouse_name.label }}: {{ form.warehouse_name }} <br>
+            {{ form.warehouse_postalcode.label }}: {{ form.warehouse_postalcode }} <br>
+            {{ form.warehouse_phonenumber.label }}: {{ form.warehouse_phonenumber }} <br>
+            {{ form.warehouse_status.label }}: {{ form.warehouse_status }} <br>
+            
+        </fieldset>
+        <button type="submit">Update Warehouse</button>
+        <button type="reset">Reset</button>
+    </form>
+</body>
+</html>
