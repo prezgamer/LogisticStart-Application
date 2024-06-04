@@ -18,6 +18,11 @@ urlpatterns = [
     path('warehouses/<int:id>/items/', views.warehouse_item_list, name='logisticstart-warehouseitemlist'),
     path('warehouses/', views.warehouse_list, name='logisticstart-warehouselist'),
     path('workers/add-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
+    path('warehouses/<int:id>/edit-warehouse-item/', views.edit_warehouse_item, name='logisticstart-editwarehouseitem'),
+    path('delete/<int:id>/', views.delete_warehouse_item, name='delete_listing'),
+    path('warehouses/<int:id>/edit/', views.edit_warehouse_listing, name='logisticstart-editwarehouse'),
+    path('warehouses/<int:id>/delete', views.delete_warehouse_listing, name='delete_warehouse_listing'),
+
     #Dashboard Path
     path('', views.logisticdashboard, name='logisticstart-dashboard'),
     path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
@@ -26,5 +31,8 @@ urlpatterns = [
     #Displaying of Delivery Schedule Path
     path('deliveryschedule/schedule/', views.delivery_schedule, name='logisticstart-delivery_schedule'),
     #worker Path
-    path('workers/', views.workerpage, name='logisticstart-worker'),  
+    path('workers/', views.workerpage, name='logisticstart-worker'),
+    path('workers/<int:id>/edit', views.edit_worker_listing, name='worker-edit'),
+    path('workers/<int:id>/delete', views.delete_worker_listing, name='worker-delete')
+
 ]
