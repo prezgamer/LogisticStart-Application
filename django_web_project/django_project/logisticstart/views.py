@@ -68,7 +68,8 @@ def logisticNewWorker(request):
         form = CreateWorkerListingForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('logisticstart-newworker')
+            worker = NewWorkerListing.objects.all()
+            return render(request, 'logisticstart/Worker/worker.html', {"workers": worker})
     else:
         form = CreateWorkerListingForm()
     return render(request, 'logisticstart/Worker/new_worker.html', {'form': form})
@@ -137,7 +138,7 @@ def add_deliveryschedule(request):
         form = CreateDeliveryScheduleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('logisticstart-add_deliveryschedule')  #Redirect to the same page after successful form submission
+            return redirect('logisticstart-delivery_schedule')  #Redirect to the same page after successful form submission
     else:
         form = CreateDeliveryScheduleForm()
     return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', {'form': form})

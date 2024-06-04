@@ -1,36 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar-item {
+            color: #007BFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #f5f5f5;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+        }
+    </style>
     <title>Warehouse Listings</title>
 </head>
 <body>
-    <button><a href="/dashboard">Dashboard</a></button>
-    <button><a href="/workers">Workers</a></button>
-    <button><a href="/">Delivery Schedule</a></button>
-    <button><a href="/warehouses">Warehouse Details</a></button>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+    </nav>
 
-    <h1>Warehouse Listings</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Warehouse Name</th>
-                <th>Postal Code</th>
-                <th>Phone Number</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for warehouse in warehouses %}
-            <tr>
-                <td><a href="{% url 'logisticstart-warehouseitemlist' id=warehouse.id %}">{{ warehouse.warehouse_name }}</a></td>
-                <td>{{ warehouse.warehouse_postalcode }}</td>
-                <td>{{ warehouse.warehouse_phonenumber }}</td>
-                <td>{{ warehouse.warehouse_status }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers">Workers</a></li>
+                <li><a href="/deliveryschedule/schedule/">Delivery Schedule</a></li>
+                <li><a href="/warehouses" class="is-active">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
 
-    </table>
-    <a href="{% url 'logisticstart-addwarehouse'%}"><button>Add Warehouse</button></a>
+    <div class="content">
+        <section class="section">
+            <div class="container">
+                <h1 class="title">Warehouse Listings</h1>
+                <div class="table-container">
+                    <table class="table is-striped is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Warehouse Name</th>
+                                <th>Postal Code</th>
+                                <th>Phone Number</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for warehouse in warehouses %}
+                            <tr>
+                                <td><a href="{% url 'logisticstart-warehouseitemlist' id=warehouse.id %}">{{ warehouse.warehouse_name }}</a></td>
+                                <td>{{ warehouse.warehouse_postalcode }}</td>
+                                <td>{{ warehouse.warehouse_phonenumber }}</td>
+                                <td>{{ warehouse.warehouse_status }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <a class="button is-primary" href="{% url 'logisticstart-addwarehouse' %}">Add Warehouse</a>
+            </div>
+        </section>
+    </div>
 </body>
 </html>

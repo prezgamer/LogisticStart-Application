@@ -1,50 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar-item {
+            color: #007BFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #f5f5f5;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+        }
+    </style>
     <title>{{ warehouse.warehouse_name }} - Item List</title>
 </head>
 <body>
-    <button><a href="/dashboard">Dashboard</a></button>
-    <button><a href="/workers">Workers</a></button>
-    <button><a href="/">Delivery Schedule</a></button>
-    <button><a href="/warehouses">Warehouse Details</a></button>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+    </nav>
 
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers">Workers</a></li>
+                <li><a href="/deliveryschedule/schedule/">Delivery Schedule</a></li>
+                <li><a href="/warehouses" class="is-active">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
 
-    <h1>Item List ({{ warehouse.warehouse_name }})</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Item Name</th>
-                <th>Weight</th>
-                <th>Delivery Date</th>
-                <th>Sender Name</th>
-                <th>Sender Phone</th>
-                <th>Recipient Name</th>
-                <th>Recipient Phone</th>
-                <th>Delivery Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-            <tr>
-                <td>{{ item.item_name }}</td>
-                <td>{{ item.weight }}</td>
-                <td>{{ item.delivery_date }}</td>
-                <td>{{ item.sender_name }}</td>
-                <td>{{ item.sender_phone }}</td>
-                <td>{{ item.recipient_name }}</td>
-                <td>{{ item.recipient_phone }}</td>
-                <td>{{ item.delivery_status }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="8">No items found for this warehouse.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{% url 'logisticstart-warehouseitemform' warehouse.id %}"><button>Add Item</button></a>
-    <a href="{% url 'logisticstart-warehouselist'%}"><button>Go back to warehouse list</button></a>
+    <div class="content">
+        <section class="section">
+            <div class="container">
+                <h1 class="title">Item List ({{ warehouse.warehouse_name }})</h1>
+                <div class="table-container">
+                    <table class="table is-striped is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Weight</th>
+                                <th>Delivery Date</th>
+                                <th>Sender Name</th>
+                                <th>Sender Phone</th>
+                                <th>Recipient Name</th>
+                                <th>Recipient Phone</th>
+                                <th>Delivery Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>{{ item.item_name }}</td>
+                                <td>{{ item.weight }}</td>
+                                <td>{{ item.delivery_date }}</td>
+                                <td>{{ item.sender_name }}</td>
+                                <td>{{ item.sender_phone }}</td>
+                                <td>{{ item.recipient_name }}</td>
+                                <td>{{ item.recipient_phone }}</td>
+                                <td>{{ item.delivery_status }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8">No items found for this warehouse.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="buttons">
+                    <a class="button is-primary" href="{% url 'logisticstart-warehouseitemform' warehouse.id %}">Add Item</a>
+                    <a class="button" href="{% url 'logisticstart-warehouselist' %}">Go back to warehouse list</a>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
