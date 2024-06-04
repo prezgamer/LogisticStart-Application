@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add A Delivery Schedule</title>
+</head>
+<body>
+    <div class="container">
+        <h1>New Schedule</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" value="NewDeliveryScheduleListing">Add</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
+</body>
+</html>

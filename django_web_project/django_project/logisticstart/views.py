@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect 
 from django.contrib.auth import authenticate, login, logout
-from .models import NewItemListing, NewWarehouseListing, NewWorkerListing
-from .forms import SignupForm, LoginForm, CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm
+from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule
+from .forms import SignupForm, LoginForm, CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -129,4 +129,19 @@ def logisticdashboard(request):
         'warehouses': warehouses,
         'workers': workers
     }
-    return render(request, 'logisticstart/Dashboard/dashboard.html', dashboard)
+    return render(request, 'logisticstart/dashboard.html', dashboard)
+
+#Adding of Delivery Schedule
+def add_deliveryschedule(request):
+    if request.method == 'POST':
+        form = CreateDeliveryScheduleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-add_deliveryschedule')  #Redirect to the same page after successful form submission
+    else:
+        form = CreateDeliveryScheduleForm()
+    return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', {'form': form})
+#Displaying of Delivery Schedule
+def delivery_schedule(request):
+    schedules = NewDeliverySchedule.objects.all()
+    return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})

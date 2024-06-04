@@ -30,3 +30,15 @@ class NewWorkerListing(models.Model):
     worker_phonenumber = models.IntegerField()
     worker_NOK = models.CharField(max_length=100)
     worker_NOK_phonenumber = models.IntegerField()
+    
+    
+#New Delivery Schedule Listing
+class NewDeliverySchedule(models.Model):
+    deliveryid = models.AutoField(primary_key=True)
+    receiver_name = models.CharField(max_length=255)
+    receiver_address = models.CharField(max_length=255)
+    receiver_number = models.IntegerField()
+    workerid = models.IntegerField()
+    warehouseid = models.IntegerField()
+    itemid = models.IntegerField()
+    delivery_status = models.CharField(max_length=255)

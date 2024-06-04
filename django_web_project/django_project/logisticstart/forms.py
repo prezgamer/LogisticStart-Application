@@ -1,7 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import NewItemListing, NewWarehouseListing, NewWorkerListing
+from .models import NewItemListing, NewWarehouseListing, NewWorkerListing, NewDeliverySchedule
 
 class SignupForm(UserCreationForm):
     class Meta:
@@ -51,4 +51,19 @@ class CreateWarehouseListingForm(forms.ModelForm):
             'warehouse_phonenumber',
             'warehouse_status',
         ]
+
+class CreateDeliveryScheduleForm(forms.ModelForm):
+    class Meta:
+        model = NewDeliverySchedule
+        fields = [
+            'receiver_name',
+            'receiver_address',
+            'receiver_number',
+            'workerid',
+            'warehouseid',
+            'itemid',
+            'delivery_status',
+            
+        ]
+
 

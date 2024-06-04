@@ -20,6 +20,10 @@ urlpatterns = [
     path('workers/add-worker/', views.logisticNewWorker, name='logisticstart-newworker'),
     #Dashboard Path
     path('dashboard/', views.logisticdashboard, name='logisticstart-dashboard'),
+    #Adding of Delivery Schedule Path
+    path('deliveryschedule/add-schedule/', views.add_deliveryschedule, name='logisticstart-add_deliveryschedule'),
+    #Displaying of Delivery Schedule Path
+    path('deliveryschedule/schedule/', views.delivery_schedule, name='logisticstart-delivery_schedule'),
     #worker Path
     path('workers/', views.workerpage, name='worker'),  
 ]

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            
+        }  
+    </style>
+
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+
+    <div class="container">
+        <div style="background-color:#FFFFFF;">
+            <table style="width:100%">
+                {% comment %} <h3>Delivery</h3> {% endcomment %}
+                    <tr>
+                        <th><h5>ID</h5></th>
+                        <th><h5>Receiver Name</h5></th>
+                        <th><h5>Receiver Address</h5></th> 
+                        <th><h5>Receiver Number</h5></th>
+                        <th><h5>Delivery Driver ID</h5></th>
+                        <th><h5>Warehouse ID</h5></th> 
+                        <th><h5>Item ID</h5></th>
+                        <th><h5>Delivery Status</h5></th> 
+                    </tr>
+                    {% for schedule in schedules %}
+                        <tr>
+                            <td>{{ schedule.deliveryid }}</td>
+                            <td>{{ schedule.receiver_name }}</td>
+                            <td>{{ schedule.receiver_address }}</td>
+                            <td>{{ schedule.receiver_number }}</td>
+                            <td>{{ schedule.workerid }}</td>
+                            <td>{{ schedule.warehouseid }}</td>
+                            <td>{{ schedule.itemid }}</td>
+                            <td>{{ schedule.delivery_status }}</td>
+                        </tr>
+                    {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
