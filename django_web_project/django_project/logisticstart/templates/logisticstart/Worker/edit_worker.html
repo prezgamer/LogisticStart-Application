@@ -1,26 +1,115 @@
-<!-- logisticstart/templates/logisticstart/edit_listing.html -->
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Edit Worker Information</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar-item {
+            color: #007BFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #f5f5f5;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+        }
+        .button-container {
+            text-align: left;
+            margin-top: 40px; /* Increased margin-top to lower the buttons */
+        }
+    </style>
 </head>
 <body>
-    <h1>Editing Listing</h1>
-    <form method="post">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Item Details:</legend>
-            {{ form.worker_name.label }}: {{ form.worker_name }} <br>
-            {{ form.worker_age.label }}: {{ form.worker_age }} <br>
-            {{ form.worker_gender.label }}: {{ form.worker_gender }} <br>
-            {{ form.worker_driving_license.label }}: {{ form.worker_driving_license }} <br>
-            {{ form.worker_phonenumber.label }}: {{ form.worker_phonenumber }} <br>
-            {{ form.worker_NOK.label }}: {{ form.worker_NOK }} <br>
-            {{ form.worker_NOK_phonenumber.label }}: {{ form.worker_NOK_phonenumber }} <br>
-        </fieldset>
-        <button type="submit">Update Listing</button>
-        <button type="reset">Reset</button>
-    </form>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers" class="is-active">Workers</a></li>
+                <li><a href="/deliveryschedule/schedule/">Delivery Schedule</a></li>
+                <li><a href="/warehouses">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <div class="container">
+                <h1 class="title">Edit Worker Information</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <legend>Item Details:</legend>
+                        <div class="field">
+                            <label class="label">{{ form.worker_name.label }}</label>
+                            <div class="control">
+                                {{ form.worker_name }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.worker_age.label }}</label>
+                            <div class="control">
+                                {{ form.worker_age }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.worker_gender.label }}</label>
+                            <div class="control">
+                                {{ form.worker_gender }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.worker_driving_license.label }}</label>
+                            <div class="control">
+                                {{ form.worker_driving_license }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.worker_phonenumber.label }}</label>
+                            <div class="control">
+                                {{ form.worker_phonenumber }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.worker_NOK.label }}</label>
+                            <div class="control">
+                                {{ form.worker_NOK }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.worker_NOK_phonenumber.label }}</label>
+                            <div class="control">
+                                {{ form.worker_NOK_phonenumber }}
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="button-container field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-link">Update Listing</button>
+                        </div>
+                        <div class="control">
+                            <button type="reset" class="button is-light">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
 </body>
 </html>

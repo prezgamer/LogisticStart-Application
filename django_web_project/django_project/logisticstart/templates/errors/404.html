@@ -1,9 +1,58 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <title>
-        Error 404 Page
-    </title>
+    <title>Error 404 Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar-item {
+            color: #007BFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #f5f5f5;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Webpage does not exist</h1>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers">Workers</a></li>
+                <li><a href="/deliveryschedule/schedule/">Delivery Schedule</a></li>
+                <li><a href="/warehouses">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <div class="container">
+                <h1 class="title">Error 404: Webpage does not exist</h1>
+                <p class="subtitle">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+                <a class="button is-link" href="/">Go to Homepage</a>
+            </div>
+        </section>
+    </div>
 </body>
+</html>

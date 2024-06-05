@@ -2,21 +2,96 @@
 <html>
 <head>
     <title>Edit Warehouse Items</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar-item {
+            color: #007BFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #f5f5f5;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+        }
+        .button-container {
+            text-align: left;
+            margin-top: 40px; /* Increased margin-top to lower the buttons */
+        }
+    </style>
 </head>
 <body>
-    <h1>Editing Listing</h1>
-    <form method="post">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Warehouse Details:</legend>
-            {{ form.warehouse_name.label }}: {{ form.warehouse_name }} <br>
-            {{ form.warehouse_postalcode.label }}: {{ form.warehouse_postalcode }} <br>
-            {{ form.warehouse_phonenumber.label }}: {{ form.warehouse_phonenumber }} <br>
-            {{ form.warehouse_status.label }}: {{ form.warehouse_status }} <br>
-            
-        </fieldset>
-        <button type="submit">Update Warehouse</button>
-        <button type="reset">Reset</button>
-    </form>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers">Workers</a></li>
+                <li><a href="/deliveryschedule/schedule/">Delivery Schedule</a></li>
+                <li><a href="/warehouses" class="is-active">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <div class="container">
+                <h1 class="title">Edit Warehouse Items</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <legend>Warehouse Details:</legend>
+                        <div class="field">
+                            <label class="label">{{ form.warehouse_name.label }}</label>
+                            <div class="control">
+                                {{ form.warehouse_name }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.warehouse_postalcode.label }}</label>
+                            <div class="control">
+                                {{ form.warehouse_postalcode }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.warehouse_phonenumber.label }}</label>
+                            <div class="control">
+                                {{ form.warehouse_phonenumber }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ form.warehouse_status.label }}</label>
+                            <div class="control">
+                                {{ form.warehouse_status }}
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="button-container field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-link">Update Warehouse</button>
+                        </div>
+                        <div class="control">
+                            <button type="reset" class="button is-light">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
