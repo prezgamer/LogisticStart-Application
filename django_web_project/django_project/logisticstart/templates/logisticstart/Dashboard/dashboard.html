@@ -38,7 +38,7 @@
             <ul class="menu-list">
                 <li><a href="/dashboard" class="is-active">Dashboard</a></li>
                 <li><a href="/workers">Workers</a></li>
-                <li><a href="/deliveryschedule/schedule/">Delivery Schedule</a></li>
+                <li><a href="/deliveryschedule">Delivery Schedule</a></li>
                 <li><a href="/warehouses">Warehouse Details</a></li>
             </ul>
         </aside>
@@ -54,7 +54,6 @@
                     <table class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Phone Number</th>
                             </tr>
@@ -62,7 +61,6 @@
                         <tbody>
                             {% for worker in workers %}
                             <tr>
-                                <td>{{ worker.id }}</td>
                                 <td>{{ worker.worker_name }}</td>
                                 <td>{{ worker.worker_phonenumber }}</td>
                             </tr>
