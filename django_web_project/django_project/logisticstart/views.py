@@ -95,6 +95,25 @@ def warehouse_list(request):
 def workerpage(request):
     workers = NewWorkerListing.objects.all()
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
+
+def edit_delivery_item(request, deliveryid):
+    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)  # Use deliveryid directly
+    if request.method == 'POST':
+        form = CreateItemListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-deliveryschedule', deliveryid=listing.deliveryid)  # Ensure the URL name is correct
+    else:
+        form = CreateItemListingForm(instance=listing)
+    return render(request, 'logisticstart/Deliveryschedule/edit_delivery_schedule.html', {'form': form})
+
+def delete_delivery_item(request, deliveryid):
+    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)  # Use deliveryid directly
+    if request.method == 'POST':
+        listing.delete()
+        return redirect('logisticstart-warehouseitemlist', deliveryid=listing.deliveryid)  # Ensure the URL name is correct
+    return render(request, 'logisticstart/Deliveryschedule/delete_listing.html', {'listing': listing})  # Ensure the template path is correct
+
 def edit_warehouse_item(request, id):
     listing = get_object_or_404(NewItemListing, id=id)
     if request.method == 'POST':
