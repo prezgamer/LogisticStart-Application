@@ -96,23 +96,25 @@ def workerpage(request):
     workers = NewWorkerListing.objects.all()
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
 
+#not working
 def edit_delivery_item(request, deliveryid):
-    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)  # Use deliveryid directly
+    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)
     if request.method == 'POST':
-        form = CreateItemListingForm(request.POST, instance=listing)
+        form = CreateDeliveryScheduleForm(request.POST, instance=listing)
         if form.is_valid():
             form.save()
-            return redirect('logisticstart-deliveryschedule', deliveryid=listing.deliveryid)  # Ensure the URL name is correct
+            return redirect('logisticstart-delivery_schedule', deliveryid=deliveryid)
     else:
-        form = CreateItemListingForm(instance=listing)
-    return render(request, 'logisticstart/Deliveryschedule/edit_delivery_schedule.html', {'form': form})
+        form = CreateDeliveryScheduleForm(instance=listing)
+    return render(request, 'logisticstart-edit_delivery_schedule', {'form': form})
 
+#working
 def delete_delivery_item(request, deliveryid):
-    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)  # Use deliveryid directly
+    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)
     if request.method == 'POST':
         listing.delete()
-        return redirect('logisticstart-warehouseitemlist', deliveryid=listing.deliveryid)  # Ensure the URL name is correct
-    return render(request, 'logisticstart/Deliveryschedule/delete_listing.html', {'listing': listing})  # Ensure the template path is correct
+        return redirect('logisticstart-delivery_schedule')
+    return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
 
 def edit_warehouse_item(request, id):
     listing = get_object_or_404(NewItemListing, id=id)

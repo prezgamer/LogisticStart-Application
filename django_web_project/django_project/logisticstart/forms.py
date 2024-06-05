@@ -63,7 +63,6 @@ class CreateDeliveryScheduleForm(forms.ModelForm):
             'warehouseid',
             'itemid',
             'delivery_status',
-            
         ]
 
 
