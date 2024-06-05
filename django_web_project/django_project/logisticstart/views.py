@@ -211,7 +211,18 @@ def delivery_schedule(request):
     schedules = NewDeliverySchedule.objects.all()
     return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
 
-
+#Editing of Delivery Schedule
+def edit_delivery_item(request, deliveryid):
+    delivery_schedule = get_object_or_404(NewDeliverySchedule, pk=deliveryid)
+    if request.method == 'POST':
+        form = CreateDeliveryScheduleForm(request.POST, instance=delivery_schedule)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-delivery_schedule')
+    else:
+        form = CreateDeliveryScheduleForm(instance=delivery_schedule)
+    
+    return render(request, 'logisticstart/Deliveryschedule/edit_delivery_schedule.html', {'form': form})
 
 def custom_page_not_found_view(request, exception):
     return render(request, "errors/404.html", {})

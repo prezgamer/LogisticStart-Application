@@ -29,7 +29,7 @@ urlpatterns = [
     #Adding of Delivery Schedule Path
     path('deliveryschedule/add-schedule/', views.add_deliveryschedule, name='logisticstart-add_deliveryschedule'),
     path('deliveryschedule/', views.delivery_schedule, name='logisticstart-delivery_schedule'),
-    path('deliveryschedule/<int:deliveryid>/edit', views.edit_delivery_item, name='logisticstart-edit_delivery_schedule'),
+    path('deliveryschedule/<int:deliveryid>/edit/', views.edit_delivery_item, name='logisticstart-edit_delivery_schedule'),
     path('deliveryschedule/<int:deliveryid>/delete', views.delete_delivery_item, name='logisticstart-delete_delivery_schedule'),
 
     #worker Path
