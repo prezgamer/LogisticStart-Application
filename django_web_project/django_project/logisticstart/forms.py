@@ -25,6 +25,9 @@ class CreateItemListingForm(forms.ModelForm):
             'recipient_phone',
             'delivery_status',
         ]
+        widgets = {
+            'delivery_status': forms.RadioSelect(choices=NewItemListing.DELIVERY_STATUS)
+        }
 
 class CreateWorkerListingForm(forms.ModelForm):
     class Meta:
@@ -39,7 +42,8 @@ class CreateWorkerListingForm(forms.ModelForm):
             'worker_NOK_phonenumber',
         ]
         widgets = {
-            'worker_gender': forms.RadioSelect(choices=NewWorkerListing.GENDER_CHOICES)
+            'worker_gender': forms.RadioSelect(choices=NewWorkerListing.GENDER_CHOICES),
+            'worker_driving_license': forms.RadioSelect(choices=NewWorkerListing.DRIVING_CLASS_TYPE)
         }
 
 class CreateWarehouseListingForm(forms.ModelForm):
@@ -51,6 +55,9 @@ class CreateWarehouseListingForm(forms.ModelForm):
             'warehouse_phonenumber',
             'warehouse_status',
         ]
+        widgets = {
+            'warehouse_status': forms.RadioSelect(choices=NewWarehouseListing.WAREHOUSE_STATUS)
+        }
 
 class CreateDeliveryScheduleForm(forms.ModelForm):
     class Meta:
@@ -64,5 +71,8 @@ class CreateDeliveryScheduleForm(forms.ModelForm):
             'itemid',
             'delivery_status',
         ]
+        widgets = {
+            'delivery_status': forms.RadioSelect(choices=NewDeliverySchedule.DELIVERY_STATUS)
+        }
 
 

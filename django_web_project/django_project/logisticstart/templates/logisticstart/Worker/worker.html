@@ -56,7 +56,6 @@
                     <table class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Worker Name</th>
                                 <th>Worker Age</th>
                                 <th>Worker Gender</th>
@@ -70,7 +69,6 @@
                         <tbody>
                             {% for worker in workers %}
                             <tr>
-                                <th>{{ worker.pk }}</th>
                                 <td>{{ worker.worker_name }}</td>
                                 <td>{{ worker.worker_age }}</td>
                                 <td>{{ worker.worker_gender }}</td>
