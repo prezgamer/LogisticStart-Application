@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 def logistichome(request):
     return render(request, 'logisticstart/home.html') #return logisticstart/templates/logisticstart/home.html
 
-def logisticitems_list(request):
+def item_list(request):
     items = NewItemListing.objects.all()
     return render(request, 'logisticstart/items_list.html', {'items': items})
 
@@ -39,7 +39,7 @@ def logisticlogin(request):
     return render(request, 'logisticstart/login.html', {'form': form})
 
 # logistic warehouse item form (Will need to update this)
-def logisticWarehouseItemForm(request, id):
+def add_warehouse_item(request, id):
     warehouse = get_object_or_404(NewWarehouseListing, id=id)
     if request.method == 'POST':
         form = CreateItemListingForm(request.POST)
@@ -63,7 +63,7 @@ def warehouse_item_list(request, id):
     return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
 
 # new worker page
-def logisticNewWorker(request):
+def add_new_worker(request):
     if request.method == 'POST':
         form = CreateWorkerListingForm(request.POST)
         if form.is_valid():
@@ -92,7 +92,7 @@ def warehouse_list(request):
     return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
 
 # worker page
-def workerpage(request):
+def worker_page(request):
     workers = NewWorkerListing.objects.all()
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
 
@@ -183,7 +183,7 @@ def delete_worker_listing(request, id):
 #     return render(request, 'logisticstart/edit_listing.html', {'form': form})
 
 #Dashboard
-def logisticdashboard(request):
+def main_dashboard(request):
     
     #Queries
     workers = NewWorkerListing.objects.all().values('id', 'worker_name', 'worker_phonenumber')
@@ -196,7 +196,7 @@ def logisticdashboard(request):
     return render(request, 'logisticstart/Dashboard/dashboard.html', dashboard)
 
 #Adding of Delivery Schedule
-def add_deliveryschedule(request):
+def add_delivery_schedule(request):
     if request.method == 'POST':
         form = CreateDeliveryScheduleForm(request.POST)
         if form.is_valid():
