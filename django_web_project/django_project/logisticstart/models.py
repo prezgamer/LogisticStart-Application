@@ -11,8 +11,10 @@ class NewWarehouseListing(models.Model):
     warehouse_postalcode = models.IntegerField()
     warehouse_phonenumber = models.IntegerField()
     warehouse_status = models.CharField(max_length=100, default='Pending', choices=WAREHOUSE_STATUS)
+    warehouse_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
 
 class NewItemListing(models.Model):
+    item_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
     DELIVERY_STATUS = (
         ('Pending', 'Pending'),
         ('Delivering', 'Delivering'),
@@ -40,6 +42,7 @@ class NewItemListing(models.Model):
 
 # New Worker Listing Model
 class NewWorkerListing(models.Model):
+    worker_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female')

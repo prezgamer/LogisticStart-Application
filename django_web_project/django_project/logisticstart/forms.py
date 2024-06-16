@@ -24,6 +24,7 @@ class CreateItemListingForm(forms.ModelForm):
             'recipient_name',
             'recipient_phone',
             'delivery_status',
+            'item_picture',
         ]
         widgets = {
             'delivery_status': forms.RadioSelect(choices=NewItemListing.DELIVERY_STATUS)
@@ -40,6 +41,7 @@ class CreateWorkerListingForm(forms.ModelForm):
             'worker_phonenumber',
             'worker_NOK',
             'worker_NOK_phonenumber',
+            'worker_picture',
         ]
         widgets = {
             'worker_gender': forms.RadioSelect(choices=NewWorkerListing.GENDER_CHOICES),
@@ -54,6 +56,7 @@ class CreateWarehouseListingForm(forms.ModelForm):
             'warehouse_postalcode',
             'warehouse_phonenumber',
             'warehouse_status',
+            'warehouse_picture',
         ]
         widgets = {
             'warehouse_status': forms.RadioSelect(choices=NewWarehouseListing.WAREHOUSE_STATUS)

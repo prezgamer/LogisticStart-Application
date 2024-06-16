@@ -131,6 +131,16 @@
                             {% endif %}
                         </div>
                         
+                        <div class="field">
+                            <label class="label" for="{{ form.worker_picture.id_for_label }}">{{ form.worker_picture.label }}:</label>
+                            <div class="control">
+                                {{ form.worker_picture }}
+                            </div>
+                            {% if form.worker_picture.errors %}
+                                <p class="help is-danger">{{ form.worker_picture.errors }}</p>
+                            {% endif %}
+                        </div>
+
                         <div class="field is-grouped">
                             <div class="control">
                                 <button class="button is-primary" type="submit">Add Worker</button>

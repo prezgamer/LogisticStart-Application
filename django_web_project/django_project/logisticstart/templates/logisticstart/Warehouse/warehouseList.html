@@ -56,6 +56,7 @@
                                 <th>Postal Code</th>
                                 <th>Phone Number</th>
                                 <th>Status</th>
+                                <th>Warehouse Picture</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -66,6 +67,7 @@
                                 <td>{{ warehouse.warehouse_postalcode }}</td>
                                 <td>{{ warehouse.warehouse_phonenumber }}</td>
                                 <td>{{ warehouse.warehouse_status }}</td>
+                                <td>{{ warehouse.warehouse_picture }}</td>
                                 <td>
                                     <a href="{% url 'logisticstart-editwarehouse' id=warehouse.id %}" class="button is-small is-info">Edit</a>
                                     <form method="post" action="{% url 'delete_warehouse_listing' id=warehouse.id %}" style="display:inline;">

@@ -64,6 +64,10 @@
                                 <td>{{ worker.worker_name }}</td>
                                 <td>{{ worker.worker_phonenumber }}</td>
                             </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8">No Workers found for this company.</td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -85,6 +89,10 @@
                                 <td>{{ warehouse.warehouse_name }}</td>
                                 <td>{{ warehouse.warehouse_postalcode }}</td>
                                 <td>{{ warehouse.warehouse_phonenumber }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8">No Warehouses found for this company.</td>
                             </tr>
                             {% endfor %}
                         </tbody>
