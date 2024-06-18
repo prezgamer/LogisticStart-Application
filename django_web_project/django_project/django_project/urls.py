@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 handler404 = 'logisticstart.views.custom_page_not_found_view'
 handler500 = 'logisticstart.views.custom_error_view'
@@ -26,3 +28,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('logisticstart.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

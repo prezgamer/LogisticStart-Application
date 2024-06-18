@@ -77,7 +77,10 @@
                                 <td>{{ worker.worker_phonenumber }}</td>
                                 <td>{{ worker.worker_NOK }}</td>
                                 <td>{{ worker.worker_NOK_phonenumber }}</td>
-                                <td>{{ worker.worker_picture }}</td>
+                                <td>
+                                    <img src= "{{worker.worker_picture.url}}"
+                                    alt="Description of Image">
+                                </td>
                                 <td>
                                     <a href="{% url 'worker-edit' id=worker.id %}" class="button is-small is-info">Edit</a>
                                     <form method="post" action="{% url 'worker-delete' id=worker.id %}" style="display:inline;">
