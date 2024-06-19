@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect 
 from django.contrib.auth import authenticate, login, logout
 from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule
-from .forms import SignupForm, LoginForm, CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm
+from .forms import SignupForm, LoginForm, CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+
 
 # Create your views here.
 def logistichome(request):
@@ -12,31 +14,6 @@ def item_list(request):
     items = NewItemListing.objects.all()
     return render(request, 'logisticstart/items_list.html', {'items': items})
 
-# signup page
-def logisticsignup(request):
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('logisticstart-login')
-    else:
-        form = SignupForm()
-    return render(request, 'logisticstart/signup.html', {'form': form})
-
-# login page
-def logisticlogin(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user:
-                login(request, user)    
-                return redirect('logisticstart-test')
-    else:
-        form = LoginForm()
-    return render(request, 'logisticstart/login.html', {'form': form})
 
 # logistic warehouse item form (Will need to update this)
 def add_warehouse_item(request, id):
@@ -235,3 +212,20 @@ def custom_permission_denied_view(request, exception=None):
 
 def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
+
+
+def logisticlogin(request):
+    return render(request, 'logisticstart/Login/login.html') #return logisticstart/templates/logisticstart/logisticstart.html
+# views.py
+
+def logisticregister(request):
+    if request.method == 'POST':
+        form = register(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account created successfully.')
+            return redirect('login/')  # Redirect to a login page or another page
+    else:
+        form = register()
+
+    return render(request, 'logisticstart/Login/register.html', {'form': form})

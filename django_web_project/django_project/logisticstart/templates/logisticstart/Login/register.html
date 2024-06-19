@@ -1,0 +1,117 @@
+<!-- templates/logisticstart/Login/register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .signup-container {
+            max-width: 400px;
+            margin: auto;
+            margin-top: 5%;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        .signup-container h1 {
+            font-size: 24px;
+            margin-bottom: 1rem;
+        }
+        .signup-container .button.google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .signup-container .button.google-btn img {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body class="has-background-light">
+    <div class="signup-container box">
+        <h1 class="title is-4 has-text-centered has-text-link">LogisticStart</h1>
+        <p class="has-text-centered">Create an Account</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="field">
+                {{ form.username.label_tag }}
+                <div class="control">
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <p class="help is-danger">{{ form.username.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.password.label_tag }}
+                <div class="control">
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <p class="help is-danger">{{ form.password.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.confirm_password.label_tag }}
+                <div class="control">
+                    {{ form.confirm_password }}
+                    {% if form.confirm_password.errors %}
+                        <p class="help is-danger">{{ form.confirm_password.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.company_name.label_tag }}
+                <div class="control">
+                    {{ form.company_name }}
+                    {% if form.company_name.errors %}
+                        <p class="help is-danger">{{ form.company_name.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.company_phonenumber.label_tag }}
+                <div class="control">
+                    {{ form.company_phonenumber }}
+                    {% if form.company_phonenumber.errors %}
+                        <p class="help is-danger">{{ form.company_phonenumber.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.company_address.label_tag }}
+                <div class="control">
+                    {{ form.company_address }}
+                    {% if form.company_address.errors %}
+                        <p class="help is-danger">{{ form.company_address.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="field">
+                <p class="has-text-centered">* Password must be 8+ characters long.<br>* Phone number must be 8 digits.</p>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link is-fullwidth" type="submit">Sign Up</button>
+                </div>
+            </div>
+        </form>
+        <div class="field">
+            <div class="control has-text-centered">
+                <p>OR</p>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button class="button is-light is-fullwidth google-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google logo" width="20">
+                    Sign up with Google
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

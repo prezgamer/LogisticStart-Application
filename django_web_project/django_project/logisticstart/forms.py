@@ -1,7 +1,8 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import NewItemListing, NewWarehouseListing, NewWorkerListing, NewDeliverySchedule
+from .models import NewItemListing, NewWarehouseListing, NewWorkerListing, NewDeliverySchedule,Accounts
+from django.core.validators import RegexValidator
 
 class SignupForm(UserCreationForm):
     class Meta:
@@ -79,3 +80,26 @@ class CreateDeliveryScheduleForm(forms.ModelForm):
         }
 
 
+class register(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = Accounts
+        fields = ['username', 'password', 'company_name', 'company_address', 'company_phonenumber']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError("Password and Confirm Password do not match")
+
+        return cleaned_data
+
+    # def clean_company_phonenumber(self):
+    #     phone_number = self.cleaned_data.get('company_phonenumber')
+    #     if not len(phone_number) != 8:
+    #         raise forms.ValidationError("Company phone number must be exactly 8 digits.")
+    #     return phone_number
