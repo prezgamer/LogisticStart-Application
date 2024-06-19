@@ -42,7 +42,7 @@ class NewItemListing(models.Model):
 
 # New Worker Listing Model
 class NewWorkerListing(models.Model):
-    worker_picture=models.ImageField(upload_to='images/', default='null.jpg')
+    worker_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female')
