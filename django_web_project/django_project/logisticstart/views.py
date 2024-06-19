@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect 
 from django.contrib.auth import authenticate, login, logout
 from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule
-from .forms import SignupForm, LoginForm, CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register
+from .forms import CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
@@ -224,7 +224,10 @@ def logisticregister(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Account created successfully.')
-            return redirect('login/')  # Redirect to a login page or another page
+            return redirect('../login/')  # Redirect to a login page or another page
+        
+        else:
+            print(form.errors) #error checking on my terminal
     else:
         form = register()
 

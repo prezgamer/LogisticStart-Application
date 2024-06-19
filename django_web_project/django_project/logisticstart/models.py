@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
-from django.core.exceptions import ValidationError
 
 
 class NewWarehouseListing(models.Model):
@@ -106,16 +105,13 @@ class NewDeliverySchedule(models.Model):
 
 
 #login
-def validate_phone_number_length(value):
-    if not (10000000 <= value <= 99999999):
-        raise ValidationError('Phone number must be exactly 8 digits.')
-    
+
 class Accounts(models.Model):
     accountID = models.AutoField(primary_key= True)
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     company_name = models.CharField(max_length=100)
     company_address = models.CharField(max_length=255)    
-    company_phonenumber = models.IntegerField(validators=[validate_phone_number_length])
+    company_phonenumber = models.CharField(max_length=15)
     
     

@@ -83,7 +83,14 @@ class CreateDeliveryScheduleForm(forms.ModelForm):
 class register(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
-
+    company_phonenumber = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'type': 'tel',
+            'pattern': '[0-9]{8}',
+            'title': 'Company phone number must be exactly 8 digits.'
+        }),
+        validators=[RegexValidator(r'^\d{8}$', 'Company phone number must be exactly 8 digits and only contain numbers.')]
+    )
     class Meta:
         model = Accounts
         fields = ['username', 'password', 'company_name', 'company_address', 'company_phonenumber']
@@ -97,9 +104,3 @@ class register(forms.ModelForm):
             raise forms.ValidationError("Password and Confirm Password do not match")
 
         return cleaned_data
-
-    # def clean_company_phonenumber(self):
-    #     phone_number = self.cleaned_data.get('company_phonenumber')
-    #     if not len(phone_number) != 8:
-    #         raise forms.ValidationError("Company phone number must be exactly 8 digits.")
-    #     return phone_number
