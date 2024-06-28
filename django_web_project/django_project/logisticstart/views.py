@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect 
-from django.contrib.auth import authenticate, login, logout
-from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule
-from .forms import CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import check_password
+from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule,Accounts
+from .forms import CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register, Login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
@@ -214,9 +215,6 @@ def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
 
 
-def logisticlogin(request):
-    return render(request, 'logisticstart/Login/login.html') #return logisticstart/templates/logisticstart/logisticstart.html
-# views.py
 
 def logisticregister(request):
     if request.method == 'POST':
@@ -232,3 +230,29 @@ def logisticregister(request):
         form = register()
 
     return render(request, 'logisticstart/Login/register.html', {'form': form})
+
+def logisticlogin(request):
+    if request.method == "POST":
+        form = Login(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            print(f"Attempting login with username: {username}")
+            try:
+                account = Accounts.objects.get(username=username)
+                print(f"Account found: {account}")
+                if check_password(password, account.password):
+                    request.session['account_id'] = account.accountID
+                    messages.success(request, 'You have been logged in successfully.')
+                    print("Login successful")
+                    return redirect('logisticstart-dashboard')  # Redirect to home or dashboard
+                else:
+                    messages.error(request, 'Invalid username or password.')
+                    print("Invalid password")
+            except Accounts.DoesNotExist:
+                messages.error(request, 'Invalid username or password.')
+                print("Account does not exist")
+    else:
+        form = Login()
+
+    return render(request, 'logisticstart/Login/login.html', {'form': form})

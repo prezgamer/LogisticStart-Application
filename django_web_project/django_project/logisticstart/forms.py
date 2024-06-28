@@ -1,17 +1,9 @@
 from django import forms 
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from .models import NewItemListing, NewWarehouseListing, NewWorkerListing, NewDeliverySchedule,Accounts
 from django.core.validators import RegexValidator
+from django.contrib.auth.hashers import make_password
 
-class SignupForm(UserCreationForm):
-    class Meta:
-        model = User 
-        fields = ['username', 'password1', 'password2']
 
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
 
 class CreateItemListingForm(forms.ModelForm):
     class Meta:
@@ -102,5 +94,13 @@ class register(forms.ModelForm):
 
         if password != confirm_password:
             raise forms.ValidationError("Password and Confirm Password do not match")
+            print("AT leatst its checking")
+        
+        # Hash the password
+        cleaned_data["password"] = make_password(password)
 
         return cleaned_data
+    
+class Login(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
