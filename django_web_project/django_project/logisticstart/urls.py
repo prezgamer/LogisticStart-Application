@@ -28,7 +28,6 @@ urlpatterns = [
     path('warehouses/<int:id>/delete', views.delete_warehouse_listing, name='delete_warehouse_listing'),
 
     #Dashboard Path
-    path('', views.main_dashboard, name='logisticstart-dashboard'),
     path('dashboard/', views.main_dashboard, name='logisticstart-dashboard'),
 
     #Delivery Schedule Paths
@@ -44,7 +43,7 @@ urlpatterns = [
     path('workers/add-worker/', views.add_new_worker, name='logisticstart-newworker'),
 
     #login
-    path('login/', views.logisticlogin, name='logisticstart-login'),
+    path('', views.logisticlogin, name='logisticstart-login'),
     path('register/', views.logisticregister, name='logisticstart-register'),
 
 ]
