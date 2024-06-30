@@ -42,6 +42,9 @@ urlpatterns = [
     path('workers/<int:id>/delete', views.delete_worker_listing, name='worker-delete'),
     path('workers/add-worker/', views.add_new_worker, name='logisticstart-newworker'),
 
+    #User Functions Paths
+    path('billing/', views.billing, name='logisticstart-billing'),
+
     #login
     path('', views.logisticlogin, name='logisticstart-login'),
     path('register/', views.logisticregister, name='logisticstart-register'),

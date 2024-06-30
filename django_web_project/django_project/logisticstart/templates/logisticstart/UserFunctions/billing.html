@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar-item {
+            color: #007BFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #f5f5f5;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+        }
+        .billing-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+        }
+        .payment-methods button {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .payment-methods .google-pay {
+            background-color: #4285F4;
+            color: white;
+        }
+        .payment-methods .apple-pay {
+            background-color: #000000;
+            color: white;
+        }
+    </style>
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers">Workers</a></li>
+                <li><a href="/deliveryschedule">Delivery Schedule</a></li>
+                <li><a href="/warehouses">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <div class="container">
+                <h1 class="title">Billing</h1>
+                <div class="billing-box">
+                    <h2 class="subtitle">Estimated Due</h2>
+                    <p><strong>$0.00</strong></p>
+                    <p>This is an estimate of the amount you owe based on your current month-to-date usage after credits & prepayments.</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Credit Applied</th>
+                                <th>Prepayments</th>
+                                <th>Total Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$0.00</td>
+                                <td>$0.00</td>
+                                <td>$0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="billing-box">
+                    <h2 class="subtitle">Payment Method</h2>
+                    <p>Use Apple Pay or Google Pay as a payment method and LogisticStart will retrieve your billed amount automatically at the end of each billing cycle. You never have to worry about paying your bills on time once you have it set up.</p>
+                    <div class="payment-methods">
+                        <button class="google-pay">
+                            <img src="https://toppng.com/uploads/preview/google-logo-png-hd-11659866438lpwuqaonqq.png" alt="Google Pay" style="height: 20px; margin-right: 10px;">
+                            Google Pay
+                        </button>
+                        <button class="apple-pay">
+                            <img src="https://banner2.cleanpng.com/20180719/ita/kisspng-apple-logo-business-coffee-page-5b50b6fc56d783.0875796515320163803557.jpg" alt="Apple Pay" style="height: 20px; margin-right: 10px;">
+                            Apple Pay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
-from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule,Accounts
+from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule,Accounts, UserBilling
 from .forms import CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register, Login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -14,6 +14,10 @@ def logistichome(request):
 def item_list(request):
     items = NewItemListing.objects.all()
     return render(request, 'logisticstart/items_list.html', {'items': items})
+
+def billing(request):
+    costs = UserBilling.objects.all()
+    return render(request, 'logisticstart/UserFunctions/billing.html', {'costs': costs})
 
 
 # logistic warehouse item form (Will need to update this)

@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 
-
 class NewWarehouseListing(models.Model):
     WAREHOUSE_STATUS = (
         ('Pending', 'Pending'),
@@ -113,5 +112,11 @@ class Accounts(models.Model):
     company_name = models.CharField(max_length=100)
     company_address = models.CharField(max_length=255)    
     company_phonenumber = models.CharField(max_length=15)
+
+#billing
+class UserBilling(models.Model):
+    userCredits = models.IntegerField()
+    userPrepayments = models.IntegerField()
+    userTotalUsage = models.IntegerField()
     
     
