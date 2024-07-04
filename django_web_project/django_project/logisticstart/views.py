@@ -19,20 +19,41 @@ def billing(request):
     costs = UserBilling.objects.all()
     return render(request, 'logisticstart/UserFunctions/billing.html', {'costs': costs})
 
-
-# logistic warehouse item form (Will need to update this)
+#logistic warehouse items
 def add_warehouse_item(request, id):
     warehouse = get_object_or_404(NewWarehouseListing, id=id)
     if request.method == 'POST':
-        form = CreateItemListingForm(request.POST)
+        form = CreateItemListingForm(request.POST, request.FILES)
         if form.is_valid():
             new_item = form.save(commit=False)
-            new_item.warehouse = warehouse  
+            new_item.warehouse = warehouse
+            if 'item_picture' in request.FILES:
+                new_item.item_picture = request.FILES['item_picture']
             new_item.save()
             return redirect('logisticstart-warehouseitemlist', id=warehouse.id)
+        else:
+            print(form.errors)  # For debugging
     else:
         form = CreateItemListingForm()
     return render(request, 'logisticstart/WarehouseItems/warehouseitemlistform.html', {'form': form, 'warehouse': warehouse})
+
+def edit_warehouse_item(request, id):
+    listing = get_object_or_404(NewItemListing, id=id)
+    if request.method == 'POST':
+        form = CreateItemListingForm(request.POST, request.FILES, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id)
+    else:
+        form = CreateItemListingForm(instance=listing)
+    return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', {'form': form})
+
+def delete_warehouse_item(request, id):
+    listing = get_object_or_404(NewItemListing, id=id)
+    if request.method == 'POST':
+        listing.delete()
+        return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id)
+    return render(request, 'delete_listing', {'listing': listing})
     
 # logistic warehouse list
 def logisticWarehouseList(request):
@@ -97,24 +118,6 @@ def delete_delivery_item(request, deliveryid):
         listing.delete()
         return redirect('logisticstart-delivery_schedule')
     return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
-
-def edit_warehouse_item(request, id):
-    listing = get_object_or_404(NewItemListing, id=id)
-    if request.method == 'POST':
-        form = CreateItemListingForm(request.POST, instance=listing)
-        if form.is_valid():
-            form.save()
-            return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id) 
-    else:
-        form = CreateItemListingForm(instance=listing)
-    return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', {'form': form})
-
-def delete_warehouse_item(request, id):
-    listing = get_object_or_404(NewItemListing, id=id)
-    if request.method == 'POST':
-        listing.delete()
-        return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id)
-    return render(request, 'delete_listing', {'listing': listing})
 
 def edit_warehouse_listing(request, id):
     listing = get_object_or_404(NewWarehouseListing, id=id)

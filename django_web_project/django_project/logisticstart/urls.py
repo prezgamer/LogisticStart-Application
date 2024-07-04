@@ -16,7 +16,6 @@ urlpatterns = [
 
     #Warehouse Item paths
     path('warehouses/<int:id>/add-item/', views.add_warehouse_item, name='logisticstart-warehouseitemform'), #look for logisticWarehouseItemForm function
-    path('warehouses/add-warehouse/', views.add_warehouse, name='logisticstart-addwarehouse'),
     path('warehouses/<int:id>/items/', views.warehouse_item_list, name='logisticstart-warehouseitemlist'),
     path('warehouses/<int:id>/edit-warehouse-item/', views.edit_warehouse_item, name='logisticstart-editwarehouseitem'),
     path('warehouses/<int:id>/delete-items/', views.delete_warehouse_item, name='delete_listing'),

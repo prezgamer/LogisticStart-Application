@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>New Item Information</title>
@@ -58,7 +65,7 @@
         <section class="section">
             <div class="container">
                 <h1 class="title">New Item Information</h1>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="field">
                         <label class="label" for="{{ form.item_name.id_for_label }}">{{ form.item_name.label }}:</label>
@@ -155,4 +162,4 @@
         </section>
     </div>
 </body>
-</html>
+</html> -->

@@ -75,7 +75,10 @@
                                 <td>{{ item.recipient_name }}</td>
                                 <td>{{ item.recipient_phone }}</td>
                                 <td>{{ item.delivery_status }}</td>
-                                <td>{{ item.item_picture }}</td>
+                                <td>
+                                    <img src= "{{item.item_picture.url}}"
+                                    alt="Description of Image">
+                                </td>
                                 <td>
                                     <a href="{% url 'logisticstart-editwarehouseitem' id=item.id %}" class="button is-small is-info">Edit</a>
                                     <form method="post" action="{% url 'delete_listing' id=item.id %}" style="display:inline;">

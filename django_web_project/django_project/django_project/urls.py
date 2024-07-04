@@ -27,6 +27,5 @@ handler400 = 'logisticstart.views.custom_bad_request_view'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('logisticstart.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
