@@ -79,6 +79,7 @@ class NewWorkerListing(models.Model):
             )
         ])
     worker_NOK_phonenumber = models.IntegerField()
+    worker_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
     
     
 #New Delivery Schedule Listing
