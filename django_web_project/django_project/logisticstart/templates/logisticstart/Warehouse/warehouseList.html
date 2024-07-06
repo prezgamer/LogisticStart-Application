@@ -1,3 +1,9 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,7 +73,11 @@
                                 <td>{{ warehouse.warehouse_postalcode }}</td>
                                 <td>{{ warehouse.warehouse_phonenumber }}</td>
                                 <td>{{ warehouse.warehouse_status }}</td>
-                                <td>{{ warehouse.warehouse_picture }}</td>
+                                <td>
+                                    <img src= "{{warehouse.warehouse_picture.url}}"
+                                    alt="Description of Image">
+                                </td>
+                        
                                 <td>
                                     <a href="{% url 'logisticstart-editwarehouse' id=warehouse.id %}" class="button is-small is-info">Edit</a>
                                     <form method="post" action="{% url 'delete_warehouse_listing' id=warehouse.id %}" style="display:inline;">
