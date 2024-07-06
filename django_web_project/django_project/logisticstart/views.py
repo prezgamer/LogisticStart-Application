@@ -122,7 +122,7 @@ def delete_delivery_item(request, deliveryid):
 def edit_warehouse_listing(request, id):
     listing = get_object_or_404(NewWarehouseListing, id=id)
     if request.method == 'POST':
-        form = CreateWarehouseListingForm(request.POST, instance=listing)
+        form = CreateWarehouseListingForm(request.POST, request.FILES, instance=listing)
         if form.is_valid():
             form.save()
             return redirect('logisticstart-warehouselist') 
