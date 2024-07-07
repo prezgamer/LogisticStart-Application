@@ -56,9 +56,9 @@
                                 <th>Receiver Name</th>
                                 <th>Receiver Address</th>
                                 <th>Receiver Number</th>
-                                <th>Delivery Driver ID</th>
-                                <th>Warehouse ID</th>
-                                <th>Item ID</th>
+                                <th>Delivery Driver</th>
+                                <th>Warehouse</th>
+                                <th>Item</th>
                                 <th>Delivery Status</th>
                             </tr>
                         </thead>
@@ -68,9 +68,12 @@
                                 <td>{{ schedule.receiver_name }}</td>
                                 <td>{{ schedule.receiver_address }}</td>
                                 <td>{{ schedule.receiver_number }}</td>
-                                <td>{{ schedule.workerid }}</td>
+                                {% comment %} <td>{{ schedule.workerid }}</td>
                                 <td>{{ schedule.warehouseid }}</td>
-                                <td>{{ schedule.itemid }}</td>
+                                <td>{{ schedule.itemid }}</td> {% endcomment %}
+                                <td>{{ schedule.worker_name }}</td> <!-- Display worker name -->
+                                <td>{{ schedule.warehouse_name }}</td> <!-- Display warehouse name -->
+                                <td>{{ schedule.item_name }}</td> <!-- Display item name -->
                                 <td>{{ schedule.delivery_status }}</td>
                                 <td>
                                     <a href="{% url 'logisticstart-edit_delivery_schedule' deliveryid=schedule.deliveryid %}" class="button is-small is-info">Edit</a>

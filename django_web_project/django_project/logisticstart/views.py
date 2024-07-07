@@ -5,6 +5,8 @@ from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDel
 from .forms import CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register, Login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.db.models import Subquery, OuterRef
+
 
 
 # Create your views here.
@@ -193,8 +195,25 @@ def add_delivery_schedule(request):
 
 #Displaying of Delivery Schedule
 def delivery_schedule(request):
-    schedules = NewDeliverySchedule.objects.all()
+    
+    #OuterRef used to reference the workerid field in NewDeliverySchedule
+    #[:1] limits the result to the first record 
+    schedules = NewDeliverySchedule.objects.annotate(
+        worker_name=Subquery(
+            NewWorkerListing.objects.filter(id=OuterRef('workerid')).values('worker_name')[:1]
+        ),
+        warehouse_name=Subquery(
+            NewWarehouseListing.objects.filter(id=OuterRef('warehouseid')).values('warehouse_name')[:1]
+        ),
+        item_name=Subquery(
+            NewItemListing.objects.filter(id=OuterRef('itemid')).values('item_name')[:1]
+        )
+    ).all()
+
     return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
+
+    # schedules = NewDeliverySchedule.objects.all()
+    # return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
 
 #Editing of Delivery Schedule
 def edit_delivery_item(request, deliveryid):
