@@ -11,7 +11,7 @@ class NewWarehouseListing(models.Model):
     warehouse_postalcode = models.IntegerField()
     warehouse_phonenumber = models.IntegerField()
     warehouse_status = models.CharField(max_length=100, default='Pending', choices=WAREHOUSE_STATUS)
-    warehouse_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
+    warehouse_picture=models.ImageField(upload_to='warehouse_pictures/', default='images/null.jpg')
 
 class NewItemListing(models.Model):
     item_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
