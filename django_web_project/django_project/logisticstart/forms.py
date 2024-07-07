@@ -56,6 +56,18 @@ class CreateWarehouseListingForm(forms.ModelForm):
         }
 
 class CreateDeliveryScheduleForm(forms.ModelForm):
+    
+    #To display the relevant id and name in dropbox
+    def __init__(self, *args, **kwargs):
+        super(CreateDeliveryScheduleForm, self).__init__(*args, **kwargs)
+        self.fields['workerid'].label_from_instance = lambda obj: f"{obj.id} - {obj.worker_name}"
+        self.fields['warehouseid'].label_from_instance = lambda obj: f"{obj.id} - {obj.warehouse_name}"
+        self.fields['itemid'].label_from_instance = lambda obj: f"{obj.id} - {obj.item_name}"
+
+    workerid = forms.ModelChoiceField(queryset=NewWorkerListing.objects.all(), empty_label=None, label='Worker')
+    warehouseid = forms.ModelChoiceField(queryset=NewWarehouseListing.objects.filter(warehouse_status='Available'), empty_label=None, label='Warehouse')
+    itemid = forms.ModelChoiceField(queryset=NewItemListing.objects.all(), empty_label=None, label='Item')
+    
     class Meta:
         model = NewDeliverySchedule
         fields = [
@@ -70,6 +82,15 @@ class CreateDeliveryScheduleForm(forms.ModelForm):
         widgets = {
             'delivery_status': forms.RadioSelect(choices=NewDeliverySchedule.DELIVERY_STATUS)
         }
+        
+    #To store only the ID
+    def clean_workerid(self):
+        return int(self.cleaned_data['workerid'].id)
+    def clean_warehouseid(self):
+        return int(self.cleaned_data['warehouseid'].id)
+    def clean_itemid(self):
+        return int(self.cleaned_data['itemid'].id)
+        
 
 
 class register(forms.ModelForm):
