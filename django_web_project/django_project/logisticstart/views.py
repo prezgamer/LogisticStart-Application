@@ -248,7 +248,7 @@ def logisticregister(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Account created successfully.')
-            return redirect('../login/')  # Redirect to a login page or another page
+            return redirect('/')  # Redirect to a login page or another page
         
         else:
             print(form.errors) #error checking on my terminal
