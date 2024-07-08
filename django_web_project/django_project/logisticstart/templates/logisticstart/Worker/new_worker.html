@@ -54,7 +54,7 @@
             <section class="section">
                 <div class="container">
                     <h1 class="title">New Worker</h1>
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
                         <h3 class="subtitle">Worker Details</h3>
@@ -155,3 +155,4 @@
         </div>
     </body>
 </html>
+
