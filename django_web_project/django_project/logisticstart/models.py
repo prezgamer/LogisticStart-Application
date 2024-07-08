@@ -2,6 +2,16 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.contrib.auth.models import User
 
+#login
+
+class Accounts(models.Model):
+    accountID = models.AutoField(primary_key= True)
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=100)
+    company_address = models.CharField(max_length=255)    
+    company_phonenumber = models.CharField(max_length=15)
+
 class NewWarehouseListing(models.Model):
     WAREHOUSE_STATUS = (
         ('Pending', 'Pending'),
@@ -40,6 +50,7 @@ class NewItemListing(models.Model):
     recipient_phone = models.IntegerField()
     delivery_status = models.CharField(max_length=35, default='Pending', choices=DELIVERY_STATUS)
     warehouse = models.ForeignKey(NewWarehouseListing, related_name='items', on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='account',default=1 , on_delete=models.CASCADE)
 
 # New Worker Listing Model
 class NewWorkerListing(models.Model):
@@ -104,21 +115,10 @@ class NewDeliverySchedule(models.Model):
     itemid = models.IntegerField()
     delivery_status = models.CharField(max_length=255, choices=DELIVERY_STATUS, default='Pending')
 
-
-#login
-
-class Accounts(models.Model):
-    accountID = models.AutoField(primary_key= True)
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    company_name = models.CharField(max_length=100)
-    company_address = models.CharField(max_length=255)    
-    company_phonenumber = models.CharField(max_length=15)
-
 #billing
 class UserBilling(models.Model):
     userCredits = models.IntegerField()
     userPrepayments = models.IntegerField()
     userTotalUsage = models.IntegerField()
-    
+    account = models.ForeignKey(Accounts, related_name='account_billing',default=1 , on_delete=models.CASCADE)
     
