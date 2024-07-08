@@ -70,7 +70,7 @@ def warehouse_item_list(request, id):
 # new worker page
 def add_new_worker(request):
     if request.method == 'POST':
-        form = CreateWorkerListingForm(request.POST)
+        form = CreateWorkerListingForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             worker = NewWorkerListing.objects.all()
@@ -142,14 +142,14 @@ def delete_warehouse_listing(request, id):
 def edit_worker_listing(request, id):
     listing = get_object_or_404(NewWorkerListing, id=id)
     if request.method == 'POST':
-        form = CreateWorkerListingForm(request.POST, instance=listing)
+        form = CreateWorkerListingForm(request.POST, request.FILES, instance=listing)
         if form.is_valid():
             form.save()
             return redirect('logisticstart-worker') 
     else:
         form = CreateWorkerListingForm(instance=listing)
     return render(request, 'logisticstart/Worker/edit_worker.html', {'form': form})
-
+    
 def delete_worker_listing(request, id):
     worker = get_object_or_404(NewWorkerListing, id=id)
     if request.method == 'POST':
