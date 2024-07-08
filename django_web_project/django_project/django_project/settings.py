@@ -78,12 +78,11 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
         'NAME': 'postgres', 
-        'USER': 'postgres.czpozqdxdrqxotrqpavt', 
+        'USER': 'postgres.rkkmlbftlwglvcbcyufl', 
         'PASSWORD': 'SnBZzPjqg@yqgp5', 
         'HOST':'aws-0-ap-southeast-1.pooler.supabase.com',
-        'PORT':'5432',
+        'PORT':'6543',
     }
 }
 

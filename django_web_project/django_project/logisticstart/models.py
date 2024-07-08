@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
+from django.contrib.auth.models import User
 
 class NewWarehouseListing(models.Model):
     WAREHOUSE_STATUS = (
