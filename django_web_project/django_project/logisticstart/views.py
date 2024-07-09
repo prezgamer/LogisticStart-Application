@@ -258,14 +258,18 @@ def logisticregister(request):
     return render(request, 'logisticstart/Login/register.html', {'form': form})
 
 def logisticlogin(request):
+    companies = Accounts.objects.values_list('company_name', flat=True).distinct()
+
     if request.method == "POST":
         form = Login(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            print(f"Attempting login with username: {username}")
+            company_name = form.cleaned_data.get('company_name')  # Fetch company name from form
+            print(f"Attempting login with username: {username} and company: {company_name}")
             try:
-                account = Accounts.objects.get(username=username)
+                # Adjust the query to also match the company name
+                account = Accounts.objects.get(username=username, company_name=company_name)
                 print(f"Account found: {account}")
                 if check_password(password, account.password):
                     request.session['account_id'] = account.accountID
@@ -276,9 +280,13 @@ def logisticlogin(request):
                     messages.error(request, 'Invalid username or password.')
                     print("Invalid password")
             except Accounts.DoesNotExist:
-                messages.error(request, 'Invalid username or password.')
-                print("Account does not exist")
+                messages.error(request, 'Invalid username or password or company name.')
+                print("Account does not exist or company name mismatch")
     else:
         form = Login()
 
-    return render(request, 'logisticstart/Login/login.html', {'form': form})
+    context = {
+        'form': form,
+        'companies': companies,  # Add the companies to the context
+    }
+    return render(request, 'logisticstart/Login/login.html', context)
