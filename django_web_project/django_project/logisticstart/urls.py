@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 
 handler404 = 'logisticstart.views.custom_page_not_found_view'
 handler500 = 'logisticstart.views.custom_error_view'
@@ -54,6 +56,9 @@ urlpatterns = [
     path('create-payment/', views.create_payment, name='create_payment'),
     path('execute-payment/', views.execute_payment, name='execute_payment'),
     path('payment-cancelled/', views.payment_cancelled, name='payment_cancelled'),
+
+    path('profile/', views.profile, name='profile'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
 ]
 if settings.DEBUG:

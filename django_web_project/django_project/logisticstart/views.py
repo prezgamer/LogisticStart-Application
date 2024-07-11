@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.db.models import Subquery, OuterRef
 from django.conf import settings
 import paypalrestsdk
+from django.contrib.auth.decorators import login_required
 from .paypal_utils import paypalrestsdk
 
 
@@ -101,6 +102,7 @@ def warehouse_list(request):
 
 # worker page
 def worker_page(request):
+    print("Current user:", request.user)
     workers = NewWorkerListing.objects.all()
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
 
@@ -344,3 +346,7 @@ def execute_payment(request):
 
 def payment_cancelled(request):
     return render(request, 'logisticstart/Paypal/payment_cancelled.html')
+
+@login_required
+def profile(request):
+    return render(request, 'logisticstart/profile.html')
