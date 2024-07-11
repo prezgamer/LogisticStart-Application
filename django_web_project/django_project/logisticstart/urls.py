@@ -50,6 +50,11 @@ urlpatterns = [
     path('', views.logisticlogin, name='logisticstart-login'),
     path('register/', views.logisticregister, name='logisticstart-register'),
 
+    #Paypal
+    path('create-payment/', views.create_payment, name='create_payment'),
+    path('execute-payment/', views.execute_payment, name='execute_payment'),
+    path('payment-cancelled/', views.payment_cancelled, name='payment_cancelled'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

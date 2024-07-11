@@ -6,6 +6,9 @@ from .forms import CreateItemListingForm, CreateWarehouseListingForm, CreateWork
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Subquery, OuterRef
+from django.conf import settings
+import paypalrestsdk
+from .paypal_utils import paypalrestsdk
 
 
 
@@ -290,3 +293,54 @@ def logisticlogin(request):
         'companies': companies,  # Add the companies to the context
     }
     return render(request, 'logisticstart/Login/login.html', context)
+
+#paypal page
+def create_payment(request):
+    payment = paypalrestsdk.Payment({
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": request.build_absolute_uri('/execute-payment'),
+            "cancel_url": request.build_absolute_uri('/payment-cancelled')
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "item",
+                    "sku": "item",
+                    "price": "10.00",
+                    "currency": "USD",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "total": "10.00",
+                "currency": "USD"
+            },
+            "description": "This is the payment transaction description."
+        }]
+    })
+
+    if payment.create():
+        for link in payment.links:
+            if link.rel == "approval_url":
+                approval_url = link.href
+                return redirect(approval_url)
+    else:
+        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
+
+def execute_payment(request):
+    payment_id = request.GET.get('paymentId')
+    payer_id = request.GET.get('PayerID')
+
+    payment = paypalrestsdk.Payment.find(payment_id)
+
+    if payment.execute({"payer_id": payer_id}):
+        return render(request, 'logisticstart/Paypal/payment_success.html')
+    else:
+        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
+
+def payment_cancelled(request):
+    return render(request, 'logisticstart/Paypal/payment_cancelled.html')
