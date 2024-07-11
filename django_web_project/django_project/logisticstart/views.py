@@ -308,16 +308,16 @@ def create_payment(request):
         "transactions": [{
             "item_list": {
                 "items": [{
-                    "name": "item",
-                    "sku": "item",
-                    "price": "10.00",
-                    "currency": "USD",
+                    "name": "total_bill",
+                    "sku": "total_bill",
+                    "price": "10.10",
+                    "currency": "SGD",
                     "quantity": 1
                 }]
             },
             "amount": {
-                "total": "10.00",
-                "currency": "USD"
+                "total": "10.10",
+                "currency": "SGD"
             },
             "description": "This is the payment transaction description."
         }]

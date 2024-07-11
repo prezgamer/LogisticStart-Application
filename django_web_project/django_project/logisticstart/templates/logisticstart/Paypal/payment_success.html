@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .notification-box {
+            max-width: 400px;
+            width: 100%;
+        }
+        .icon-check {
+            font-size: 48px;
+            color: #4CAF50; /* Green checkmark color */
+            margin-bottom: 20px;
+        }
+        .button.is-primary {
+            background-color: #6A0DAD; /* Purple color for the button */
+            border: none;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .button.is-primary:hover {
+            background-color: #550a8a; /* Darker purple on hover */
+        }
+    </style>
     <title>Payment Success</title>
 </head>
 <body>
-    <h1>Payment Successful!</h1>
-    <p>Thank you for your purchase.</p>
+
+    <div class="content">
+        <div class="notification-box">
+            <div class="icon-check">✔️</div>
+            <h1 class="title">Payment Successful!</h1>
+            <p class="subtitle">Your payment has been completed.</p>
+            <a href="/dashboard" class="button is-primary is-medium">Finish</a>
+        </div>
+    </div>
+
 </body>
 </html>

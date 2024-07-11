@@ -32,7 +32,7 @@
             display: flex;
             gap: 10px;
         }
-        .payment-methods button {
+        .payment-methods a {
             display: inline-flex;
             align-items: center;
             padding: 10px 20px;
@@ -40,17 +40,23 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            text-decoration: none;
         }
         .payment-methods .google-pay {
             background-color: #4285F4;
             color: white;
         }
-        .payment-methods .apple-pay {
-            background-color: #000000;
-            color: white;
+        .payment-methods .paypal-pay {
+            background-color: #FFC439;
+            color: black;
+        }
+        .payment-methods img {
+            height: 20px;
+            margin-right: 10px;
         }
     </style>
     <title>Dashboard</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
 </head>
 <body>
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -99,16 +105,16 @@
                 </div>
                 <div class="billing-box">
                     <h2 class="subtitle">Payment Method</h2>
-                    <p>Use Apple Pay or Google Pay as a payment method and LogisticStart will retrieve your billed amount automatically at the end of each billing cycle. You never have to worry about paying your bills on time once you have it set up.</p>
+                    <p>Use Google Pay or PayPal as a payment method and LogisticStart will retrieve your billed amount automatically at the end of each billing cycle. You never have to worry about paying your bills on time once you have it set up.</p>
                     <div class="payment-methods">
-                        <button class="google-pay">
-                            <img src="https://toppng.com/uploads/preview/google-logo-png-hd-11659866438lpwuqaonqq.png" alt="Google Pay" style="height: 20px; margin-right: 10px;">
+                        <a href="/create-payment" class="google-pay">
+                            <img src="https://toppng.com/uploads/preview/google-logo-png-hd-11659866438lpwuqaonqq.png" alt="Google Pay">
                             Google Pay
-                        </button>
-                        <button class="apple-pay">
-                            <img src="https://banner2.cleanpng.com/20180719/ita/kisspng-apple-logo-business-coffee-page-5b50b6fc56d783.0875796515320163803557.jpg" alt="Apple Pay" style="height: 20px; margin-right: 10px;">
-                            Apple Pay
-                        </button>
+                        </a>
+                        <a href="/create-payment" class="paypal-pay">
+                            <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal">
+                            PayPal
+                        </a>
                     </div>
                 </div>
             </div>
