@@ -350,3 +350,14 @@ def payment_cancelled(request):
 @login_required
 def profile(request):
     return render(request, 'logisticstart/profile.html')
+
+def profile_view(request):
+    return render(request, 'profile.html')
+
+def edit_profile_view(request):
+    # Add your view logic here
+    return render(request, 'edit_profile.html')
+
+def change_password_view(request):
+    # Add your view logic here
+    return render(request, 'change_password.html')

@@ -14,13 +14,22 @@
     margin-right: 10px;
 }
 
+.user-name {
+    color: #000;
+    margin-right: 10px;
+    font-size: 16px; /* Adjust as needed */
+}
+
 .dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
+    background-color: transparent !important; /* Make the background transparent */
+    color: black !important; /* Change text color to black */
+    font-size: 16px !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important; /* Remove padding */
+    outline: none !important; /* Remove any outline */
+    box-shadow: none !important; /* Remove any box shadow */
+    background-image: none !important; /* Remove any background images */
 }
 
 .dropdown {
@@ -31,6 +40,7 @@
 .dropdown-content {
     display: none;
     position: absolute;
+    right: 0;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -44,12 +54,14 @@
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
 
 .dropdown:hover .dropdown-content {
-    display: block;
+    display: block; /* Ensure the dropdown content becomes visible on hover */
 }
 
 .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+    background-color: transparent !important; /* Keep background transparent on hover */
 }
