@@ -233,13 +233,13 @@ def delivery_schedule(request):
     current_account = get_current_account(request)
     schedules = NewDeliverySchedule.objects.filter(account=current_account).annotate(
         worker_name=Subquery(
-            NewWorkerListing.objects.filter(id=OuterRef('workerid')).values('worker_name')[:1]
+            NewWorkerListing.objects.filter(id=OuterRef('worker_id')).values('worker_name')[:1]
         ),
         warehouse_name=Subquery(
-            NewWarehouseListing.objects.filter(id=OuterRef('warehouseid')).values('warehouse_name')[:1]
+            NewWarehouseListing.objects.filter(id=OuterRef('warehouse_id')).values('warehouse_name')[:1]
         ),
         item_name=Subquery(
-            NewItemListing.objects.filter(id=OuterRef('itemid')).values('item_name')[:1]
+            NewItemListing.objects.filter(id=OuterRef('item_id')).values('item_name')[:1]
         )
     ).all()
     return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})

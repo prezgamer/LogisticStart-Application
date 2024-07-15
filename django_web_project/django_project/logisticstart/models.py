@@ -23,7 +23,7 @@ class NewWarehouseListing(models.Model):
     warehouse_phonenumber = models.IntegerField()
     warehouse_status = models.CharField(max_length=100, default='Pending', choices=WAREHOUSE_STATUS)
     warehouse_picture=models.ImageField(upload_to='warehouse_pictures/', default='images/null.jpg')
-    account = models.ForeignKey(Accounts, on_delete=models.CASCADE, related_name='warehouses')
+    account = models.ForeignKey(Accounts, on_delete=models.CASCADE, related_name='warehouses', default=1)
 
 class NewItemListing(models.Model):
     item_picture = models.ImageField(upload_to='images/', default='images/null.jpg')
@@ -51,11 +51,11 @@ class NewItemListing(models.Model):
     recipient_phone = models.CharField(max_length=15)
     delivery_status = models.CharField(max_length=35, default='Pending', choices=DELIVERY_STATUS)
     warehouse = models.ForeignKey('NewWarehouseListing', related_name='items', on_delete=models.CASCADE)
-    account = models.ForeignKey(Accounts, related_name='item_listings' , on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='items' , on_delete=models.CASCADE)
 
 # New Worker Listing Model
 class NewWorkerListing(models.Model):
-    account = models.ForeignKey(Accounts, related_name='workers', on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='workers', on_delete=models.CASCADE, default='1')
     worker_picture=models.ImageField(upload_to='worker_pictures/', default='images/null.jpg')
     GENDER_CHOICES = (
         ('M', 'Male'),
@@ -116,6 +116,7 @@ class NewDeliverySchedule(models.Model):
     worker = models.ForeignKey(NewWorkerListing, related_name='deliveries', on_delete=models.CASCADE)
     warehouse = models.ForeignKey(NewWarehouseListing, related_name='deliveries', on_delete=models.CASCADE)
     item = models.ForeignKey(NewItemListing, related_name='deliveries', on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='deliveries' , default=1, on_delete=models.CASCADE)
     delivery_status = models.CharField(max_length=255, choices=DELIVERY_STATUS, default='Pending')
 
 #billing
@@ -123,5 +124,5 @@ class UserBilling(models.Model):
     userCredits = models.IntegerField()
     userPrepayments = models.IntegerField()
     userTotalUsage = models.IntegerField()
-    account = models.ForeignKey(Accounts, related_name='billing', on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='billing', on_delete=models.CASCADE, default='1')
     
