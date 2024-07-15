@@ -3,8 +3,11 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
+        .navbar {
+            background-color: #D9D9D9; /* Gray color for the navbar */
+        }
         .navbar-item {
-            color: #007BFF; /* Blue color for the text */
+            color: #000AFF; /* Blue color for the text */
             font-weight: bold;
         }
         .sidebar {
@@ -13,13 +16,21 @@
             width: 200px;
             top: 3.25rem; /* Adjust for navbar height */
             left: 0;
-            background-color: #f5f5f5;
+            background-color: #E6E6E6;
             padding-top: 20px;
         }
         .content {
             margin-left: 220px;
             margin-top: 3.25rem; /* Adjust for navbar height */
             padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .buttons {
+            margin-top: 0;
         }
     </style>
     <title>{{ warehouse.warehouse_name }} - Item List</title>
@@ -47,7 +58,13 @@
     <div class="content">
         <section class="section">
             <div class="container">
-                <h1 class="title">Item List ({{ warehouse.warehouse_name }})</h1>
+                <div class="header">
+                    <h1 class="title">Item List ({{ warehouse.warehouse_name }})</h1>
+                    <div class="buttons">
+                        <a class="button is-primary" href="{% url 'logisticstart-warehouseitemform' warehouse.id %}">Add Item</a>
+                        <a class="button" href="{% url 'logisticstart-warehouselist' %}">Go back to warehouse list</a>
+                    </div>
+                </div>
                 <div class="table-container">
                     <table class="table is-striped is-fullwidth">
                         <thead>
@@ -76,8 +93,7 @@
                                 <td>{{ item.recipient_phone }}</td>
                                 <td>{{ item.delivery_status }}</td>
                                 <td>
-                                    <img src= "{{item.item_picture.url}}"
-                                    alt="Description of Image">
+                                    <img src="{{item.item_picture.url}}" alt="Description of Image">
                                 </td>
                                 <td>
                                     <a href="{% url 'logisticstart-editwarehouseitem' id=item.id %}" class="button is-small is-info">Edit</a>
@@ -94,10 +110,6 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                </div>
-                <div class="buttons">
-                    <a class="button is-primary" href="{% url 'logisticstart-warehouseitemform' warehouse.id %}">Add Item</a>
-                    <a class="button" href="{% url 'logisticstart-warehouselist' %}">Go back to warehouse list</a>
                 </div>
             </div>
         </section>
