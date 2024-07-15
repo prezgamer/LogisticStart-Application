@@ -10,29 +10,44 @@ from django.conf import settings
 import paypalrestsdk
 from django.contrib.auth.decorators import login_required
 from .paypal_utils import paypalrestsdk
+from django.core.exceptions import PermissionDenied
 
-
-
-# Create your views here.
 def logistichome(request):
-    return render(request, 'logisticstart/home.html') #return logisticstart/templates/logisticstart/home.html
+    return render(request, 'logisticstart/home.html') 
+
+# def get_current_account(request):
+#     # Implement your logic to get the current account, e.g., based on session data
+#     account_id = request.session.get('account_id')
+#     if account_id:
+#         return Accounts.objects.get(id=account_id)
+
+def get_current_account(request):
+    account_id = request.session.get('account_id')
+    if account_id:
+        return get_object_or_404(Accounts, accountID=account_id)
+    else:
+        raise PermissionDenied("You must be logged in to view this page.")
 
 def item_list(request):
-    items = NewItemListing.objects.all()
+    current_account = get_current_account(request)
+    items = NewItemListing.objects.filter(account=current_account)
     return render(request, 'logisticstart/items_list.html', {'items': items})
 
 def billing(request):
-    costs = UserBilling.objects.all()
+    current_account = get_current_account(request)
+    costs = UserBilling.objects.filter(account=current_account)
     return render(request, 'logisticstart/UserFunctions/billing.html', {'costs': costs})
 
 #logistic warehouse items
 def add_warehouse_item(request, id):
-    warehouse = get_object_or_404(NewWarehouseListing, id=id)
+    current_account = get_current_account(request)
+    warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateItemListingForm(request.POST, request.FILES)
         if form.is_valid():
             new_item = form.save(commit=False)
             new_item.warehouse = warehouse
+            new_item.account = current_account
             if 'item_picture' in request.FILES:
                 new_item.item_picture = request.FILES['item_picture']
             new_item.save()
@@ -44,7 +59,8 @@ def add_warehouse_item(request, id):
     return render(request, 'logisticstart/WarehouseItems/warehouseitemlistform.html', {'form': form, 'warehouse': warehouse})
 
 def edit_warehouse_item(request, id):
-    listing = get_object_or_404(NewItemListing, id=id)
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewItemListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateItemListingForm(request.POST, request.FILES, instance=listing)
         if form.is_valid():
@@ -55,7 +71,8 @@ def edit_warehouse_item(request, id):
     return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', {'form': form})
 
 def delete_warehouse_item(request, id):
-    listing = get_object_or_404(NewItemListing, id=id)
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewItemListing, id=id, account=current_account)
     if request.method == 'POST':
         listing.delete()
         return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id)
@@ -63,52 +80,59 @@ def delete_warehouse_item(request, id):
     
 # logistic warehouse list
 def logisticWarehouseList(request):
-    warehouses = NewWarehouseListing.objects.all()
+    current_account = get_current_account(request)
+    warehouses = NewWarehouseListing.objects.filter(account=current_account)
     return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
 
 def warehouse_item_list(request, id):
-    warehouse = get_object_or_404(NewWarehouseListing, id=id)
+    current_account = get_current_account(request)
+    warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
     items = warehouse.items.all()
     return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
 
 # new worker page
 def add_new_worker(request):
+    current_account = get_current_account(request)
     if request.method == 'POST':
         form = CreateWorkerListingForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            worker = NewWorkerListing.objects.all()
-            return render(request, 'logisticstart/Worker/worker.html', {"workers": worker})
+            worker = form.save(commit=False)
+            worker.account = current_account
+            worker.save()
+            return redirect('logisticstart-workerlist')
     else:
         form = CreateWorkerListingForm()
     return render(request, 'logisticstart/Worker/new_worker.html', {'form': form})
 
 # add warehouses
 def add_warehouse(request):
+    current_account = get_current_account(request)
     if request.method == 'POST':
         form = CreateWarehouseListingForm(request.POST)
         if form.is_valid():
-            form.save()
-            warehouses = NewWarehouseListing.objects.all()
-            return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
+            warehouse = form.save(commit=False)
+            warehouse.account = current_account
+            warehouse.save()
+            return redirect('logisticstart-warehouselist')
     else:
         form = CreateWarehouseListingForm()
     return render(request, 'logisticstart/Warehouse/add_warehouse.html', {'form': form})
 
 # warehouse list
 def warehouse_list(request):
-    warehouses = NewWarehouseListing.objects.all()
+    current_account = get_current_account(request)
+    warehouses = NewWarehouseListing.objects.filter(account=current_account)
     return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
 
 # worker page
 def worker_page(request):
-    print("Current user:", request.user)
-    workers = NewWorkerListing.objects.all()
+    current_account = get_current_account(request)
+    workers = NewWorkerListing.objects.filter(account=current_account)
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
 
-#not working
 def edit_delivery_item(request, deliveryid):
-    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
     if request.method == 'POST':
         form = CreateDeliveryScheduleForm(request.POST, instance=listing)
         if form.is_valid():
@@ -118,45 +142,49 @@ def edit_delivery_item(request, deliveryid):
         form = CreateDeliveryScheduleForm(instance=listing)
     return render(request, 'logisticstart-edit_delivery_schedule', {'form': form})
 
-#working
 def delete_delivery_item(request, deliveryid):
-    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid)
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
     if request.method == 'POST':
         listing.delete()
         return redirect('logisticstart-delivery_schedule')
     return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
 
 def edit_warehouse_listing(request, id):
-    listing = get_object_or_404(NewWarehouseListing, id=id)
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateWarehouseListingForm(request.POST, request.FILES, instance=listing)
         if form.is_valid():
             form.save()
-            return redirect('logisticstart-warehouselist') 
+            return redirect('logisticstart-warehouselist')
     else:
         form = CreateWarehouseListingForm(instance=listing)
     return render(request, 'logisticstart/Warehouse/edit_warehouse.html', {'form': form})
 
 def delete_warehouse_listing(request, id):
-    warehouse = get_object_or_404(NewWarehouseListing, id=id)
+    current_account = get_current_account(request)
+    warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
     if request.method == 'POST':
         warehouse.delete()
         return redirect('logisticstart-warehouselist')
     return render(request, 'delete_warehouse_listing', {'warehouse': warehouse})
 
 def edit_worker_listing(request, id):
-    listing = get_object_or_404(NewWorkerListing, id=id)
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewWorkerListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateWorkerListingForm(request.POST, request.FILES, instance=listing)
         if form.is_valid():
             form.save()
-            return redirect('logisticstart-worker') 
+            return redirect('logisticstart-worker')
     else:
         form = CreateWorkerListingForm(instance=listing)
     return render(request, 'logisticstart/Worker/edit_worker.html', {'form': form})
     
 def delete_worker_listing(request, id):
-    worker = get_object_or_404(NewWorkerListing, id=id)
+    current_account = get_current_account(request)
+    worker = get_object_or_404(NewWorkerListing, id=id, account=current_account)
     if request.method == 'POST':
         worker.delete()
         return redirect('logisticstart-worker')
@@ -176,10 +204,9 @@ def delete_worker_listing(request, id):
 
 #Dashboard
 def main_dashboard(request):
-    
-    #Queries
-    workers = NewWorkerListing.objects.all().values('id', 'worker_name', 'worker_phonenumber')
-    warehouses = NewWarehouseListing.objects.all().values('warehouse_name', 'warehouse_postalcode', 'warehouse_phonenumber')
+    current_account = get_current_account(request)
+    workers = NewWorkerListing.objects.filter(account=current_account).values('id', 'worker_name', 'worker_phonenumber')
+    warehouses = NewWarehouseListing.objects.filter(account=current_account).values('warehouse_name', 'warehouse_postalcode', 'warehouse_phonenumber')
     
     dashboard = {
         'warehouses': warehouses,
@@ -189,21 +216,22 @@ def main_dashboard(request):
 
 #Adding of Delivery Schedule
 def add_delivery_schedule(request):
+    current_account = get_current_account(request)
     if request.method == 'POST':
         form = CreateDeliveryScheduleForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('logisticstart-delivery_schedule')  #Redirect to the same page after successful form submission
+            delivery_schedule = form.save(commit=False)
+            delivery_schedule.account = current_account
+            delivery_schedule.save()
+            return redirect('logisticstart-delivery_schedule')
     else:
         form = CreateDeliveryScheduleForm()
     return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', {'form': form})
 
 #Displaying of Delivery Schedule
 def delivery_schedule(request):
-    
-    #OuterRef used to reference the workerid field in NewDeliverySchedule
-    #[:1] limits the result to the first record 
-    schedules = NewDeliverySchedule.objects.annotate(
+    current_account = get_current_account(request)
+    schedules = NewDeliverySchedule.objects.filter(account=current_account).annotate(
         worker_name=Subquery(
             NewWorkerListing.objects.filter(id=OuterRef('workerid')).values('worker_name')[:1]
         ),
@@ -214,15 +242,13 @@ def delivery_schedule(request):
             NewItemListing.objects.filter(id=OuterRef('itemid')).values('item_name')[:1]
         )
     ).all()
-
     return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
-
-    # schedules = NewDeliverySchedule.objects.all()
-    # return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
 
 #Editing of Delivery Schedule
 def edit_delivery_item(request, deliveryid):
-    delivery_schedule = get_object_or_404(NewDeliverySchedule, pk=deliveryid)
+    current_account = get_current_account(request)
+    delivery_schedule = get_object_or_404(NewDeliverySchedule, pk=deliveryid, account=current_account)
+
     if request.method == 'POST':
         form = CreateDeliveryScheduleForm(request.POST, instance=delivery_schedule)
         if form.is_valid():
