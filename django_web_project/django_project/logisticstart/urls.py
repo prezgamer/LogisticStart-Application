@@ -58,10 +58,10 @@ urlpatterns = [
     path('payment-cancelled/', views.payment_cancelled, name='payment_cancelled'),
 
     #Profile Paths
-    path('profile/', views.profile_view, name='profile'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('profile/edit/', views.edit_profile_view, name='edit_profile'),
-    path('profile/change-password/', views.change_password_view, name='change_password'),
+    path('profile/', views.profile_view, name='logisticstart-profile'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logisticstart-logout'),
+    path('profile/edit/', views.edit_profile_view, name='logisticstart-edit_profile'),
+    path('profile/change-password/', views.change_password_view, name='logisticstart-change_password'),
 
 ]
 if settings.DEBUG:

@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
+        .navbar {
+            background-color: #D9D9D9; /* Gray color for the navbar */
+        }
         .navbar-item {
-            color: #007BFF; /* Blue color for the text */
+            color: #000AFF; /* Blue color for the text */
             font-weight: bold;
         }
         .sidebar {
@@ -18,7 +21,7 @@
             width: 200px;
             top: 3.25rem; /* Adjust for navbar height */
             left: 0;
-            background-color: #f5f5f5;
+            background-color: #E6E6E6;
             padding-top: 20px;
         }
         .content {
@@ -78,13 +81,14 @@
             </a>
         </div>
         <div class="user-info">
-            <img src="{% static 'images/default_avatar.png' %}" alt="{{ user.username }}" class="user-avatar" id="dropdownToggle">
-            <span>{{ user.username }}</span>
+            <img src="{% static 'images/default_avatar.png' %}" alt="{{ account.username }}" class="user-avatar" id="dropdownToggle">
+            <span>{{ account.username }}</span>
             <div class="dropdown">
-                <button class="dropbtn" style="display:none">{{ user.username }}</button>
+                <button class="dropbtn" style="display:none">{{ account.username }}</button>
                 <div class="dropdown-content" id="dropdownMenu">
-                    <a href="{% url 'profile' %}">Profile</a>
-                    <a href="{% url 'logout' %}">Logout</a>
+                    <a href="{% url 'logisticstart-profile' %}">Profile</a>
+                    <a href="{% url 'logisticstart-billing' %}">Billing</a>
+                    <a href="{% url 'logisticstart-logout' %}">Logout</a>
                 </div>
             </div>
         </div>

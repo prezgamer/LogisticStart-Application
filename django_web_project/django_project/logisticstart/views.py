@@ -12,8 +12,8 @@ from django.contrib.auth.decorators import login_required
 from .paypal_utils import paypalrestsdk
 from django.core.exceptions import PermissionDenied
 
-def logistichome(request):
-    return render(request, 'logisticstart/home.html') 
+# def logistichome(request):
+#     return render(request, 'logisticstart/home.html') 
 
 # def get_current_account(request):
 #     # Implement your logic to get the current account, e.g., based on session data
@@ -81,8 +81,9 @@ def delete_warehouse_item(request, id):
 # logistic warehouse list
 def logisticWarehouseList(request):
     current_account = get_current_account(request)
+    account = Accounts.objects.filter(account=current_account)
     warehouses = NewWarehouseListing.objects.filter(account=current_account)
-    return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
+    return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses , 'account': account})
 
 def warehouse_item_list(request, id):
     current_account = get_current_account(request)
@@ -375,10 +376,11 @@ def payment_cancelled(request):
 
 @login_required
 def profile(request):
-    return render(request, 'logisticstart/profile.html')
+    current_account = get_current_account(request)
+    return render(request, 'logisticstart/Profile/profile.html')
 
 def profile_view(request):
-    return render(request, 'profile.html')
+    return render(request, 'logisticstart/Profile/profile.html')
 
 def edit_profile_view(request):
     # Add your view logic here
