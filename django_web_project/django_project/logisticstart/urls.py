@@ -40,7 +40,7 @@ urlpatterns = [
     path('deliveryschedule/<int:deliveryid>/delete', views.delete_delivery_item, name='logisticstart-delete_delivery_schedule'),
 
     #Worker Paths
-    path('workers/', views.worker_page, name='logisticstart-worker'),
+    path('workers/', views.worker_page, name='logisticstart-workerlist'),
     path('workers/<int:id>/edit', views.edit_worker_listing, name='worker-edit'),
     path('workers/<int:id>/delete', views.delete_worker_listing, name='worker-delete'),
     path('workers/add-worker/', views.add_new_worker, name='logisticstart-newworker'),
