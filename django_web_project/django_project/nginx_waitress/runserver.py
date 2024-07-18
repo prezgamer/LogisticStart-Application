@@ -1,6 +1,7 @@
 from waitress import serve
 
-from webproject.wsgi import application
+#AZURE
+from django_project.wsgi import application
 # documentation: https://docs.pylonsproject.org/projects/waitress/en/stable/api.html
 
 if __name__ == '__main__':
