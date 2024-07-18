@@ -77,20 +77,14 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 #dont change this, it is sending to my superbase database server
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'logisticstartdb',        
-        'USER': 'root',        
-        'PASSWORD': '090500',
-        'HOST': 'localhost',        
-        'PORT': '3306', 
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'postgres', 
-        # 'USER': 'postgres.noixhlhobqgyvohirpvu', 
-        # 'PASSWORD': 'SnBZzPjqg@yqgp5', 
-        # 'HOST':'aws-0-ap-southeast-1.pooler.supabase.com',
-        # 'PORT':'6543',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres', 
+        'USER': 'postgres.rkkmlbftlwglvcbcyufl', 
+        'PASSWORD': 'SnBZzPjqg@yqgp5', 
+        'HOST':'aws-0-ap-southeast-1.pooler.supabase.com',
+        'PORT':'6543',
     }
-}
+} 
 
 
 # Password validation

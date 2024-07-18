@@ -374,18 +374,20 @@ def execute_payment(request):
 def payment_cancelled(request):
     return render(request, 'logisticstart/Paypal/payment_cancelled.html')
 
-@login_required
 def profile(request):
     current_account = get_current_account(request)
     return render(request, 'logisticstart/Profile/profile.html')
 
-def profile_view(request):
-    return render(request, 'logisticstart/Profile/profile.html')
+# def logout(request):
+#     return render(request, 'logisticstart/Login/login.html')
 
-def edit_profile_view(request):
-    # Add your view logic here
-    return render(request, 'edit_profile.html')
+# def profile_view(request):
+#     return render(request, 'logisticstart/Profile/profile.html')
 
-def change_password_view(request):
-    # Add your view logic here
-    return render(request, 'change_password.html')
+# def edit_profile_view(request):
+#     # Add your view logic here
+#     return render(request, 'edit_profile.html')
+
+# def change_password_view(request):
+#     # Add your view logic here
+#     return render(request, 'change_password.html')
