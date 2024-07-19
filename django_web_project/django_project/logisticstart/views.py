@@ -16,8 +16,8 @@ from django.core.files.base import ContentFile
 import base64
 
 #work in progress
-# def logistichome(request):
-#     return render(request, 'logisticstart/home.html') 
+def logistichome(request):
+    return render(request, 'logisticstart/home.html') 
 
 #run testcamera.html
 def test_camera(request):
@@ -52,6 +52,18 @@ def billing(request):
 
 #paypal page
 def create_payment(request):
+    current_account = get_current_account(request)
+    total_workers = NewWorkerListing.objects.filter(account=current_account).count()
+
+    if total_workers <= 10:
+        cost = 0
+    elif total_workers <= 50:
+        cost = 10
+    else:
+        cost = 100
+
+    cost_str = f"{cost:.2f}"
+
     payment = paypalrestsdk.Payment({
         "intent": "sale",
         "payer": {
@@ -66,13 +78,13 @@ def create_payment(request):
                 "items": [{
                     "name": "total_bill",
                     "sku": "total_bill",
-                    "price": "10.10",
+                    "price": cost_str,
                     "currency": "SGD",
                     "quantity": 1
                 }]
             },
             "amount": {
-                "total": "10.10",
+                "total": cost_str,
                 "currency": "SGD"
             },
             "description": "This is the payment transaction description."
@@ -86,6 +98,7 @@ def create_payment(request):
                 return redirect(approval_url)
     else:
         return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
+
 
 #execute payment using paypal
 def execute_payment(request):

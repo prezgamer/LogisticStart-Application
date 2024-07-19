@@ -12,11 +12,12 @@ handler400 = 'logisticstart.views.custom_bad_request_view'
 
 
 urlpatterns = [
-    # path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
     # path('login/', views.logisticlogin, name='logisticstart-login'), #login page
     # path('signup/', views.logisticsignup, name='logisticstart-signup'), #signup page
     # path('form/', views.logisticform, name='logisticstart-form'), #look for logisticstart function
     # path('items/', views.item_list, name='logisticstart-list'), #look for logisticitems_list function
+
+    path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
 
     #Warehouse Item paths
     path('warehouses/<int:id>/add-item/', views.add_warehouse_item, name='logisticstart-warehouseitemform'), #look for logisticWarehouseItemForm function
@@ -49,7 +50,7 @@ urlpatterns = [
     path('billing/', views.billing, name='logisticstart-billing'),
 
     #login
-    path('', views.login_user, name='logisticstart-login'),
+    path('login/', views.login_user, name='logisticstart-login'),
     path('register/', views.register_user, name='logisticstart-register'),
     path('camera/', views.test_camera, name='logisticstart-camera'),
     path('upload/', views.upload_image, name='logisticstart-upload'),
