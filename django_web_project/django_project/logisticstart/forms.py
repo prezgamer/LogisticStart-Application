@@ -3,8 +3,6 @@ from .models import NewItemListing, NewWarehouseListing, NewWorkerListing, NewDe
 from django.core.validators import RegexValidator
 from django.contrib.auth.hashers import make_password
 
-
-
 class CreateItemListingForm(forms.ModelForm):
     class Meta:
         model = NewItemListing

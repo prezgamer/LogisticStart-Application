@@ -13,6 +13,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+import base64
 
 #work in progress
 # def logistichome(request):
@@ -24,9 +25,14 @@ def test_camera(request):
 
 #upload image function for testcamera
 def upload_image(request):
-    if request.method == 'POST' and request.FILES['image']:
+    if request.method == 'POST' and request.FILES.get('image'):
         image = request.FILES['image']
-        path = default_storage.save(f'uploads/{image.name}', ContentFile(image.read()))
+        path = default_storage.save(f'worker_pictures/{image.name}', ContentFile(image.read()))
+        return JsonResponse({'status': 'success', 'path': path})
+    elif request.method == 'POST' and request.POST.get('image_data'):
+        image_data = request.POST['image_data'].split(",")[1]
+        image = ContentFile(base64.b64decode(image_data), name='captured_image.png')
+        path = default_storage.save(f'worker_pictures/{image.name}', image)
         return JsonResponse({'status': 'success', 'path': path})
     return JsonResponse({'status': 'failed'})
 
