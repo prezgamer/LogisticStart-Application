@@ -48,18 +48,26 @@ def get_current_account(request):
 def billing(request):
     current_account = get_current_account(request)
     costs = UserBilling.objects.filter(account=current_account)
-    return render(request, 'logisticstart/UserFunctions/billing.html', {'costs': costs})
+    total_workers = NewWorkerListing.objects.filter(account=current_account).count()
+
+
+    if total_workers > 0:
+        cost = 10
+    elif total_workers >= 50:
+        cost = 100
+
+    cost_str = f"{cost:.2f}"
+
+    return render(request, 'logisticstart/UserFunctions/billing.html', {'cost': cost_str})
 
 #paypal page
 def create_payment(request):
     current_account = get_current_account(request)
     total_workers = NewWorkerListing.objects.filter(account=current_account).count()
 
-    if total_workers <= 10:
-        cost = 0
-    elif total_workers <= 50:
+    if total_workers > 0:
         cost = 10
-    else:
+    elif total_workers >= 50:
         cost = 100
 
     cost_str = f"{cost:.2f}"
