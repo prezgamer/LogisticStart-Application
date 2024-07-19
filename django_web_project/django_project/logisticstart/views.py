@@ -212,28 +212,6 @@ def delete_worker_listing(request, id):
         return redirect('logisticstart-workerlist')
     return render(request, 'worker-delete', {'worker': worker})
 
-#edit delivery items from delivery schedules
-def edit_delivery_item(request, deliveryid):
-    current_account = get_current_account(request)
-    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
-    if request.method == 'POST':
-        form = CreateDeliveryScheduleForm(request.POST, instance=listing)
-        if form.is_valid():
-            form.save()
-            return redirect('logisticstart-delivery_schedule', deliveryid=deliveryid)
-    else:
-        form = CreateDeliveryScheduleForm(instance=listing)
-    return render(request, 'logisticstart-edit_delivery_schedule', {'form': form})
-
-#delete delivery items from delivery schedules
-def delete_delivery_item(request, deliveryid):
-    current_account = get_current_account(request)
-    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
-    if request.method == 'POST':
-        listing.delete()
-        return redirect('logisticstart-delivery_schedule')
-    return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
-
 #edit warehouse listing from warehouse list
 def edit_warehouse_listing(request, id):
     current_account = get_current_account(request)
@@ -312,6 +290,15 @@ def edit_delivery_item(request, deliveryid):
         form = CreateDeliveryScheduleForm(instance=delivery_schedule)
     
     return render(request, 'logisticstart/Deliveryschedule/edit_delivery_schedule.html', {'form': form})
+
+#delete delivery items from delivery schedules
+def delete_delivery_item(request, deliveryid):
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
+    if request.method == 'POST':
+        listing.delete()
+        return redirect('logisticstart-delivery_schedule')
+    return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
 
 def custom_page_not_found_view(request, exception):
     return render(request, "errors/404.html", {})
