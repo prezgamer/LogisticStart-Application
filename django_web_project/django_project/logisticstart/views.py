@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Subquery, OuterRef
 from django.conf import settings
-import paypalrestsdk
 from django.contrib.auth.decorators import login_required
 from .paypal_utils import paypalrestsdk
 from django.core.exceptions import PermissionDenied
@@ -15,18 +14,15 @@ from django.http import JsonResponse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
+#work in progress
 # def logistichome(request):
 #     return render(request, 'logisticstart/home.html') 
 
-# def get_current_account(request):
-#     # Implement your logic to get the current account, e.g., based on session data
-#     account_id = request.session.get('account_id')
-#     if account_id:
-#         return Accounts.objects.get(id=account_id)
-
+#run testcamera.html
 def test_camera(request):
     return render(request, 'logisticstart/Login/testcamera.html')
 
+#upload image function for testcamera
 def upload_image(request):
     if request.method == 'POST' and request.FILES['image']:
         image = request.FILES['image']
@@ -34,6 +30,7 @@ def upload_image(request):
         return JsonResponse({'status': 'success', 'path': path})
     return JsonResponse({'status': 'failed'})
 
+#receive current account by getting the account_id of the account table
 def get_current_account(request):
     account_id = request.session.get('account_id')
     if account_id:
@@ -41,17 +38,73 @@ def get_current_account(request):
     else:
         raise PermissionDenied("You must be logged in to view this page.")
 
-def item_list(request):
-    current_account = get_current_account(request)
-    items = NewItemListing.objects.filter(account=current_account)
-    return render(request, 'logisticstart/items_list.html', {'items': items})
-
+#render the billing page
 def billing(request):
     current_account = get_current_account(request)
     costs = UserBilling.objects.filter(account=current_account)
     return render(request, 'logisticstart/UserFunctions/billing.html', {'costs': costs})
 
-#logistic warehouse items
+#paypal page
+def create_payment(request):
+    payment = paypalrestsdk.Payment({
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": request.build_absolute_uri('/execute-payment'),
+            "cancel_url": request.build_absolute_uri('/payment-cancelled')
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "total_bill",
+                    "sku": "total_bill",
+                    "price": "10.10",
+                    "currency": "SGD",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "total": "10.10",
+                "currency": "SGD"
+            },
+            "description": "This is the payment transaction description."
+        }]
+    })
+
+    if payment.create():
+        for link in payment.links:
+            if link.rel == "approval_url":
+                approval_url = link.href
+                return redirect(approval_url)
+    else:
+        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
+
+#execute payment using paypal
+def execute_payment(request):
+    payment_id = request.GET.get('paymentId')
+    payer_id = request.GET.get('PayerID')
+
+    payment = paypalrestsdk.Payment.find(payment_id)
+
+    if payment.execute({"payer_id": payer_id}):
+        return render(request, 'logisticstart/Paypal/payment_success.html')
+    else:
+        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
+
+#when payment is cancelled
+def payment_cancelled(request):
+    return render(request, 'logisticstart/Paypal/payment_cancelled.html')
+
+#list down the items from the item table
+def warehouse_item_list(request, id):
+    current_account = get_current_account(request)
+    warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
+    items = warehouse.items.all()
+    return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
+
+#add items to respective warehouse from forms
 def add_warehouse_item(request, id):
     current_account = get_current_account(request)
     warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
@@ -65,12 +118,11 @@ def add_warehouse_item(request, id):
                 new_item.item_picture = request.FILES['item_picture']
             new_item.save()
             return redirect('logisticstart-warehouseitemlist', id=warehouse.id)
-        else:
-            print(form.errors)  # For debugging
     else:
         form = CreateItemListingForm()
     return render(request, 'logisticstart/WarehouseItems/warehouseitemlistform.html', {'form': form, 'warehouse': warehouse})
 
+#edit warehouse items from respective warehouses
 def edit_warehouse_item(request, id):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewItemListing, id=id, account=current_account)
@@ -83,6 +135,7 @@ def edit_warehouse_item(request, id):
         form = CreateItemListingForm(instance=listing)
     return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', {'form': form})
 
+#delete warehouse items from respective warehouses
 def delete_warehouse_item(request, id):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewItemListing, id=id, account=current_account)
@@ -90,21 +143,8 @@ def delete_warehouse_item(request, id):
         listing.delete()
         return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id)
     return render(request, 'delete_listing', {'listing': listing})
-    
-# logistic warehouse list
-def logisticWarehouseList(request):
-    current_account = get_current_account(request)
-    account = Accounts.objects.filter(account=current_account)
-    warehouses = NewWarehouseListing.objects.filter(account=current_account)
-    return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses , 'account': account})
 
-def warehouse_item_list(request, id):
-    current_account = get_current_account(request)
-    warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
-    items = warehouse.items.all()
-    return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
-
-# new worker page
+#add new workers to worker table
 def add_new_worker(request):
     current_account = get_current_account(request)
     if request.method == 'POST':
@@ -118,7 +158,7 @@ def add_new_worker(request):
         form = CreateWorkerListingForm()
     return render(request, 'logisticstart/Worker/new_worker.html', {'form': form})
 
-# add warehouses
+#add new warehouses to warehouse table
 def add_warehouse(request):
     current_account = get_current_account(request)
     if request.method == 'POST':
@@ -132,18 +172,41 @@ def add_warehouse(request):
         form = CreateWarehouseListingForm()
     return render(request, 'logisticstart/Warehouse/add_warehouse.html', {'form': form})
 
-# warehouse list
+#render the warehouse list 
 def warehouse_list(request):
     current_account = get_current_account(request)
     warehouses = NewWarehouseListing.objects.filter(account=current_account)
     return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
 
-# worker page
-def worker_page(request):
+#render the worker list
+def worker_list(request):
     current_account = get_current_account(request)
     workers = NewWorkerListing.objects.filter(account=current_account)
     return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
 
+#edit worker listing from worker list
+def edit_worker_listing(request, id):
+    current_account = get_current_account(request)
+    listing = get_object_or_404(NewWorkerListing, id=id, account=current_account)
+    if request.method == 'POST':
+        form = CreateWorkerListingForm(request.POST, request.FILES, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('logisticstart-workerlist')
+    else:
+        form = CreateWorkerListingForm(instance=listing)
+    return render(request, 'logisticstart/Worker/edit_worker.html', {'form': form})
+
+#delete worker listing from worker list
+def delete_worker_listing(request, id):
+    current_account = get_current_account(request)
+    worker = get_object_or_404(NewWorkerListing, id=id, account=current_account)
+    if request.method == 'POST':
+        worker.delete()
+        return redirect('logisticstart-workerlist')
+    return render(request, 'worker-delete', {'worker': worker})
+
+#edit delivery items from delivery schedules
 def edit_delivery_item(request, deliveryid):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
@@ -156,6 +219,7 @@ def edit_delivery_item(request, deliveryid):
         form = CreateDeliveryScheduleForm(instance=listing)
     return render(request, 'logisticstart-edit_delivery_schedule', {'form': form})
 
+#delete delivery items from delivery schedules
 def delete_delivery_item(request, deliveryid):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
@@ -164,6 +228,7 @@ def delete_delivery_item(request, deliveryid):
         return redirect('logisticstart-delivery_schedule')
     return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
 
+#edit warehouse listing from warehouse list
 def edit_warehouse_listing(request, id):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
@@ -176,6 +241,7 @@ def edit_warehouse_listing(request, id):
         form = CreateWarehouseListingForm(instance=listing)
     return render(request, 'logisticstart/Warehouse/edit_warehouse.html', {'form': form})
 
+#delete warehouse listing from warehouse list
 def delete_warehouse_listing(request, id):
     current_account = get_current_account(request)
     warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
@@ -183,38 +249,6 @@ def delete_warehouse_listing(request, id):
         warehouse.delete()
         return redirect('logisticstart-warehouselist')
     return render(request, 'delete_warehouse_listing', {'warehouse': warehouse})
-
-def edit_worker_listing(request, id):
-    current_account = get_current_account(request)
-    listing = get_object_or_404(NewWorkerListing, id=id, account=current_account)
-    if request.method == 'POST':
-        form = CreateWorkerListingForm(request.POST, request.FILES, instance=listing)
-        if form.is_valid():
-            form.save()
-            return redirect('logisticstart-workerlist')
-    else:
-        form = CreateWorkerListingForm(instance=listing)
-    return render(request, 'logisticstart/Worker/edit_worker.html', {'form': form})
-    
-def delete_worker_listing(request, id):
-    current_account = get_current_account(request)
-    worker = get_object_or_404(NewWorkerListing, id=id, account=current_account)
-    if request.method == 'POST':
-        worker.delete()
-        return redirect('logisticstart-workerlist')
-    return render(request, 'worker-delete', {'worker': worker})
-
-# # Edit listing view 
-# def edit_listing(request, pk):
-#     listing = get_object_or_404(NewItemListing, pk=pk)
-#     if request.method == 'POST':
-#         form = CreateItemListingForm(request.POST, instance=listing)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('logisticstart-list')  # Adjust this redirect as necessary
-#     else:
-#         form = CreateItemListingForm(instance=listing)
-#     return render(request, 'logisticstart/edit_listing.html', {'form': form})
 
 #Dashboard
 def main_dashboard(request):
@@ -243,7 +277,7 @@ def add_delivery_schedule(request):
     return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', {'form': form})
 
 #Displaying of Delivery Schedule
-def delivery_schedule(request):
+def delivery_schedule_list(request):
     current_account = get_current_account(request)
     schedules = NewDeliverySchedule.objects.filter(account=current_account).annotate(
         worker_name=Subquery(
@@ -286,8 +320,8 @@ def custom_bad_request_view(request, exception=None):
     return render(request, "errors/400.html", {})
 
 
-
-def logisticregister(request):
+#when user registers
+def register_user(request):
     if request.method == 'POST':
         form = register(request.POST)
         if form.is_valid():
@@ -302,7 +336,8 @@ def logisticregister(request):
 
     return render(request, 'logisticstart/Login/register.html', {'form': form})
 
-def logisticlogin(request):
+#when user login
+def login_user(request):
     companies = Accounts.objects.values_list('company_name', flat=True).distinct()
 
     if request.method == "POST":
@@ -336,57 +371,7 @@ def logisticlogin(request):
     }
     return render(request, 'logisticstart/Login/login.html', context)
 
-#paypal page
-def create_payment(request):
-    payment = paypalrestsdk.Payment({
-        "intent": "sale",
-        "payer": {
-            "payment_method": "paypal"
-        },
-        "redirect_urls": {
-            "return_url": request.build_absolute_uri('/execute-payment'),
-            "cancel_url": request.build_absolute_uri('/payment-cancelled')
-        },
-        "transactions": [{
-            "item_list": {
-                "items": [{
-                    "name": "total_bill",
-                    "sku": "total_bill",
-                    "price": "10.10",
-                    "currency": "SGD",
-                    "quantity": 1
-                }]
-            },
-            "amount": {
-                "total": "10.10",
-                "currency": "SGD"
-            },
-            "description": "This is the payment transaction description."
-        }]
-    })
-
-    if payment.create():
-        for link in payment.links:
-            if link.rel == "approval_url":
-                approval_url = link.href
-                return redirect(approval_url)
-    else:
-        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
-
-def execute_payment(request):
-    payment_id = request.GET.get('paymentId')
-    payer_id = request.GET.get('PayerID')
-
-    payment = paypalrestsdk.Payment.find(payment_id)
-
-    if payment.execute({"payer_id": payer_id}):
-        return render(request, 'logisticstart/Paypal/payment_success.html')
-    else:
-        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
-
-def payment_cancelled(request):
-    return render(request, 'logisticstart/Paypal/payment_cancelled.html')
-
+#load up profile page
 def profile(request):
     current_account = get_current_account(request)
     return render(request, 'logisticstart/Profile/profile.html')

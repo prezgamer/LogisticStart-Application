@@ -35,12 +35,12 @@ urlpatterns = [
 
     #Delivery Schedule Paths
     path('deliveryschedule/add-schedule/', views.add_delivery_schedule, name='logisticstart-add_deliveryschedule'),
-    path('deliveryschedule/', views.delivery_schedule, name='logisticstart-delivery_schedule'),
+    path('deliveryschedule/', views.delivery_schedule_list, name='logisticstart-delivery_schedule'),
     path('deliveryschedule/<int:deliveryid>/edit/', views.edit_delivery_item, name='logisticstart-edit_delivery_schedule'),
     path('deliveryschedule/<int:deliveryid>/delete', views.delete_delivery_item, name='logisticstart-delete_delivery_schedule'),
 
     #Worker Paths
-    path('workers/', views.worker_page, name='logisticstart-workerlist'),
+    path('workers/', views.worker_list, name='logisticstart-workerlist'),
     path('workers/<int:id>/edit', views.edit_worker_listing, name='worker-edit'),
     path('workers/<int:id>/delete', views.delete_worker_listing, name='worker-delete'),
     path('workers/add-worker/', views.add_new_worker, name='logisticstart-newworker'),
@@ -49,10 +49,10 @@ urlpatterns = [
     path('billing/', views.billing, name='logisticstart-billing'),
 
     #login
-    path('', views.logisticlogin, name='logisticstart-login'),
-    path('register/', views.logisticregister, name='logisticstart-register'),
+    path('', views.login_user, name='logisticstart-login'),
+    path('register/', views.register_user, name='logisticstart-register'),
     path('camera/', views.test_camera, name='logisticstart-camera'),
-    path('camera/upload/', views.upload_image, name='logisticstart-upload'),
+    path('upload/', views.upload_image, name='logisticstart-upload'),
 
     #Paypal
     path('create-payment/', views.create_payment, name='create_payment'),
