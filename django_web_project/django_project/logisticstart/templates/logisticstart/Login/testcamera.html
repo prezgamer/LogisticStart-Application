@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera App</title>
+</head>
+<body>
+    <h1>Camera App</h1>
+    <button id="open-camera">Open Camera</button>
+    <input type="file" id="upload-file" accept="image/*">
+    <button id="upload-image">Upload Image</button>
+    <img id="preview" src="" alt="Image preview" style="display: none;"/>
+    
+    <script>
+        document.getElementById('open-camera').addEventListener('click', async () => {
+            const video = document.createElement('video');
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            video.play();
+
+            document.body.appendChild(video);
+
+            const captureButton = document.createElement('button');
+            captureButton.textContent = 'Capture';
+            document.body.appendChild(captureButton);
+
+            captureButton.addEventListener('click', () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const dataURL = canvas.toDataURL('image/png');
+
+                document.getElementById('preview').src = dataURL;
+                document.getElementById('preview').style.display = 'block';
+
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.remove();
+                captureButton.remove();
+            });
+        });
+
+        document.getElementById('upload-file').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                document.getElementById('preview').src = e.target.result;
+                document.getElementById('preview').style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('upload-image').addEventListener('click', async () => {
+            const preview = document.getElementById('preview');
+            if (preview.src) {
+                const response = await fetch(preview.src);
+                const blob = await response.blob();
+                const formData = new FormData();
+                formData.append('image', blob, 'image.png');
+
+                const result = await fetch('/upload/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                });
+
+                const data = await result.json();
+                if (data.status === 'success') {
+                    alert('Image uploaded successfully');
+                } else {
+                    alert('Image upload failed');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

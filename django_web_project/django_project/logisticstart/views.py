@@ -11,6 +11,9 @@ import paypalrestsdk
 from django.contrib.auth.decorators import login_required
 from .paypal_utils import paypalrestsdk
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 # def logistichome(request):
 #     return render(request, 'logisticstart/home.html') 
@@ -20,6 +23,16 @@ from django.core.exceptions import PermissionDenied
 #     account_id = request.session.get('account_id')
 #     if account_id:
 #         return Accounts.objects.get(id=account_id)
+
+def test_camera(request):
+    return render(request, 'logisticstart/Login/testcamera.html')
+
+def upload_image(request):
+    if request.method == 'POST' and request.FILES['image']:
+        image = request.FILES['image']
+        path = default_storage.save(f'uploads/{image.name}', ContentFile(image.read()))
+        return JsonResponse({'status': 'success', 'path': path})
+    return JsonResponse({'status': 'failed'})
 
 def get_current_account(request):
     account_id = request.session.get('account_id')

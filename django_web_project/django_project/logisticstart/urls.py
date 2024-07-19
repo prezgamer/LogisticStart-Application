@@ -51,6 +51,8 @@ urlpatterns = [
     #login
     path('', views.logisticlogin, name='logisticstart-login'),
     path('register/', views.logisticregister, name='logisticstart-register'),
+    path('camera/', views.test_camera, name='logisticstart-camera'),
+    path('camera/upload/', views.upload_image, name='logisticstart-upload'),
 
     #Paypal
     path('create-payment/', views.create_payment, name='create_payment'),
