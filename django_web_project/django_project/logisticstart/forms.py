@@ -54,17 +54,15 @@ class CreateWarehouseListingForm(forms.ModelForm):
         }
 
 class CreateDeliveryScheduleForm(forms.ModelForm):
-    
-    #To display the relevant id and name in dropbox
     def __init__(self, *args, **kwargs):
         super(CreateDeliveryScheduleForm, self).__init__(*args, **kwargs)
-        self.fields['workerid'].label_from_instance = lambda obj: f"{obj.id} - {obj.worker_name}"
-        self.fields['warehouseid'].label_from_instance = lambda obj: f"{obj.id} - {obj.warehouse_name}"
-        self.fields['itemid'].label_from_instance = lambda obj: f"{obj.id} - {obj.item_name}"
+        self.fields['worker'].label_from_instance = lambda obj: f"{obj.id} - {obj.worker_name}"
+        self.fields['warehouse'].label_from_instance = lambda obj: f"{obj.id} - {obj.warehouse_name}"
+        self.fields['item'].label_from_instance = lambda obj: f"{obj.id} - {obj.item_name}"
 
-    workerid = forms.ModelChoiceField(queryset=NewWorkerListing.objects.all(), empty_label=None, label='Worker')
-    warehouseid = forms.ModelChoiceField(queryset=NewWarehouseListing.objects.filter(warehouse_status='Available'), empty_label=None, label='Warehouse')
-    itemid = forms.ModelChoiceField(queryset=NewItemListing.objects.all(), empty_label=None, label='Item')
+    worker = forms.ModelChoiceField(queryset=NewWorkerListing.objects.all(), empty_label=None, label='Worker')
+    warehouse = forms.ModelChoiceField(queryset=NewWarehouseListing.objects.filter(warehouse_status='Available'), empty_label=None, label='Warehouse')
+    item = forms.ModelChoiceField(queryset=NewItemListing.objects.all(), empty_label=None, label='Item')
     
     class Meta:
         model = NewDeliverySchedule
@@ -72,24 +70,21 @@ class CreateDeliveryScheduleForm(forms.ModelForm):
             'receiver_name',
             'receiver_address',
             'receiver_number',
-            'workerid',
-            'warehouseid',
-            'itemid',
+            'worker',
+            'warehouse',
+            'item',
             'delivery_status',
         ]
         widgets = {
             'delivery_status': forms.RadioSelect(choices=NewDeliverySchedule.DELIVERY_STATUS)
         }
         
-    #To store only the ID
-    def clean_workerid(self):
-        return int(self.cleaned_data['workerid'].id)
-    def clean_warehouseid(self):
-        return int(self.cleaned_data['warehouseid'].id)
-    def clean_itemid(self):
-        return int(self.cleaned_data['itemid'].id)
-        
-
+    def clean_worker(self):
+        return self.cleaned_data['worker']
+    def clean_warehouse(self):
+        return self.cleaned_data['warehouse']
+    def clean_item(self):
+        return self.cleaned_data['item']
 
 class register(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
