@@ -3,8 +3,11 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
+        .navbar {
+            background-color: #D9D9D9; /* Gray color for the navbar */
+        }
         .navbar-item {
-            color: #007BFF; /* Blue color for the text */
+            color: #000AFF; /* Blue color for the text */
             font-weight: bold;
         }
         .sidebar {
@@ -13,13 +16,19 @@
             width: 200px;
             top: 3.25rem; /* Adjust for navbar height */
             left: 0;
-            background-color: #f5f5f5;
+            background-color: #E6E6E6;
             padding-top: 20px;
         }
         .content {
             margin-left: 220px;
             margin-top: 3.25rem; /* Adjust for navbar height */
             padding: 20px;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
     </style>
     <title>Dashboard</title>
@@ -47,7 +56,10 @@
     <div class="content">
         <section class="section">
             <div class="container">
-                <h1 class="title">Delivery Schedule</h1>
+                <div class="header-container">
+                    <h1 class="title">Delivery Schedule</h1>
+                    <a class="button is-primary" href="{% url 'logisticstart-add_deliveryschedule' %}">Add Delivery</a>
+                </div>
 
                 <div class="table-container">
                     <table class="table is-striped is-fullwidth">
@@ -60,6 +72,7 @@
                                 <th>Warehouse</th>
                                 <th>Item</th>
                                 <th>Delivery Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,12 +81,9 @@
                                 <td>{{ schedule.receiver_name }}</td>
                                 <td>{{ schedule.receiver_address }}</td>
                                 <td>{{ schedule.receiver_number }}</td>
-                                {% comment %} <td>{{ schedule.workerid }}</td>
-                                <td>{{ schedule.warehouseid }}</td>
-                                <td>{{ schedule.itemid }}</td> {% endcomment %}
-                                <td>{{ schedule.worker_name }}</td> <!-- Display worker name -->
-                                <td>{{ schedule.warehouse_name }}</td> <!-- Display warehouse name -->
-                                <td>{{ schedule.item_name }}</td> <!-- Display item name -->
+                                <td>{{ schedule.worker_name }}</td> 
+                                <td>{{ schedule.warehouse_name }}</td> 
+                                <td>{{ schedule.item_name }}</td> 
                                 <td>{{ schedule.delivery_status }}</td>
                                 <td>
                                     <a href="{% url 'logisticstart-edit_delivery_schedule' deliveryid=schedule.deliveryid %}" class="button is-small is-info">Edit</a>
@@ -83,11 +93,14 @@
                                     </form>
                                 </td>
                             </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8">No delivery schedules found for this company.</td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <a class="button is-primary" href="{% url 'logisticstart-add_deliveryschedule' %}">Add Delivery</a>
             </div>
         </section>
     </div>

@@ -23,9 +23,10 @@ class NewWarehouseListing(models.Model):
     warehouse_phonenumber = models.IntegerField()
     warehouse_status = models.CharField(max_length=100, default='Pending', choices=WAREHOUSE_STATUS)
     warehouse_picture=models.ImageField(upload_to='warehouse_pictures/', default='images/null.jpg')
+    account = models.ForeignKey(Accounts, on_delete=models.CASCADE, related_name='warehouses', default=1)
 
 class NewItemListing(models.Model):
-    item_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
+    item_picture = models.ImageField(upload_to='images/', default='images/null.jpg')
     DELIVERY_STATUS = (
         ('Pending', 'Pending'),
         ('Delivering', 'Delivering'),
@@ -47,14 +48,15 @@ class NewItemListing(models.Model):
                 message='Name must contain only letters.'
             )
         ])
-    recipient_phone = models.IntegerField()
+    recipient_phone = models.CharField(max_length=15)
     delivery_status = models.CharField(max_length=35, default='Pending', choices=DELIVERY_STATUS)
-    warehouse = models.ForeignKey(NewWarehouseListing, related_name='items', on_delete=models.CASCADE)
-    account = models.ForeignKey(Accounts, related_name='account',default=1 , on_delete=models.CASCADE)
+    warehouse = models.ForeignKey('NewWarehouseListing', related_name='items', on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='items' , on_delete=models.CASCADE)
 
 # New Worker Listing Model
 class NewWorkerListing(models.Model):
-    worker_picture=models.ImageField(upload_to='images/', default='images/null.jpg')
+    account = models.ForeignKey(Accounts, related_name='workers', on_delete=models.CASCADE, default='1')
+    worker_picture=models.ImageField(upload_to='worker_pictures/', default='images/null.jpg')
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female')
@@ -101,18 +103,20 @@ class NewDeliverySchedule(models.Model):
         ('Delivering', 'Delivering'),
         ('Delivered', 'Delivered')
     )
+    
     deliveryid = models.AutoField(primary_key=True)
     receiver_name = models.CharField(max_length=255, validators=[
-            RegexValidator(
-                regex='^[a-zA-Z ]+$',
-                message='Name must contain only letters.'
-            )
-        ])
+        RegexValidator(
+            regex='^[a-zA-Z ]+$',
+            message='Name must contain only letters.'
+        )
+    ])
     receiver_address = models.CharField(max_length=255)
-    receiver_number = models.IntegerField()
-    workerid = models.IntegerField()
-    warehouseid = models.IntegerField()
-    itemid = models.IntegerField()
+    receiver_number = models.CharField(max_length=15)
+    worker = models.ForeignKey(NewWorkerListing, related_name='deliveries', on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(NewWarehouseListing, related_name='deliveries', on_delete=models.CASCADE)
+    item = models.ForeignKey(NewItemListing, related_name='deliveries', on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='deliveries' , default=1, on_delete=models.CASCADE)
     delivery_status = models.CharField(max_length=255, choices=DELIVERY_STATUS, default='Pending')
 
 #billing
@@ -120,5 +124,5 @@ class UserBilling(models.Model):
     userCredits = models.IntegerField()
     userPrepayments = models.IntegerField()
     userTotalUsage = models.IntegerField()
-    account = models.ForeignKey(Accounts, related_name='account_billing',default=1 , on_delete=models.CASCADE)
+    account = models.ForeignKey(Accounts, related_name='billing', on_delete=models.CASCADE, default='1')
     

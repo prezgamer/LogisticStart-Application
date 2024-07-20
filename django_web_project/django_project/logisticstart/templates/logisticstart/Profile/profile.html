@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar {
+            background-color: #D9D9D9; /* Gray color for the navbar */
+        }
+        .navbar-item {
+            color: #000AFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #E6E6E6;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .buttons {
+            margin-top: 0;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .box .content .field p {
+            margin-bottom: 0.5rem; /* Adjust margin between text elements */
+        }
+        .normal-text {
+            font-weight: normal;
+        }
+        .bold-text {
+            font-weight: bold;
+        }
+    </style>
+    <title>Profile</title>
+</head>
+<body>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers">Workers</a></li>
+                <li><a href="/deliveryschedule">Delivery Schedule</a></li>
+                <li><a href="/warehouses" class="is-active">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <div class="container">
+                <div class="header">
+                    <h1 class="title">Profile</h1>
+                </div>
+                <div class="columns">
+                    <div class="column is-half">
+                        <div class="box">
+                            <h2 class="subtitle has-text-left">Account Details:</h2>
+                            <div class="field">
+                                <label class="label">Name:</label>
+                                <p class="bold-text">Andrew - Placeholder</p>
+                            </div>
+                            <div class="field">
+                                <label class="label">Account Since:</label>
+                                <p class="normal-text">22-June-2024</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="columns">
+                    <div class="column is-half">
+                        <div class="box">
+                            <h2 class="subtitle has-text-left">Company Details:</h2>
+                            <div class="field">
+                                <label class="label">Company Name:</label>
+                                <p class="normal-text">Water Front Ltd</p>
+                            </div>
+                            <div class="field">
+                                <label class="label">Company Phone Number:</label>
+                                <p class="normal-text">91123333</p>
+                            </div>
+                            <div class="field">
+                                <label class="label">Company Address:</label>
+                                <p class="normal-text">112333</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

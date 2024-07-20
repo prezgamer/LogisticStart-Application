@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogisticStart</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .navbar {
+            background-color: #D9D9D9; /* Gray color for the navbar */
+        }
+        .navbar-item {
+            color: #000AFF; /* Blue color for the text */
+            font-weight: bold;
+        }
+        .sidebar {
+            height: calc(100vh - 3.25rem); /* Adjust for navbar height */
+            position: fixed;
+            width: 200px;
+            top: 3.25rem; /* Adjust for navbar height */
+            left: 0;
+            background-color: #E6E6E6;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 220px;
+            margin-top: 3.25rem; /* Adjust for navbar height */
+            padding: 20px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block; /* Ensure the dropdown content becomes visible on hover */
+        }
+        .dropdown:hover .dropbtn {
+            background-color: transparent !important; /* Keep background transparent on hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                LogisticStart
+            </a>
+        </div>
+        <div class="user-info">
+            <img src="{% static 'images/default_avatar.png' %}" alt="{{ account.username }}" class="user-avatar" id="dropdownToggle">
+            <span>{{ account.username }}</span>
+            <div class="dropdown">
+                <button class="dropbtn" style="display:none">{{ account.username }}</button>
+                <div class="dropdown-content" id="dropdownMenu">
+                    <a href="{% url 'logisticstart-profile' %}">Profile</a>
+                    <a href="{% url 'logisticstart-billing' %}">Billing</a>
+                    <a href="{% url 'logisticstart-login' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/workers">Workers</a></li>
+                <li><a href="/deliveryschedule">Delivery Schedule</a></li>
+                <li><a href="/warehouses" class="is-active">Warehouse Details</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script>
+        // JavaScript to handle the click event on the user avatar
+        document.getElementById('dropdownToggle').addEventListener('click', function() {
+            var dropdown = document.getElementById('dropdownMenu');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Hide the dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-avatar')) {
+                var dropdowns = document.getElementsByClassName('dropdown-content');
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

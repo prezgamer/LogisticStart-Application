@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 
 handler404 = 'logisticstart.views.custom_page_not_found_view'
 handler500 = 'logisticstart.views.custom_error_view'
@@ -10,11 +12,12 @@ handler400 = 'logisticstart.views.custom_bad_request_view'
 
 
 urlpatterns = [
-    # path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
     # path('login/', views.logisticlogin, name='logisticstart-login'), #login page
     # path('signup/', views.logisticsignup, name='logisticstart-signup'), #signup page
     # path('form/', views.logisticform, name='logisticstart-form'), #look for logisticstart function
     # path('items/', views.item_list, name='logisticstart-list'), #look for logisticitems_list function
+
+    path('', views.logistichome, name='logisticstart-home'), #look for logistichome function
 
     #Warehouse Item paths
     path('warehouses/<int:id>/add-item/', views.add_warehouse_item, name='logisticstart-warehouseitemform'), #look for logisticWarehouseItemForm function
@@ -33,12 +36,12 @@ urlpatterns = [
 
     #Delivery Schedule Paths
     path('deliveryschedule/add-schedule/', views.add_delivery_schedule, name='logisticstart-add_deliveryschedule'),
-    path('deliveryschedule/', views.delivery_schedule, name='logisticstart-delivery_schedule'),
+    path('deliveryschedule/', views.delivery_schedule_list, name='logisticstart-delivery_schedule'),
     path('deliveryschedule/<int:deliveryid>/edit/', views.edit_delivery_item, name='logisticstart-edit_delivery_schedule'),
     path('deliveryschedule/<int:deliveryid>/delete', views.delete_delivery_item, name='logisticstart-delete_delivery_schedule'),
 
     #Worker Paths
-    path('workers/', views.worker_page, name='logisticstart-worker'),
+    path('workers/', views.worker_list, name='logisticstart-workerlist'),
     path('workers/<int:id>/edit', views.edit_worker_listing, name='worker-edit'),
     path('workers/<int:id>/delete', views.delete_worker_listing, name='worker-delete'),
     path('workers/add-worker/', views.add_new_worker, name='logisticstart-newworker'),
@@ -47,8 +50,21 @@ urlpatterns = [
     path('billing/', views.billing, name='logisticstart-billing'),
 
     #login
-    path('', views.logisticlogin, name='logisticstart-login'),
-    path('register/', views.logisticregister, name='logisticstart-register'),
+    path('login/', views.login_user, name='logisticstart-login'),
+    path('register/', views.register_user, name='logisticstart-register'),
+    path('camera/', views.test_camera, name='logisticstart-camera'),
+    path('upload/', views.upload_image, name='logisticstart-upload'),
+
+    #Paypal
+    path('create-payment/', views.create_payment, name='create_payment'),
+    path('execute-payment/', views.execute_payment, name='execute_payment'),
+    path('payment-cancelled/', views.payment_cancelled, name='payment_cancelled'),
+
+    #Profile Paths
+    path('profile/', views.profile, name='logisticstart-profile'),
+    # path('logout/', views.logisticlogin, name='logisticstart-logout'),
+    # path('profile/edit/', views.edit_profile_view, name='logisticstart-edit_profile'),
+    # path('profile/change-password/', views.change_password_view, name='logisticstart-change_password'),
 
 ]
 if settings.DEBUG:

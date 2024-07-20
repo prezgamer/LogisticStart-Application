@@ -55,7 +55,7 @@ ROOT_URLCONF = 'django_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +84,7 @@ DATABASES = {
         'HOST':'aws-0-ap-southeast-1.pooler.supabase.com',
         'PORT':'6543',
     }
-}
+} 
 
 
 # Password validation
@@ -124,7 +124,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'logisticstart/static')
 ]
 
 MEDIA_URL = '/media/images/'
@@ -134,3 +134,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#Paypal Settings
+PAYPAL_CLIENT_ID = 'AX_yuMiwVa6EfqW6w2N1wMG5mlEPwD0JUc7iaccAsYIcmw8zes_p2XVFi77bzJwXTUqYq8a9witcfyOL'
+PAYPAL_CLIENT_SECRET = 'EB6bSPXg1X0LhkosG2xJ3ViXLIFZknKPTTMs6ZfF8Ieb7D0SrGFDB9nRbyryBqOSyFyNHsbfX_XDpJ0W'
+PAYPAL_MODE = 'sandbox'  # or 'live' for production

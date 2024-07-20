@@ -50,7 +50,11 @@
             <div class="field">
                 <label class="label">Company Name</label>
                 <div class="control">
-                    {{ form.company_name }}
+                    <select name="company_name" class="input">
+                        {% for company_name in companies %}
+                        <option value="{{ company_name }}">{{ company_name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="field">
