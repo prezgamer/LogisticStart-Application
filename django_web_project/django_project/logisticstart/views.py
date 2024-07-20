@@ -51,7 +51,9 @@ def billing(request):
     total_workers = NewWorkerListing.objects.filter(account=current_account).count()
 
 
-    if total_workers > 0:
+    if total_workers > 0 and total_workers < 10:
+        cost = 0
+    elif total_workers >= 10 and total_workers < 50:
         cost = 10
     elif total_workers >= 50:
         cost = 100
@@ -65,12 +67,17 @@ def create_payment(request):
     current_account = get_current_account(request)
     total_workers = NewWorkerListing.objects.filter(account=current_account).count()
 
-    if total_workers > 0:
+    if total_workers > 0 and total_workers < 10:
+        cost = 0
+    elif total_workers >= 10 and total_workers < 50:
         cost = 10
     elif total_workers >= 50:
         cost = 100
 
     cost_str = f"{cost:.2f}"
+
+    if cost_str == "0.00":
+        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': "No Payment required"})
 
     payment = paypalrestsdk.Payment({
         "intent": "sale",
@@ -105,7 +112,7 @@ def create_payment(request):
                 approval_url = link.href
                 return redirect(approval_url)
     else:
-        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
+        return render(request, 'logisticstart/Paypal/payment_error.html', {'error': "Transaction error"})
 
 
 #execute payment using paypal
