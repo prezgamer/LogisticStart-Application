@@ -196,10 +196,12 @@ def add_new_worker(request):
 def add_warehouse(request):
     current_account = get_current_account(request)
     if request.method == 'POST':
-        form = CreateWarehouseListingForm(request.POST)
+        form = CreateWarehouseListingForm(request.POST,request.FILES)
         if form.is_valid():
             warehouse = form.save(commit=False)
             warehouse.account = current_account
+            if 'item_picture' in request.FILES:
+                warehouse.item_picture = request.FILES['item_picture']
             warehouse.save()
             return redirect('logisticstart-warehouselist')
     else:
