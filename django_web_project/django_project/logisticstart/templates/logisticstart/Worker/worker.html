@@ -89,7 +89,7 @@
                                 <td>{{ worker.worker_NOK }}</td>
                                 <td>{{ worker.worker_NOK_phonenumber }}</td>
                                 <td>
-                                    <img src="{{ worker.worker_picture.url }}" alt="Description of Image">
+                                    <img src="{{ worker.worker_picture.url }}" alt="Description of Image" style="width: 100px; height: auto;">
                                 </td>
                                 <td>
                                     <a href="{% url 'worker-edit' id=worker.id %}" class="button is-small is-info">Edit</a>
