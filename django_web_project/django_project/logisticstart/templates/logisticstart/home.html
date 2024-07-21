@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         .hero-body {
-            background: url('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQjo90gNAYQ0r1dhL24jdDq3Qar7rOLhSAumccQnlojWYVgwytF') no-repeat center center;
+            background: url('{% static "images/Home_Page/truck.jpg" %}') no-repeat center center;
             background-size: cover;
             text-align: center;
             display: flex;
@@ -153,7 +154,6 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="navbar-brand">
             <a class="navbar-item" href="/">
@@ -234,11 +234,11 @@
                 </div>
                 <div class="column is-half">
                     <div class="carousel">
-                        <img src="https://moovlogistics.com/wp-content/uploads/2024/06/Bonded-Warehouse-in-China.jpg" class="carousel-img">
-                        <img src="https://sellercraft.co/wp-content/uploads/brizy/imgs/types-of-inventory.jpg-565x377x31x0x502x377x1681114871.webp" class="carousel-img">
-                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTMc1jjnniJ7G7FvEeuDMI1HIxmHM7Tg0BqIC_lzA2p352XFATR" class="carousel-img">
-                        <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRNFlUscEhlym5qjnspFJ4YlETypqsaissuxZd3tu6_VJRDJ9Gq" class="carousel-img">
-                        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS46PEMJ1uA8YfhwaxzM3HPtjw1svWGi-4quzTZJlqLJ7AK9_NT" class="carousel-img">
+                        <img src="{% static 'images/Home_Page/carousel1.jpg' %}" class="carousel-img">
+                        <img src="{% static 'images/Home_Page/carousel2.jpg' %}" class="carousel-img">
+                        <img src="{% static 'images/Home_Page/carousel3.jpg' %}" class="carousel-img">
+                        <img src="{% static 'images/Home_Page/carousel4.jpg' %}" class="carousel-img">
+                        <img src="{% static 'images/Home_Page/carousel5.jpg' %}" class="carousel-img">
                     </div>
                 </div>
             </div>
