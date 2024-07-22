@@ -278,22 +278,28 @@ def main_dashboard(request):
 
 #Adding of Delivery Schedule
 def add_delivery_schedule(request):
+    #retrieve the current account from the request
     current_account = get_current_account(request)
     if request.method == 'POST':
-        form = CreateDeliveryScheduleForm(request.POST)
+        #ensures that the form can filter workers, warehouses, and items to only those belonging to the current account
+        form = CreateDeliveryScheduleForm(request.POST, current_account=current_account)
         if form.is_valid():
             delivery_schedule = form.save(commit=False)
             delivery_schedule.account = current_account
             delivery_schedule.save()
             return redirect('logisticstart-delivery_schedule')
     else:
-        form = CreateDeliveryScheduleForm()
+        form = CreateDeliveryScheduleForm(current_account=current_account)
     return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', {'form': form})
 
 #Displaying of Delivery Schedule
 def delivery_schedule_list(request):
     current_account = get_current_account(request)
+    #retrieves all NewDeliverySchedule objects associated with the current account 
+    #annotates each delivery schedule with the corresponding name
     schedules = NewDeliverySchedule.objects.filter(account=current_account).annotate(
+        #Filters the NewXXXXXListing objects to include only those whose id matches the XXXXXX_id in the NewDeliverySchedule object
+        #[:1]: retrieves the first matching name 
         worker_name=Subquery(
             NewWorkerListing.objects.filter(id=OuterRef('worker_id')).values('worker_name')[:1]
         ),
@@ -309,17 +315,20 @@ def delivery_schedule_list(request):
 #Editing of Delivery Schedule
 def edit_delivery_item(request, deliveryid):
     current_account = get_current_account(request)
+    #retrieve a NewDeliverySchedule with the primary key matching deliveryid and that belongs to the current_account
     delivery_schedule = get_object_or_404(NewDeliverySchedule, pk=deliveryid, account=current_account)
 
     if request.method == 'POST':
-        form = CreateDeliveryScheduleForm(request.POST, instance=delivery_schedule)
+        #current_account is passed to the form to ensure that only relevant items are displayed in the form's fields
+        form = CreateDeliveryScheduleForm(request.POST, instance=delivery_schedule, current_account=current_account)
         if form.is_valid():
             form.save()
             return redirect('logisticstart-delivery_schedule')
     else:
-        form = CreateDeliveryScheduleForm(instance=delivery_schedule)
+        form = CreateDeliveryScheduleForm(instance=delivery_schedule, current_account=current_account)
     
     return render(request, 'logisticstart/Deliveryschedule/edit_delivery_schedule.html', {'form': form})
+
 
 #delete delivery items from delivery schedules
 def delete_delivery_item(request, deliveryid):

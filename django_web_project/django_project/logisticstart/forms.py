@@ -54,16 +54,11 @@ class CreateWarehouseListingForm(forms.ModelForm):
         }
 
 class CreateDeliveryScheduleForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(CreateDeliveryScheduleForm, self).__init__(*args, **kwargs)
-        self.fields['worker'].label_from_instance = lambda obj: f"{obj.id} - {obj.worker_name}"
-        self.fields['warehouse'].label_from_instance = lambda obj: f"{obj.id} - {obj.warehouse_name}"
-        self.fields['item'].label_from_instance = lambda obj: f"{obj.id} - {obj.item_name}"
+    #Dropdown field for worker,warehouse and items
+    worker = forms.ModelChoiceField(queryset=NewWorkerListing.objects.none(), empty_label=None, label='Worker')
+    warehouse = forms.ModelChoiceField(queryset=NewWarehouseListing.objects.none(), empty_label=None, label='Warehouse')
+    item = forms.ModelChoiceField(queryset=NewItemListing.objects.none(), empty_label=None, label='Item')
 
-    worker = forms.ModelChoiceField(queryset=NewWorkerListing.objects.all(), empty_label=None, label='Worker')
-    warehouse = forms.ModelChoiceField(queryset=NewWarehouseListing.objects.filter(warehouse_status='Available'), empty_label=None, label='Warehouse')
-    item = forms.ModelChoiceField(queryset=NewItemListing.objects.all(), empty_label=None, label='Item')
-    
     class Meta:
         model = NewDeliverySchedule
         fields = [
@@ -78,14 +73,22 @@ class CreateDeliveryScheduleForm(forms.ModelForm):
         widgets = {
             'delivery_status': forms.RadioSelect(choices=NewDeliverySchedule.DELIVERY_STATUS)
         }
+    #initialize method 
+    def __init__(self, *args, **kwargs):
+        current_account = kwargs.pop('current_account', None)
+        super(CreateDeliveryScheduleForm, self).__init__(*args, **kwargs)
         
-    def clean_worker(self):
-        return self.cleaned_data['worker']
-    def clean_warehouse(self):
-        return self.cleaned_data['warehouse']
-    def clean_item(self):
-        return self.cleaned_data['item']
-
+        if current_account:
+            #filtering to only include the fields associated with the current account.
+            self.fields['worker'].queryset = NewWorkerListing.objects.filter(account=current_account)
+            #will only display warehouses that has the available status
+            self.fields['warehouse'].queryset = NewWarehouseListing.objects.filter(account=current_account, warehouse_status='Available') 
+            self.fields['item'].queryset = NewItemListing.objects.filter(account=current_account)
+        #making custom labels to include both the id and name of that specific thing
+        self.fields['worker'].label_from_instance = lambda obj: f"{obj.id} - {obj.worker_name}"
+        self.fields['warehouse'].label_from_instance = lambda obj: f"{obj.id} - {obj.warehouse_name}"
+        self.fields['item'].label_from_instance = lambda obj: f"{obj.id} - {obj.item_name}"
+        
 class register(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)

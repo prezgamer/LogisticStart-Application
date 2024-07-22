@@ -78,21 +78,24 @@
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">{{ form.workerid.label }}</label>
+                            <label class="label">{{ form.worker.label }}</label>
                             <div class="control">
-                                {{ form.workerid }}
+                                {% comment %} names should match the field names in CreateDeliveryScheduleForm  {% endcomment %}
+                                {{ form.worker }} 
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">{{ form.warehouseid.label }}</label>
+                            <label class="label">{{ form.warehouse.label }}</label>
                             <div class="control">
-                                {{ form.warehouseid }}
+                                {% comment %} names should match the field names in CreateDeliveryScheduleForm  {% endcomment %}
+                                {{ form.warehouse }}
                             </div>
                         </div>
                         <div class="field">
-                            <label class="label">{{ form.itemid.label }}</label>
+                            <label class="label">{{ form.item.label }}</label>
                             <div class="control">
-                                {{ form.itemid }}
+                                {% comment %} names should match the field names in CreateDeliveryScheduleForm  {% endcomment %}
+                                {{ form.item }}
                             </div>
                         </div>
                         <div class="field">
@@ -114,7 +117,5 @@
             </div>
         </section>
     </div>
-
-
 </body>
 </html>
