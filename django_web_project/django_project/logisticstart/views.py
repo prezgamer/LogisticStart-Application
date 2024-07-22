@@ -376,6 +376,8 @@ def login_user(request):
                 print(f"Account found: {account}")
                 if check_password(password, account.password):
                     request.session['account_id'] = account.accountID
+                    request.session['username'] = account.username  # Added to store username in session
+                    print(f"Session username set: {request.session['username']}")  # Debug statement
                     messages.success(request, 'You have been logged in successfully.')
                     print("Login successful")
                     return redirect('logisticstart-dashboard')  # Redirect to home or dashboard
@@ -395,9 +397,14 @@ def login_user(request):
     return render(request, 'logisticstart/Login/login.html', context)
 
 #load up profile page
+
 def profile(request):
     current_account = get_current_account(request)
-    return render(request, 'logisticstart/Profile/profile.html')
+    username = request.session.get('username')
+    print(f"Profile view - username: {username}")  # Debug statement
+    return render(request, 'logisticstart/Profile/profile.html', {
+        'username': username,
+    })
 
 # def logout(request):
 #     return render(request, 'logisticstart/Login/login.html')
