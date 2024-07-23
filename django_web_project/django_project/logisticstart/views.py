@@ -417,13 +417,22 @@ def custom_page_not_found_view(request, exception):
     return render(request, "errors/404.html", {'account_info':account_info})
 
 def custom_error_view(request, exception=None):
-    return render(request, "errors/500.html", {})
+    current_account = get_current_account(request)
+    account_info = current_account
+    return render(request, "errors/404.html", {'account_info':account_info})
+
 
 def custom_permission_denied_view(request, exception=None):
-    return render(request, "errors/403.html", {})
+    current_account = get_current_account(request)
+    account_info = current_account
+    return render(request, "errors/404.html", {'account_info':account_info})
+
 
 def custom_bad_request_view(request, exception=None):
-    return render(request, "errors/400.html", {})
+    current_account = get_current_account(request)
+    account_info = current_account
+    return render(request, "errors/404.html", {'account_info':account_info})
+
 
 
 #when user registers
