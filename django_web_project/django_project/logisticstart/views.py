@@ -393,6 +393,7 @@ def login_user(request):
                 if check_password(password, account.password):
                     request.session['account_id'] = account.accountID
                     request.session['username'] = account.username  # Added to store username in session
+                    request.session['company_name'] = account.company_name  # Added to store company name in session
                     print(f"Session username set: {request.session['username']}")  # Debug statement
                     messages.success(request, 'You have been logged in successfully.')
                     print("Login successful")
