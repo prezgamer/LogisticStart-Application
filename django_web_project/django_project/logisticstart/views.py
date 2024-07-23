@@ -47,6 +47,7 @@ def get_current_account(request):
 #render the billing page
 def billing(request):
     current_account = get_current_account(request)
+    account_info = current_account
     costs = UserBilling.objects.filter(account=current_account)
     total_workers = NewWorkerListing.objects.filter(account=current_account).count()
 
@@ -59,8 +60,11 @@ def billing(request):
         cost = 100
 
     cost_str = f"{cost:.2f}"
-
-    return render(request, 'logisticstart/UserFunctions/billing.html', {'cost': cost_str})
+    context = {
+        'cost': cost_str,
+        'account_info':account_info
+    }
+    return render(request, 'logisticstart/UserFunctions/billing.html', context)
 
 #paypal page
 def create_payment(request):
