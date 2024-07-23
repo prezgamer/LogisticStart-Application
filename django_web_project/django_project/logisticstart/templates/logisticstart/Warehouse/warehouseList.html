@@ -71,6 +71,12 @@
         .dropdown:hover .dropbtn {
             background-color: transparent !important; /* Keep background transparent on hover */
         }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
         .menu-list a {
             display: flex;
@@ -125,7 +131,11 @@
     <div class="content">
         <section class="section">
             <div class="container">
-                <h1 class="title">Warehouse Listings</h1>
+                <div class="header-container">
+                    <h1 class="title">Warehouse Listings</h1>
+                    <a class="button is-primary" href="{% url 'logisticstart-addwarehouse' %}">Add Warehouse</a>
+                </div>
+
                 <div class="table-container">
                     <table class="table is-striped is-fullwidth">
                         <thead>
@@ -159,9 +169,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                </div>
-                <a class="button is-primary" href="{% url 'logisticstart-addwarehouse' %}">Add Warehouse</a>
-            </div>
+                
         </section>
     </div>
     <script>
