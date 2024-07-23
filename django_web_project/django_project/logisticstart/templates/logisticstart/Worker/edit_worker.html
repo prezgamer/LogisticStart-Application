@@ -49,7 +49,7 @@
 <body>
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="/">
+            <a class="navbar-item" href="{% url 'logisticstart-dashboard' %}">
                 LogisticStart
             </a>
         </div>
@@ -59,10 +59,10 @@
     <div class="sidebar">
         <aside class="menu">
             <ul class="menu-list">
-                <li><a href="/dashboard"><img src="{% static 'images/Icons/home_icon.png' %}" alt="Home Icon" class="menu-icon"> Dashboard</a></li>
-                <li><a href="/workers" class="is-active"><img src="{% static 'images/Icons/user_group_icon.png' %}" alt="Workers Icon" class="menu-icon"> Workers</a></li>
-                <li><a href="/deliveryschedule"><img src="{% static 'images/Icons/truck_icon.png' %}" alt="Delivery Icon" class="menu-icon"> Delivery Schedule</a></li>
-                <li><a href="/warehouses"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
+                <li><a href="{% url 'logisticstart-dashboard' %}"><img src="{% static 'images/Icons/home_icon.png' %}" alt="Home Icon" class="menu-icon"> Dashboard</a></li>
+                <li><a href="{% url 'logisticstart-workerlist' %}" class="is-active"><img src="{% static 'images/Icons/user_group_icon.png' %}" alt="Workers Icon" class="menu-icon"> Workers</a></li>
+                <li><a href="{% url 'logisticstart-delivery_schedule' %}"><img src="{% static 'images/Icons/truck_icon.png' %}" alt="Delivery Icon" class="menu-icon"> Delivery Schedule</a></li>
+                <li><a href="{% url 'logisticstart-warehouselist' %}"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
             </ul>
         </aside>
     </div>

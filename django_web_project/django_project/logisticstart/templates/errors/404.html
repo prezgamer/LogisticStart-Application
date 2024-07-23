@@ -4,8 +4,11 @@
     <title>Error 404 Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
+        .navbar {
+            background-color: #D9D9D9; /* Gray color for the navbar */
+        }
         .navbar-item {
-            color: #007BFF; /* Blue color for the text */
+            color: #000AFF; /* Blue color for the text */
             font-weight: bold;
         }
         .sidebar {
@@ -14,33 +17,48 @@
             width: 200px;
             top: 3.25rem; /* Adjust for navbar height */
             left: 0;
-            background-color: #f5f5f5;
+            background-color: #E6E6E6;
             padding-top: 20px;
         }
         .content {
             margin-left: 220px;
             margin-top: 3.25rem; /* Adjust for navbar height */
             padding: 20px;
-            text-align: center;
+        }
+
+        .menu-list a {
+            display: flex;
+            align-items: center;
+            font-size: 1rem; /* Adjust as needed */
+            text-decoration: none; /* Remove underline if needed */
+            color: inherit; /* Ensure the text color is inherited */
+        }
+
+        .menu-icon {
+            width: 1.5em;  /* Size relative to the font size */
+            height: 1.5em; /* Size relative to the font size */
+            margin-right: 0.5em;  /* Space between icon and text */
+            vertical-align: middle; /* Align icon with text */
         }
     </style>
 </head>
 <body>
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="/">
+            <a class="navbar-item" href="{% url 'logisticstart-dashboard' %}">
                 LogisticStart
             </a>
         </div>
     </nav>
 
+    {% load static %}
     <div class="sidebar">
         <aside class="menu">
             <ul class="menu-list">
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/workers">Workers</a></li>
-                <li><a href="/deliveryschedule/schedule/">Delivery Schedule</a></li>
-                <li><a href="/warehouses">Warehouse Details</a></li>
+                <li><a href="{% url 'logisticstart-dashboard' %}"><img src="{% static 'images/Icons/home_icon.png' %}" alt="Home Icon" class="menu-icon"> Dashboard</a></li>
+                <li><a href="{% url 'logisticstart-workerlist' %}"><img src="{% static 'images/Icons/user_group_icon.png' %}" alt="Workers Icon" class="menu-icon"> Workers</a></li>
+                <li><a href="{% url 'logisticstart-delivery_schedule' %}"><img src="{% static 'images/Icons/truck_icon.png' %}" alt="Delivery Icon" class="menu-icon"> Delivery Schedule</a></li>
+                <li><a href="{% url 'logisticstart-warehouselist' %}"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
             </ul>
         </aside>
     </div>
@@ -50,7 +68,7 @@
             <div class="container">
                 <h1 class="title">Error 404: Webpage does not exist</h1>
                 <p class="subtitle">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
-                <a class="button is-link" href="/">Go to Homepage</a>
+                <a class="button is-link" href="{% url 'logisticstart-dashboard' %}">Go to Homepage</a>
             </div>
         </section>
     </div>

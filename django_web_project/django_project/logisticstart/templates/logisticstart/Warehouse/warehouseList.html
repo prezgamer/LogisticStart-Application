@@ -71,12 +71,27 @@
         .dropdown:hover .dropbtn {
             background-color: transparent !important; /* Keep background transparent on hover */
         }
+
+        .menu-list a {
+            display: flex;
+            align-items: center;
+            font-size: 1rem; /* Adjust as needed */
+            text-decoration: none; /* Remove underline if needed */
+            color: inherit; /* Ensure the text color is inherited */
+        }
+
+        .menu-icon {
+            width: 1.5em;  /* Size relative to the font size */
+            height: 1.5em; /* Size relative to the font size */
+            margin-right: 0.5em;  /* Space between icon and text */
+            vertical-align: middle; /* Align icon with text */
+        }
     </style>
 </head>
 <body>
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="/">
+            <a class="navbar-item" href="{% url 'logisticstart-dashboard' %}">
                 LogisticStart
             </a>
         </div>
@@ -94,13 +109,14 @@
         </div>
     </nav>
 
+    {% load static %}
     <div class="sidebar">
         <aside class="menu">
             <ul class="menu-list">
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/workers">Workers</a></li>
-                <li><a href="/deliveryschedule">Delivery Schedule</a></li>
-                <li><a href="/warehouses" class="is-active">Warehouse Details</a></li>
+                <li><a href="{% url 'logisticstart-dashboard' %}"><img src="{% static 'images/Icons/home_icon.png' %}" alt="Home Icon" class="menu-icon"> Dashboard</a></li>
+                <li><a href="{% url 'logisticstart-workerlist' %}"><img src="{% static 'images/Icons/user_group_icon.png' %}" alt="Workers Icon" class="menu-icon"> Workers</a></li>
+                <li><a href="{% url 'logisticstart-delivery_schedule' %}"><img src="{% static 'images/Icons/truck_icon.png' %}" alt="Delivery Icon" class="menu-icon"> Delivery Schedule</a></li>
+                <li><a href="{% url 'logisticstart-warehouselist' %}" class="is-active"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
             </ul>
         </aside>
     </div>
