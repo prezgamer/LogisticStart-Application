@@ -15,7 +15,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import base64
 
-#work in progress
+#Load the home.html 
 def logistichome(request):
     return render(request, 'logisticstart/home.html') 
 
