@@ -225,7 +225,13 @@ def warehouse_list(request):
 def worker_list(request):
     current_account = get_current_account(request)
     workers = NewWorkerListing.objects.filter(account=current_account)
-    return render(request, 'logisticstart/Worker/worker.html', {'workers': workers})
+    account_info = current_account
+
+    context = {
+        'workers' : workers,
+        'account_info': account_info
+    }
+    return render(request, 'logisticstart/Worker/worker.html', context)
 
 #edit worker listing from worker list
 def edit_worker_listing(request, id):
