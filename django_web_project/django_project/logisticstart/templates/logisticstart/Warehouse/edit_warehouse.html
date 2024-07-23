@@ -62,7 +62,7 @@
                 <li><a href="/dashboard"><img src="{% static 'images/Icons/home_icon.png' %}" alt="Home Icon" class="menu-icon"> Dashboard</a></li>
                 <li><a href="/workers"><img src="{% static 'images/Icons/user_group_icon.png' %}" alt="Workers Icon" class="menu-icon"> Workers</a></li>
                 <li><a href="/deliveryschedule"><img src="{% static 'images/Icons/truck_icon.png' %}" alt="Delivery Icon" class="menu-icon"> Delivery Schedule</a></li>
-                <li><a href="/warehouses"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
+                <li><a href="/warehouses" class="is-active"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
             </ul>
         </aside>
     </div>
@@ -108,10 +108,13 @@
                     </fieldset>
                     <div class="button-container field is-grouped">
                         <div class="control">
-                            <button type="submit" class="button is-link">Update Warehouse</button>
+                            <button type="submit" class="button is-primary">Update Warehouse</button>
                         </div>
                         <div class="control">
                             <button type="reset" class="button is-light">Reset</button>
+                        </div>
+                        <div class="control">
+                            <a class="button is-link" href="{% url 'logisticstart-warehouselist'%}">Back to Warehouse List</a>
                         </div>
                     </div>
                 </form>

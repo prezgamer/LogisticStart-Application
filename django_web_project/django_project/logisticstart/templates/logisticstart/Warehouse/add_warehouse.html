@@ -58,7 +58,7 @@
                 <li><a href="/dashboard"><img src="{% static 'images/Icons/home_icon.png' %}" alt="Home Icon" class="menu-icon"> Dashboard</a></li>
                 <li><a href="/workers"><img src="{% static 'images/Icons/user_group_icon.png' %}" alt="Workers Icon" class="menu-icon"> Workers</a></li>
                 <li><a href="/deliveryschedule"><img src="{% static 'images/Icons/truck_icon.png' %}" alt="Delivery Icon" class="menu-icon"> Delivery Schedule</a></li>
-                <li><a href="/warehouses"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
+                <li><a href="/warehouses" class="is-active"><img src="{% static 'images/Icons/warehouse_icon.png' %}" alt="Warehouse Icon" class="menu-icon"> Warehouse Details</a></li>
             </ul>
         </aside>
     </div>
@@ -73,7 +73,7 @@
                     <div class="buttons">
                         <button class="button is-primary" type="submit" value="NewWarehouseListing">Add</button>
                         <button class="button" type="reset">Reset</button>
-                        <a class="button is-linked" href="{% url 'logisticstart-warehouselist' %}">Back to warehouse list</a>
+                        <a class="button is-linked" href="{% url 'logisticstart-warehouselist' %}">Back to Warehouse list</a>
                     
                     </div>
                 </form>
