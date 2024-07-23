@@ -394,6 +394,8 @@ def login_user(request):
                     request.session['account_id'] = account.accountID
                     request.session['username'] = account.username  # Added to store username in session
                     request.session['company_name'] = account.company_name  # Added to store company name in session
+                    request.session['company_address'] = account.company_address
+                    request.session['company_phonenumber'] = account.company_phonenumber
                     print(f"Session username set: {request.session['username']}")  # Debug statement
                     messages.success(request, 'You have been logged in successfully.')
                     print("Login successful")
@@ -419,10 +421,14 @@ def profile(request):
     current_account = get_current_account(request)
     username = request.session.get('username')
     company_name = request.session.get('company_name')
+    company_address = request.session.get('company_address')
+    company_phonenumber = request.session.get('company_phonenumber')
 
     return render(request, 'logisticstart/Profile/profile.html', {
         'username': username,
         'company_name': company_name,
+        'company_address': company_address,
+        'company_phonenumber': company_phonenumber
     })
 
 # def logout(request):
