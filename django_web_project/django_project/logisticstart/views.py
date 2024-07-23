@@ -417,9 +417,11 @@ def login_user(request):
 def profile(request):
     current_account = get_current_account(request)
     username = request.session.get('username')
-    print(f"Profile view - username: {username}")  # Debug statement
+    company_name = request.session.get('company_name')
+
     return render(request, 'logisticstart/Profile/profile.html', {
         'username': username,
+        'company_name': company_name,
     })
 
 # def logout(request):
