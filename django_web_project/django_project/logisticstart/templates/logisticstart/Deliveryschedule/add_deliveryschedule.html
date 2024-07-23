@@ -41,7 +41,7 @@
             <ul class="menu-list">
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/workers">Workers</a></li>
-                <li><a href="/deliveryschedule">Delivery Schedule</a></li>
+                <li><a href="/deliveryschedule" class="is-active">Delivery Schedule</a></li>
                 <li><a href="/warehouses">Warehouse Details</a></li>
             </ul>
         </aside>
@@ -57,6 +57,7 @@
                     <div class="buttons">
                         <button class="button is-primary" type="submit" value="NewDeliveryScheduleListing">Add</button>
                         <button class="button" type="reset">Reset</button>
+                        <a class="button is-link" href="{% url 'logisticstart-delivery_schedule' %}">Back to Delivery List</a>
                     </div>
                 </form>
             </div>
