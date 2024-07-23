@@ -212,7 +212,14 @@ def add_warehouse(request):
 def warehouse_list(request):
     current_account = get_current_account(request)
     warehouses = NewWarehouseListing.objects.filter(account=current_account)
-    return render(request, 'logisticstart/Warehouse/warehouseList.html', {'warehouses': warehouses})
+    account_info = current_account  # No need to fetch again, use current_account directly
+
+    context = {
+        'warehouses': warehouses,
+        'account_info': account_info,
+    }
+
+    return render(request, 'logisticstart/Warehouse/warehouseList.html', context)
 
 #render the worker list
 def worker_list(request):

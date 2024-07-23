@@ -36,6 +36,11 @@
             top: 10px;
             right: 10px;
         }
+        .user-role {
+            font-size: 0.9em;
+            color: #666;
+        }
+    
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -102,8 +107,13 @@
             </a>
         </div>
         <div class="user-info">
-            <img src="{% static 'images/default_avatar.png' %}" alt="{{ request.user.username }}" class="user-avatar" id="dropdownToggle">
-            <span>{{ request.user.username }}</span>
+            <div class="user-avatar-container">
+                <img src="{% static 'images/default_avatar.png' %}" alt="{{ request.user.username }}" class="user-avatar" id="dropdownToggle">
+            </div>
+            <div class="user-details">
+                <p class="user-role">{{ account_info.username }}</p>
+                <p class="user-role">{{ account_info.company_name }}</p>
+            </div>
             <div class="dropdown">
                 <button class="dropbtn" style="display:none">{{ request.user.username }}</button>
                 <div class="dropdown-content" id="dropdownMenu">
