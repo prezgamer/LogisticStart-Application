@@ -51,6 +51,34 @@
         <section class="section">
             <div class="container">
                 <h1 class="title">Dashboard</h1>
+                
+                <div class="table-container">
+                    <h3 class="subtitle">Ongoing Deliveries</h3>
+                    <table class="table is-striped is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Delivery ID</th>    
+                                <th>Receiver Name</th>
+                                <th>Address</th>
+                                <th>Delivery By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for delivery in deliveries %}
+                            <tr>
+                                <td>{{ delivery.deliveryid }}</td>
+                                <td>{{ delivery.receiver_name }}</td>
+                                <td>{{ delivery.receiver_address }}</td>
+                                <td>{{ delivery.worker_name }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8">No ongoing deliveries for now.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="table-container">
                     <h3 class="subtitle">Workers</h3>

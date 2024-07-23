@@ -267,10 +267,17 @@ def delete_warehouse_listing(request, id):
 #Dashboard
 def main_dashboard(request):
     current_account = get_current_account(request)
+    
+    #display deliveries with status delivering, as well as retrieving workers name using the id stored
+    delivery = NewDeliverySchedule.objects.filter(account=current_account, delivery_status='Delivering').annotate(
+        worker_name=Subquery(NewWorkerListing.objects.filter(id=OuterRef('worker_id')).values('worker_name')[:1])
+    ).values('deliveryid', 'receiver_name',"receiver_address", 'worker_name')
+    
     workers = NewWorkerListing.objects.filter(account=current_account).values('id', 'worker_name', 'worker_phonenumber')
     warehouses = NewWarehouseListing.objects.filter(account=current_account).values('warehouse_name', 'warehouse_postalcode', 'warehouse_phonenumber')
     
     dashboard = {
+        'deliveries':delivery,
         'warehouses': warehouses,
         'workers': workers
     }
