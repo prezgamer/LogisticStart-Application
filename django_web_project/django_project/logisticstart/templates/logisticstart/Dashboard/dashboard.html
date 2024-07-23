@@ -107,10 +107,11 @@
             </div>
             <div class="dropdown">
                 <button class="dropbtn" style="display:none">{{ request.user.username }}</button>
+                
                 <div class="dropdown-content" id="dropdownMenu">
                     <a href="{% url 'logisticstart-profile' %}">Profile</a>
                     <a href="{% url 'logisticstart-billing' %}">Billing</a>
-                    <a href="{% url 'logisticstart-login' %}">Logout</a>
+                    <a href="{% url 'logisticstart-logout' %}">Logout</a>
                 </div>
             </div>
     </nav>

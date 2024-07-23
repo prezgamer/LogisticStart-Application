@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect 
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 from .models import NewItemListing, NewWarehouseListing, NewWorkerListing,NewDeliverySchedule,Accounts, UserBilling
 from .forms import CreateItemListingForm, CreateWarehouseListingForm, CreateWorkerListingForm,CreateDeliveryScheduleForm,register, Login
@@ -14,6 +13,8 @@ from django.http import JsonResponse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import base64
+from .decorators import login_required
+
 
 #Load the home.html 
 def logistichome(request):
@@ -45,6 +46,7 @@ def get_current_account(request):
         raise PermissionDenied("You must be logged in to view this page.")
 
 #render the billing page
+@login_required
 def billing(request):
     current_account = get_current_account(request)
     account_info = current_account
@@ -236,6 +238,7 @@ def add_warehouse(request):
     return render(request, 'logisticstart/Warehouse/add_warehouse.html', context)
 
 #render the warehouse list 
+@login_required
 def warehouse_list(request):
     current_account = get_current_account(request)
     warehouses = NewWarehouseListing.objects.filter(account=current_account)
@@ -249,6 +252,7 @@ def warehouse_list(request):
     return render(request, 'logisticstart/Warehouse/warehouseList.html', context)
 
 #render the worker list
+@login_required
 def worker_list(request):
     current_account = get_current_account(request)
     workers = NewWorkerListing.objects.filter(account=current_account)
@@ -317,6 +321,7 @@ def delete_warehouse_listing(request, id):
     return render(request, 'delete_warehouse_listing', {'warehouse': warehouse})
 
 #Dashboard
+@login_required
 def main_dashboard(request):
     current_account = get_current_account(request)
     
@@ -358,6 +363,7 @@ def add_delivery_schedule(request):
     return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', context)
 
 #Displaying of Delivery Schedule
+@login_required
 def delivery_schedule_list(request):
     current_account = get_current_account(request)
     #retrieves all NewDeliverySchedule objects associated with the current account 
@@ -383,6 +389,7 @@ def delivery_schedule_list(request):
     return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html',context)
 
 #Editing of Delivery Schedule
+@login_required
 def edit_delivery_item(request, deliveryid):
     current_account = get_current_account(request)
     account_info = current_account
@@ -425,12 +432,10 @@ def custom_error_view(request, exception=None):
     account_info = current_account
     return render(request, "errors/404.html", {'account_info':account_info})
 
-
 def custom_permission_denied_view(request, exception=None):
     current_account = get_current_account(request)
     account_info = current_account
     return render(request, "errors/404.html", {'account_info':account_info})
-
 
 def custom_bad_request_view(request, exception=None):
     current_account = get_current_account(request)
@@ -496,6 +501,7 @@ def login_user(request):
     return render(request, 'logisticstart/Login/login.html', context)
 
 #load up profile page
+@login_required
 def profile(request):
     try:
         current_account = get_current_account(request)
@@ -507,16 +513,9 @@ def profile(request):
         'account_info': account_info,
     })
 
-# def logout(request):
-#     return render(request, 'logisticstart/Login/login.html')
 
-# def profile_view(request):
-#     return render(request, 'logisticstart/Profile/profile.html')
-
-# def edit_profile_view(request):
-#     # Add your view logic here
-#     return render(request, 'edit_profile.html')
-
-# def change_password_view(request):
-#     # Add your view logic here
-#     return render(request, 'change_password.html')
+def logout(request):
+    if 'username' in request.session:
+        del request.session['username']
+        #messages.success(request, 'You have successfully logged out.')
+    return redirect('logisticstart-login')
