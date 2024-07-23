@@ -288,11 +288,12 @@ def main_dashboard(request):
     
     workers = NewWorkerListing.objects.filter(account=current_account).values('id', 'worker_name', 'worker_phonenumber')
     warehouses = NewWarehouseListing.objects.filter(account=current_account).values('warehouse_name', 'warehouse_postalcode', 'warehouse_phonenumber')
-    
+    account_info = current_account
     dashboard = {
         'deliveries':delivery,
         'warehouses': warehouses,
-        'workers': workers
+        'workers': workers,
+        'account_info' : account_info
     }
     return render(request, 'logisticstart/Dashboard/dashboard.html', dashboard)
 
@@ -330,7 +331,12 @@ def delivery_schedule_list(request):
             NewItemListing.objects.filter(id=OuterRef('item_id')).values('item_name')[:1]
         )
     ).all()
-    return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html', {'schedules': schedules})
+    account_info = current_account
+    context = {
+        'schedules' : schedules,
+        'account_info' : account_info
+    }
+    return render(request, 'logisticstart/Deliveryschedule/deliveryschedule.html',context)
 
 #Editing of Delivery Schedule
 def edit_delivery_item(request, deliveryid):
