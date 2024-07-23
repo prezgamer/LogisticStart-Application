@@ -134,13 +134,20 @@ def payment_cancelled(request):
 #list down the items from the item table
 def warehouse_item_list(request, id):
     current_account = get_current_account(request)
+    account_info = current_account
     warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
     items = warehouse.items.all()
-    return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', {'warehouse': warehouse, 'items': items})
+    context = {
+        'warehouse': warehouse,
+        'account_info': account_info,
+        'items' : items
+    }
+    return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', context)
 
 #add items to respective warehouse from forms
 def add_warehouse_item(request, id):
     current_account = get_current_account(request)
+    account_info = current_account
     warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateItemListingForm(request.POST, request.FILES)
@@ -154,7 +161,12 @@ def add_warehouse_item(request, id):
             return redirect('logisticstart-warehouseitemlist', id=warehouse.id)
     else:
         form = CreateItemListingForm()
-    return render(request, 'logisticstart/WarehouseItems/warehouseitemlistform.html', {'form': form, 'warehouse': warehouse})
+    context={
+        'form': form, 
+        'warehouse': warehouse,
+        'account_info' : account_info
+    }
+    return render(request, 'logisticstart/WarehouseItems/warehouseitemlistform.html', context)
 
 #edit warehouse items from respective warehouses
 def edit_warehouse_item(request, id):
@@ -181,6 +193,8 @@ def delete_warehouse_item(request, id):
 #add new workers to worker table
 def add_new_worker(request):
     current_account = get_current_account(request)
+    account_info = current_account
+
     if request.method == 'POST':
         form = CreateWorkerListingForm(request.POST, request.FILES)
         if form.is_valid():
@@ -190,11 +204,16 @@ def add_new_worker(request):
             return redirect('logisticstart-workerlist')
     else:
         form = CreateWorkerListingForm()
-    return render(request, 'logisticstart/Worker/new_worker.html', {'form': form})
+    context={
+        'form': form, 
+        'account_info' : account_info
+    }
+    return render(request, 'logisticstart/Worker/new_worker.html', context)
 
 #add new warehouses to warehouse table
 def add_warehouse(request):
     current_account = get_current_account(request)
+    account_info = current_account
     if request.method == 'POST':
         form = CreateWarehouseListingForm(request.POST,request.FILES)
         if form.is_valid():
@@ -206,7 +225,11 @@ def add_warehouse(request):
             return redirect('logisticstart-warehouselist')
     else:
         form = CreateWarehouseListingForm()
-    return render(request, 'logisticstart/Warehouse/add_warehouse.html', {'form': form})
+    context = {
+        'form' : form,
+        'account_info' : account_info
+    }
+    return render(request, 'logisticstart/Warehouse/add_warehouse.html', context)
 
 #render the warehouse list 
 def warehouse_list(request):
@@ -236,6 +259,8 @@ def worker_list(request):
 #edit worker listing from worker list
 def edit_worker_listing(request, id):
     current_account = get_current_account(request)
+    account_info = current_account
+
     listing = get_object_or_404(NewWorkerListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateWorkerListingForm(request.POST, request.FILES, instance=listing)
@@ -244,7 +269,11 @@ def edit_worker_listing(request, id):
             return redirect('logisticstart-workerlist')
     else:
         form = CreateWorkerListingForm(instance=listing)
-    return render(request, 'logisticstart/Worker/edit_worker.html', {'form': form})
+    context={
+        'form': form, 
+        'account_info' : account_info
+    }
+    return render(request, 'logisticstart/Worker/edit_worker.html', context)
 
 #delete worker listing from worker list
 def delete_worker_listing(request, id):
@@ -258,6 +287,8 @@ def delete_worker_listing(request, id):
 #edit warehouse listing from warehouse list
 def edit_warehouse_listing(request, id):
     current_account = get_current_account(request)
+    account_info = current_account
+
     listing = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateWarehouseListingForm(request.POST, request.FILES, instance=listing)
@@ -266,7 +297,11 @@ def edit_warehouse_listing(request, id):
             return redirect('logisticstart-warehouselist')
     else:
         form = CreateWarehouseListingForm(instance=listing)
-    return render(request, 'logisticstart/Warehouse/edit_warehouse.html', {'form': form})
+    context={
+        'form': form,
+        'account_info' : account_info
+    }
+    return render(request, 'logisticstart/Warehouse/edit_warehouse.html', context)
 
 #delete warehouse listing from warehouse list
 def delete_warehouse_listing(request, id):
@@ -301,6 +336,7 @@ def main_dashboard(request):
 def add_delivery_schedule(request):
     #retrieve the current account from the request
     current_account = get_current_account(request)
+    account_info = current_account
     if request.method == 'POST':
         #ensures that the form can filter workers, warehouses, and items to only those belonging to the current account
         form = CreateDeliveryScheduleForm(request.POST, current_account=current_account)
@@ -311,7 +347,11 @@ def add_delivery_schedule(request):
             return redirect('logisticstart-delivery_schedule')
     else:
         form = CreateDeliveryScheduleForm(current_account=current_account)
-    return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', {'form': form})
+    context = {
+        'form' : form,
+        'account_info' : account_info
+    }
+    return render(request, 'logisticstart/Deliveryschedule/add_deliveryschedule.html', context)
 
 #Displaying of Delivery Schedule
 def delivery_schedule_list(request):
@@ -341,6 +381,7 @@ def delivery_schedule_list(request):
 #Editing of Delivery Schedule
 def edit_delivery_item(request, deliveryid):
     current_account = get_current_account(request)
+    account_info = current_account
     #retrieve a NewDeliverySchedule with the primary key matching deliveryid and that belongs to the current_account
     delivery_schedule = get_object_or_404(NewDeliverySchedule, pk=deliveryid, account=current_account)
 
@@ -352,8 +393,13 @@ def edit_delivery_item(request, deliveryid):
             return redirect('logisticstart-delivery_schedule')
     else:
         form = CreateDeliveryScheduleForm(instance=delivery_schedule, current_account=current_account)
-    
-    return render(request, 'logisticstart/Deliveryschedule/edit_delivery_schedule.html', {'form': form})
+    context = {
+        'form':form,
+        'account_info' : account_info
+
+    }
+
+    return render(request, 'logisticstart/Deliveryschedule/edit_delivery_schedule.html', context)
 
 
 #delete delivery items from delivery schedules
@@ -366,7 +412,9 @@ def delete_delivery_item(request, deliveryid):
     return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
 
 def custom_page_not_found_view(request, exception):
-    return render(request, "errors/404.html", {})
+    current_account = get_current_account(request)
+    account_info = current_account
+    return render(request, "errors/404.html", {'account_info':account_info})
 
 def custom_error_view(request, exception=None):
     return render(request, "errors/500.html", {})

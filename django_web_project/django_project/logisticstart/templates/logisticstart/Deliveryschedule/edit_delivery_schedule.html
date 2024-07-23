@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
     <title>Edit Warehouse Items</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
@@ -29,7 +30,53 @@
             text-align: left;
             margin-top: 40px; /* Increased margin-top to lower the buttons */
         }
-
+        .user-info {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .user-role {
+            font-size: 0.9em;
+            color: #666;
+        }
+    
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block; /* Ensure the dropdown content becomes visible on hover */
+        }
+        .dropdown:hover .dropbtn {
+            background-color: transparent !important; /* Keep background transparent on hover */
+        }
         .menu-list a {
             display: flex;
             align-items: center;
@@ -53,6 +100,22 @@
                 LogisticStart
             </a>
         </div>
+        <div class="user-info">
+            <div class="user-avatar-container">
+                <img src="{% static 'images/default_avatar.png' %}" alt="{{ request.user.username }}" class="user-avatar" id="dropdownToggle">
+            </div>
+            <div class="user-details">
+                <p class="user-role">{{ account_info.username }}</p>
+                <p class="user-role">{{ account_info.company_name }}</p>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" style="display:none">{{ request.user.username }}</button>
+                <div class="dropdown-content" id="dropdownMenu">
+                    <a href="{% url 'logisticstart-profile' %}">Profile</a>
+                    <a href="{% url 'logisticstart-billing' %}">Billing</a>
+                    <a href="{% url 'logisticstart-login' %}">Logout</a>
+                </div>
+            </div>
     </nav>
 
     {% load static %}
@@ -136,5 +199,25 @@
             </div>
         </section>
     </div>
+    <script>
+        // JavaScript to handle the click event on the user avatar
+        document.getElementById('dropdownToggle').addEventListener('click', function() {
+            var dropdown = document.getElementById('dropdownMenu');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Hide the dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-avatar')) {
+                var dropdowns = document.getElementsByClassName('dropdown-content');
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
