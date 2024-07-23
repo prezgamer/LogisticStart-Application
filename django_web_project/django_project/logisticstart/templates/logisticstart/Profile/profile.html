@@ -95,11 +95,7 @@
                             <h2 class="subtitle has-text-left">Account Details:</h2>
                             <div class="field">
                                 <label class="label">Name:</label>
-                                <p class="bold-text">{{ username }}</p>
-                            </div>
-                            <div class="field">
-                                <label class="label">Account Since:</label>
-                                <p class="normal-text">22-June-2024</p>
+                                <p class="normal-text">{{ account_info.username }}</p>
                             </div>
                         </div>
                     </div>
@@ -111,15 +107,15 @@
                             <h2 class="subtitle has-text-left">Company Details:</h2>
                             <div class="field">
                                 <label class="label">Company Name:</label>
-                                <p class="normal-text">{{ company_name }}</p>
+                                <p class="normal-text">{{ account_info.company_name }}</p>
                             </div>
                             <div class="field">
                                 <label class="label">Company Phone Number:</label>
-                                <p class="normal-text">{{ company_phonenumber }}</p>
+                                <p class="normal-text">{{ account_info.company_phonenumber }}</p>
                             </div>
                             <div class="field">
                                 <label class="label">Company Address:</label>
-                                <p class="normal-text">{{ company_address }}</p>
+                                <p class="normal-text">{{ account_info.company_address }}</p>
                             </div>
                         </div>
                     </div>

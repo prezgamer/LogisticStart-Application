@@ -416,19 +416,15 @@ def login_user(request):
     return render(request, 'logisticstart/Login/login.html', context)
 
 #load up profile page
-
 def profile(request):
-    current_account = get_current_account(request)
-    username = request.session.get('username')
-    company_name = request.session.get('company_name')
-    company_address = request.session.get('company_address')
-    company_phonenumber = request.session.get('company_phonenumber')
+    try:
+        current_account = get_current_account(request)
+    except PermissionDenied:
+        return redirect('login_url')  # Replace 'login_url' with the actual URL or URL name of your login page
 
+    account_info = current_account  # No need to fetch again, use current_account directly
     return render(request, 'logisticstart/Profile/profile.html', {
-        'username': username,
-        'company_name': company_name,
-        'company_address': company_address,
-        'company_phonenumber': company_phonenumber
+        'account_info': account_info,
     })
 
 # def logout(request):
