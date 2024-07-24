@@ -118,6 +118,19 @@ class register(forms.ModelForm):
 
         return cleaned_data
     
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if Accounts.objects.filter(username=username).exists():
+            raise forms.ValidationError("A user with this username already exists.")
+        return username
+    
+    def clean_company_name(self):
+        company_name = self.cleaned_data.get('company_name')
+        if Accounts.objects.filter(company_name=company_name).exists():
+            raise forms.ValidationError("A company with this name already exists.")
+        return company_name
+
+    
 class Login(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
