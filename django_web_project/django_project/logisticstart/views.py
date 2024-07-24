@@ -481,7 +481,7 @@ def register_user(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Account created successfully.')
-            return redirect('/')  # Redirect to a login page or another page
+            return redirect('logisticstart-login')  # Redirect to a login page or another page
         
         else:
             print(form.errors) #error checking on my terminal
@@ -552,4 +552,4 @@ def logout(request):
     if 'username' in request.session:
         del request.session['username']
         #messages.success(request, 'You have successfully logged out.')
-    return redirect('logisticstart-login')
+    return redirect('logisticstart-home')
