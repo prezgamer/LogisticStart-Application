@@ -490,6 +490,7 @@ def register_user(request):
 #when user login
 def login_user(request):
     companies = Accounts.objects.values_list('company_name', flat=True).distinct()
+    error_message = None
 
     if request.method == "POST":
         form = Login(request.POST)
@@ -514,9 +515,11 @@ def login_user(request):
                     return redirect('logisticstart-dashboard')  # Redirect to home or dashboard
                 else:
                     messages.error(request, 'Invalid username or password.')
+                    error_message = 'Invalid username or password.'
                     print("Invalid password")
             except Accounts.DoesNotExist:
                 messages.error(request, 'Invalid username or password or company name.')
+                error_message = 'Invalid username or password or company name.'
                 print("Account does not exist or company name mismatch")
     else:
         form = Login()
@@ -524,6 +527,7 @@ def login_user(request):
     context = {
         'form': form,
         'companies': companies,  # Add the companies to the context
+        'error_message' : error_message
     }
     return render(request, 'logisticstart/Login/login.html', context)
 

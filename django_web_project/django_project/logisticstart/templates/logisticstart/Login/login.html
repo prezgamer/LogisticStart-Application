@@ -30,6 +30,7 @@
         .login-container .button.google-btn img {
             margin-right: 0.5rem;
         }
+        
     </style>
 </head>
 <body>
@@ -69,6 +70,11 @@
         <div class="register-link">
             <p>Don't have an account? <a href="{% url 'logisticstart-register' %}" class="is-link">Register here</a></p>
         </div>
+        {% if error_message %}
+        <div class="notification is-danger">
+            {{ error_message }}
+        </div>
+        {% endif %}
     </div>
 </body>
 </html>
