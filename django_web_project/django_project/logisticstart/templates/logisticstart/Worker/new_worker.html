@@ -248,13 +248,13 @@
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             video.srcObject = stream;
             video.play();
-
+    
             document.body.appendChild(video);
-
+    
             const captureButton = document.createElement('button');
             captureButton.textContent = 'Capture';
             document.body.appendChild(captureButton);
-
+    
             captureButton.addEventListener('click', () => {
                 const canvas = document.createElement('canvas');
                 canvas.width = video.videoWidth;
@@ -262,26 +262,31 @@
                 const context = canvas.getContext('2d');
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const dataURL = canvas.toDataURL('image/png');
-
+    
+                // Display the captured image
                 document.getElementById('preview').src = dataURL;
                 document.getElementById('preview').style.display = 'block';
-
+    
+                // Stop the video stream
                 video.srcObject.getTracks().forEach(track => track.stop());
                 video.remove();
                 captureButton.remove();
             });
         });
-
+    
+        // Handle form submission and image upload
         document.getElementById('worker-form').addEventListener('submit', async (event) => {
             const preview = document.getElementById('preview');
             if (preview.src) {
                 event.preventDefault();
-
+    
+                // Convert dataURL to blob and append to FormData
                 const response = await fetch(preview.src);
                 const blob = await response.blob();
                 const formData = new FormData(event.target);
                 formData.append('image', blob, 'captured_image.png');
-
+    
+                // Upload the image to the server
                 const result = await fetch('/upload/', {
                     method: 'POST',
                     body: formData,
@@ -289,7 +294,8 @@
                         'X-CSRFToken': '{{ csrf_token }}'
                     }
                 });
-
+    
+                // Handle the response and add hidden input if successful
                 const data = await result.json();
                 if (data.status === 'success') {
                     const hiddenInput = document.createElement('input');
@@ -297,13 +303,14 @@
                     hiddenInput.name = 'worker_picture';
                     hiddenInput.value = data.path;
                     event.target.appendChild(hiddenInput);
-                    event.target.submit();
+                    event.target.submit();  // Resubmit the form
                 } else {
                     alert('Image upload failed');
                 }
             }
         });
     </script>
+    
     <script>
         // JavaScript to handle the click event on the user avatar
         document.getElementById('dropdownToggle').addEventListener('click', function() {

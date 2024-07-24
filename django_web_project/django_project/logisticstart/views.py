@@ -221,20 +221,24 @@ def delete_warehouse_item(request, id):
 @login_required
 def add_new_worker(request):
     current_account = get_current_account(request)
-    account_info = current_account
-
     if request.method == 'POST':
         form = CreateWorkerListingForm(request.POST, request.FILES)
         if form.is_valid():
             worker = form.save(commit=False)
             worker.account = current_account
+
+            # Check if an image is uploaded
+            if 'worker_picture' in request.FILES:
+                worker.worker_picture = request.FILES['worker_picture']
+
             worker.save()
             return redirect('logisticstart-workerlist')
     else:
         form = CreateWorkerListingForm()
-    context={
-        'form': form, 
-        'account_info' : account_info
+
+    context = {
+        'form': form,
+        'account_info': current_account
     }
     return render(request, 'logisticstart/Worker/new_worker.html', context)
 
