@@ -113,7 +113,7 @@ class NewDeliverySchedule(models.Model):
         )
     ])
     receiver_address = models.CharField(max_length=255)
-    receiver_number = models.CharField(max_length=15)
+    receiver_number = models.IntegerField(max_length=15)
     worker = models.ForeignKey(NewWorkerListing, related_name='deliveries', on_delete=models.CASCADE)
     warehouse = models.ForeignKey(NewWarehouseListing, related_name='deliveries', on_delete=models.CASCADE)
     item = models.ForeignKey(NewItemListing, related_name='deliveries', on_delete=models.CASCADE)
