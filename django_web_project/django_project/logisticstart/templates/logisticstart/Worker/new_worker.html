@@ -43,7 +43,6 @@
             font-size: 0.9em;
             color: #666;
         }
-    
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -214,17 +213,15 @@
                     </div>
                     
                     <div class="field">
-                        <label class="label" for="{{ form.worker_picture.id_for_label }}">{{ form.worker_picture.label }}:</label>
+                        <label class="label" for="worker_picture">Worker Picture:</label>
                         <div class="control">
-                            {{ form.worker_picture }}
+                            <input type="file" id="worker_picture" name="worker_picture">
                             <button type="button" id="open-camera">Open Camera</button>
+                            <a id="download-link" style="display: none; margin-left: 10px;">Download Image</a>
                         </div>
-                        {% if form.worker_picture.errors %}
-                            <p class="help is-danger">{{ form.worker_picture.errors }}</p>
-                        {% endif %}
                     </div>
 
-                    <img id="preview" src="" alt="Image preview" style="display: none;"/>
+                    <img id="preview" src="" alt="Image preview" style="display: none;" />
 
                     <div class="field is-grouped">
                         <div class="control">
@@ -248,13 +245,13 @@
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
             video.srcObject = stream;
             video.play();
-    
+
             document.body.appendChild(video);
-    
+
             const captureButton = document.createElement('button');
             captureButton.textContent = 'Capture';
             document.body.appendChild(captureButton);
-    
+
             captureButton.addEventListener('click', () => {
                 const canvas = document.createElement('canvas');
                 canvas.width = video.videoWidth;
@@ -262,54 +259,40 @@
                 const context = canvas.getContext('2d');
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const dataURL = canvas.toDataURL('image/png');
-    
+
                 // Display the captured image
-                document.getElementById('preview').src = dataURL;
-                document.getElementById('preview').style.display = 'block';
-    
+                const preview = document.getElementById('preview');
+                preview.src = dataURL;
+                preview.style.display = 'block';
+
+                // Prepare the download link
+                const downloadLink = document.getElementById('download-link');
+                downloadLink.href = dataURL;
+                downloadLink.download = 'worker_picture.png';
+                downloadLink.style.display = 'inline-block';
+                downloadLink.textContent = 'Download Image';
+
                 // Stop the video stream
                 video.srcObject.getTracks().forEach(track => track.stop());
                 video.remove();
                 captureButton.remove();
             });
         });
-    
-        // Handle form submission and image upload
-        document.getElementById('worker-form').addEventListener('submit', async (event) => {
-            const preview = document.getElementById('preview');
-            if (preview.src) {
-                event.preventDefault();
-    
-                // Convert dataURL to blob and append to FormData
-                const response = await fetch(preview.src);
-                const blob = await response.blob();
-                const formData = new FormData(event.target);
-                formData.append('image', blob, 'captured_image.png');
-    
-                // Upload the image to the server
-                const result = await fetch('/upload/', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    }
-                });
-    
-                // Handle the response and add hidden input if successful
-                const data = await result.json();
-                if (data.status === 'success') {
-                    const hiddenInput = document.createElement('input');
-                    hiddenInput.type = 'hidden';
-                    hiddenInput.name = 'worker_picture';
-                    hiddenInput.value = data.path;
-                    event.target.appendChild(hiddenInput);
-                    event.target.submit();  // Resubmit the form
-                } else {
-                    alert('Image upload failed');
-                }
-            }
+
+        // Prevent reset button from clearing the image preview and download link
+        document.querySelector('.button[type="reset"]').addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the form reset
+
+            // Manually clear all form fields except for the image
+            const form = document.getElementById('worker-form');
+            form.reset();
+
+            // Hide the preview and download link
+            document.getElementById('preview').style.display = 'none';
+            document.getElementById('download-link').style.display = 'none';
         });
     </script>
+    
     
     <script>
         // JavaScript to handle the click event on the user avatar

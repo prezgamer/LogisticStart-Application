@@ -26,16 +26,11 @@ def test_camera(request):
 
 #upload image function for testcamera
 def upload_image(request):
-    if request.method == 'POST' and request.FILES.get('image'):
-        image = request.FILES['image']
-        path = default_storage.save(f'worker_pictures/{image.name}', ContentFile(image.read()))
-        return JsonResponse({'status': 'success', 'path': path})
-    elif request.method == 'POST' and request.POST.get('image_data'):
-        image_data = request.POST['image_data'].split(",")[1]
-        image = ContentFile(base64.b64decode(image_data), name='captured_image.png')
-        path = default_storage.save(f'worker_pictures/{image.name}', image)
-        return JsonResponse({'status': 'success', 'path': path})
-    return JsonResponse({'status': 'failed'})
+    if request.method == 'POST' and request.FILES['image']:
+        uploaded_file = request.FILES['image']
+        file_path = default_storage.save(f'captured_worker_pictures/{uploaded_file.name}', uploaded_file)
+        return JsonResponse({'status': 'success', 'path': default_storage.url(file_path)})
+    return JsonResponse({'status': 'failure', 'message': 'No image uploaded'})
 
 #receive current account by getting the account_id of the account table
 def get_current_account(request):
