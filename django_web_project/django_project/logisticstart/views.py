@@ -69,6 +69,7 @@ def billing(request):
     return render(request, 'logisticstart/UserFunctions/billing.html', context)
 
 #paypal page
+@login_required
 def create_payment(request):
     current_account = get_current_account(request)
     total_workers = NewWorkerListing.objects.filter(account=current_account).count()
@@ -122,6 +123,7 @@ def create_payment(request):
 
 
 #execute payment using paypal
+@login_required
 def execute_payment(request):
     payment_id = request.GET.get('paymentId')
     payer_id = request.GET.get('PayerID')
@@ -134,10 +136,12 @@ def execute_payment(request):
         return render(request, 'logisticstart/Paypal/payment_error.html', {'error': payment.error})
 
 #when payment is cancelled
+@login_required
 def payment_cancelled(request):
     return render(request, 'logisticstart/Paypal/payment_cancelled.html')
 
 #list down the items from the item table
+@login_required
 def warehouse_item_list(request, id):
     current_account = get_current_account(request)
     account_info = current_account
@@ -151,6 +155,7 @@ def warehouse_item_list(request, id):
     return render(request, 'logisticstart/WarehouseItems/warehouseitemlist.html', context)
 
 #add items to respective warehouse from forms
+@login_required
 def add_warehouse_item(request, id):
     current_account = get_current_account(request)
     account_info = current_account
@@ -174,6 +179,8 @@ def add_warehouse_item(request, id):
     }
     return render(request, 'logisticstart/WarehouseItems/warehouseitemlistform.html', context)
 
+#render edit warehouse form
+@login_required
 def edit_warehouse_item(request, id):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewItemListing, id=id, account=current_account)
@@ -187,6 +194,7 @@ def edit_warehouse_item(request, id):
     return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', {'form': form, 'warehouse_id': listing.warehouse.id})
 
 #delete warehouse items from respective warehouses
+@login_required
 def delete_warehouse_item(request, id):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewItemListing, id=id, account=current_account)
@@ -196,6 +204,7 @@ def delete_warehouse_item(request, id):
     return render(request, 'delete_listing', {'listing': listing})
 
 #add new workers to worker table
+@login_required
 def add_new_worker(request):
     current_account = get_current_account(request)
     account_info = current_account
@@ -216,6 +225,7 @@ def add_new_worker(request):
     return render(request, 'logisticstart/Worker/new_worker.html', context)
 
 #add new warehouses to warehouse table
+@login_required
 def add_warehouse(request):
     current_account = get_current_account(request)
     account_info = current_account
@@ -264,6 +274,7 @@ def worker_list(request):
     return render(request, 'logisticstart/Worker/worker.html', context)
 
 #edit worker listing from worker list
+@login_required
 def edit_worker_listing(request, id):
     current_account = get_current_account(request)
     account_info = current_account
@@ -283,6 +294,7 @@ def edit_worker_listing(request, id):
     return render(request, 'logisticstart/Worker/edit_worker.html', context)
 
 #delete worker listing from worker list
+@login_required
 def delete_worker_listing(request, id):
     current_account = get_current_account(request)
     worker = get_object_or_404(NewWorkerListing, id=id, account=current_account)
@@ -292,6 +304,7 @@ def delete_worker_listing(request, id):
     return render(request, 'worker-delete', {'worker': worker})
 
 #edit warehouse listing from warehouse list
+@login_required
 def edit_warehouse_listing(request, id):
     current_account = get_current_account(request)
     account_info = current_account
@@ -311,6 +324,7 @@ def edit_warehouse_listing(request, id):
     return render(request, 'logisticstart/Warehouse/edit_warehouse.html', context)
 
 #delete warehouse listing from warehouse list
+@login_required
 def delete_warehouse_listing(request, id):
     current_account = get_current_account(request)
     warehouse = get_object_or_404(NewWarehouseListing, id=id, account=current_account)
@@ -341,6 +355,7 @@ def main_dashboard(request):
     return render(request, 'logisticstart/Dashboard/dashboard.html', dashboard)
 
 #Adding of Delivery Schedule
+@login_required
 def add_delivery_schedule(request):
     #retrieve the current account from the request
     current_account = get_current_account(request)
@@ -413,6 +428,7 @@ def edit_delivery_item(request, deliveryid):
 
 
 #delete delivery items from delivery schedules
+@login_required
 def delete_delivery_item(request, deliveryid):
     current_account = get_current_account(request)
     listing = get_object_or_404(NewDeliverySchedule, deliveryid=deliveryid, account=current_account)
@@ -421,21 +437,25 @@ def delete_delivery_item(request, deliveryid):
         return redirect('logisticstart-delivery_schedule')
     return render(request, 'logisticstart-delete_delivery_schedule', {'listing': listing})
 
+@login_required
 def custom_page_not_found_view(request, exception):
     current_account = get_current_account(request)
     account_info = current_account
     return render(request, "errors/404.html", {'account_info':account_info})
 
+@login_required
 def custom_error_view(request, exception=None):
     current_account = get_current_account(request)
     account_info = current_account
     return render(request, "errors/404.html", {'account_info':account_info})
 
+@login_required
 def custom_permission_denied_view(request, exception=None):
     current_account = get_current_account(request)
     account_info = current_account
     return render(request, "errors/404.html", {'account_info':account_info})
 
+@login_required
 def custom_bad_request_view(request, exception=None):
     current_account = get_current_account(request)
     account_info = current_account
