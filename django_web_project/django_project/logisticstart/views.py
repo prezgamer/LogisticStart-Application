@@ -84,10 +84,13 @@ def create_payment(request):
         cost = 100
     else:
         cost = 0
-    cost_str = f"{cost:.2f}"
-
-    if cost_str == "0.00":
+    
+    if cost == 0:
         return render(request, 'logisticstart/Paypal/payment_error.html', {'error': "No Payment required"})
+    else:
+        cost_str = f"{cost:.2f}"
+        if cost_str == "0.00":
+            return render(request, 'logisticstart/Paypal/payment_error.html', {'error': "No Payment required"})
 
     payment = paypalrestsdk.Payment({
         "intent": "sale",
