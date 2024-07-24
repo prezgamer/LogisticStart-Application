@@ -176,6 +176,10 @@
                                     </form>
                                 </td>
                             </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8">No warehouses found for this company.</td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
