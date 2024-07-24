@@ -49,7 +49,7 @@ class NewItemListing(models.Model):
                 message='Name must contain only letters.'
             )
         ])
-    recipient_phone = models.CharField(max_length=15)
+    recipient_phone = models.IntegerField(max_length=15)
     delivery_status = models.CharField(max_length=35, default='Pending', choices=DELIVERY_STATUS)
     warehouse = models.ForeignKey('NewWarehouseListing', related_name='items', on_delete=models.CASCADE)
     account = models.ForeignKey(Accounts, related_name='items' , on_delete=models.CASCADE)
