@@ -12,7 +12,6 @@ from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-import base64
 from .decorators import login_required
 
 

@@ -238,9 +238,11 @@
                         <div class="control">
                             <button class="button is-light" type="reset">Reset</button>
                         </div>
+                        <div class="control">
+                            <a class="button is-link" href="{% url 'logisticstart-warehouseitemlist' warehouse.id %}">Back to Item List</a>
+                        </div>
                     </div>
                 </form>
-                <a class="button is-link" href="{% url 'logisticstart-warehouseitemlist' warehouse.id %}">Back to Item List</a>
             </div>
         </section>
     </div>
