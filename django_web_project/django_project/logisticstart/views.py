@@ -183,6 +183,7 @@ def add_warehouse_item(request, id):
 @login_required
 def edit_warehouse_item(request, id):
     current_account = get_current_account(request)
+    account_info = current_account
     listing = get_object_or_404(NewItemListing, id=id, account=current_account)
     if request.method == 'POST':
         form = CreateItemListingForm(request.POST, request.FILES, instance=listing)
@@ -191,7 +192,14 @@ def edit_warehouse_item(request, id):
             return redirect('logisticstart-warehouseitemlist', id=listing.warehouse.id)
     else:
         form = CreateItemListingForm(instance=listing)
-    return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', {'form': form, 'warehouse_id': listing.warehouse.id})
+    
+    context = {
+        'form': form,
+        'account_info': account_info,
+        'warehouse_id': listing.warehouse.id
+    }
+    return render(request, 'logisticstart/WarehouseItems/edit_warehouse_items.html', context)
+
 
 #delete warehouse items from respective warehouses
 @login_required
