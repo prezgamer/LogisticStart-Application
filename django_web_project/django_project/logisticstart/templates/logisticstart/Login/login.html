@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page Refined</title>
+    <title>Login Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
+        html,body {
+            background-color: #f0f0f0 !important; /* This sets the background color of the whole webpage */
+        }
         .login-container {
             max-width: 400px;
             margin: auto;
@@ -29,7 +32,7 @@
         }
     </style>
 </head>
-<body class="has-background-light">
+<body>
     <div class="login-container box">
         <h1 class="title is-4 has-text-centered has-text-link">LogisticStart</h1>
         <p class="has-text-centered">Sign into your Account</p>
@@ -68,19 +71,6 @@
                 </div>
             </div>
         </form>
-        <div class="field">
-            <div class="control has-text-centered">
-                <p>OR</p>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control">
-                <button class="button is-light is-fullwidth google-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google logo" width="20">
-                    Sign in with Google
-                </button>
-            </div>
-        </div>
         <div class="register-link">
             <p>Don't have an account? <a href="{% url 'logisticstart-register' %}" class="is-link">Register here</a></p>
         </div>

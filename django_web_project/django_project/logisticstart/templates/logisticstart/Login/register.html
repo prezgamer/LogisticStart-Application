@@ -6,6 +6,9 @@
     <title>Sign Up Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
+        html, body {
+            background-color: #f0f0f0 !important; /* This sets the background color of the whole webpage */
+        }
         .signup-container {
             max-width: 400px;
             margin: auto;
@@ -70,7 +73,7 @@
         });
     </script>
 </head>
-<body class="has-background-light">
+<body>
     <div class="signup-container box">
         <h1 class="title is-4 has-text-centered has-text-link">LogisticStart</h1>
         <p class="has-text-centered">Create an Account</p>
@@ -139,19 +142,7 @@
                 </div>
             </div>
         </form>
-        <div class="field">
-            <div class="control has-text-centered">
-                <p>OR</p>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control">
-                <button class="button is-light is-fullwidth google-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google logo" width="20">
-                    Sign up with Google
-                </button>
-            </div>
-        </div>
+        
     </div>
 </body>
 </html>
