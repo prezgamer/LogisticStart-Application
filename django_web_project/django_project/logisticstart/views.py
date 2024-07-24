@@ -60,6 +60,8 @@ def billing(request):
         cost = 10
     elif total_workers >= 50:
         cost = 100
+    else:
+        cost = 0
 
     cost_str = f"{cost:.2f}"
     context = {
