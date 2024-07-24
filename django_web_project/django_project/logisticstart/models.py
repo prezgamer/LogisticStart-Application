@@ -42,7 +42,7 @@ class NewItemListing(models.Model):
                 message='Name must contain only letters.'
             )
         ])
-    sender_phone = models.CharField(max_length=15)
+    sender_phone = models.IntegerField(max_length=15)
     recipient_name = models.CharField(max_length=100, validators=[
             RegexValidator(
                 regex='^[a-zA-Z ]+$',
