@@ -10,7 +10,7 @@ class Accounts(models.Model):
     password = models.CharField(max_length=100)
     company_name = models.CharField(max_length=100)
     company_address = models.CharField(max_length=255)    
-    company_phonenumber = models.IntegerField(max_length=15)
+    company_phonenumber = models.IntegerField()
     
 
 class NewWarehouseListing(models.Model):
@@ -42,14 +42,14 @@ class NewItemListing(models.Model):
                 message='Name must contain only letters.'
             )
         ])
-    sender_phone = models.IntegerField(max_length=15)
+    sender_phone = models.IntegerField()
     recipient_name = models.CharField(max_length=100, validators=[
             RegexValidator(
                 regex='^[a-zA-Z ]+$',
                 message='Name must contain only letters.'
             )
         ])
-    recipient_phone = models.IntegerField(max_length=15)
+    recipient_phone = models.IntegerField()
     delivery_status = models.CharField(max_length=35, default='Pending', choices=DELIVERY_STATUS)
     warehouse = models.ForeignKey('NewWarehouseListing', related_name='items', on_delete=models.CASCADE)
     account = models.ForeignKey(Accounts, related_name='items' , on_delete=models.CASCADE)
@@ -113,7 +113,7 @@ class NewDeliverySchedule(models.Model):
         )
     ])
     receiver_address = models.CharField(max_length=255)
-    receiver_number = models.IntegerField(max_length=15)
+    receiver_number = models.IntegerField()
     worker = models.ForeignKey(NewWorkerListing, related_name='deliveries', on_delete=models.CASCADE)
     warehouse = models.ForeignKey(NewWarehouseListing, related_name='deliveries', on_delete=models.CASCADE)
     item = models.ForeignKey(NewItemListing, related_name='deliveries', on_delete=models.CASCADE)
