@@ -139,8 +139,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #Paypal Settings
-PAYPAL_CLIENT_ID = 'AX_yuMiwVa6EfqW6w2N1wMG5mlEPwD0JUc7iaccAsYIcmw8zes_p2XVFi77bzJwXTUqYq8a9witcfyOL'
-PAYPAL_CLIENT_SECRET = 'EB6bSPXg1X0LhkosG2xJ3ViXLIFZknKPTTMs6ZfF8Ieb7D0SrGFDB9nRbyryBqOSyFyNHsbfX_XDpJ0W'
+PAYPAL_CLIENT_ID = <Insert your own id>
+PAYPAL_CLIENT_SECRET = <Insert your own id>
 PAYPAL_MODE = 'sandbox'  # or 'live' for production
 
 LOGIN_URL = 'logisticstart-login'
