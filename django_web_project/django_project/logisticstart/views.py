@@ -48,9 +48,9 @@ def billing(request):
     total_workers = NewWorkerListing.objects.filter(account=current_account).count()
 
 
-    if total_workers > 0 and total_workers < 10:
+    if total_workers > 0 and total_workers < 5:
         cost = 0
-    elif total_workers >= 10 and total_workers < 50:
+    elif total_workers >= 5 and total_workers < 50:
         cost = 10
     elif total_workers >= 50:
         cost = 100
@@ -69,16 +69,19 @@ def billing(request):
 def create_payment(request):
     current_account = get_current_account(request)
     total_workers = NewWorkerListing.objects.filter(account=current_account).count()
+    print("Number of workers: ",total_workers)
 
-    if total_workers > 0 and total_workers < 10:
+    if total_workers > 0 and total_workers < 5:
         cost = 0
-    elif total_workers >= 10 and total_workers < 50:
+    elif total_workers >= 5 and total_workers < 50:
         cost = 10
     elif total_workers >= 50:
         cost = 100
     else:
         cost = 0
     
+    print("Cost: ",cost)
+
     if cost == 0:
         return render(request, 'logisticstart/Paypal/payment_error.html', {'error': "No Payment required"})
     else:

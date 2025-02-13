@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8xna1pdbv5m7=23fk9+bv(ulpye21eu#r6ssrkapw5090#*1#$'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = bool(os.environ.get("DEBUG", default=0))
+ 
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
 
 
 # Application definition (do not touch this)
@@ -76,13 +78,25 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 #dont change this, it is sending to my superbase database server
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'postgres', 
+    #     'USER': 'postgres.rkkmlbftlwglvcbcyufl', 
+    #     'PASSWORD': 'SnBZzPjqg@yqgp5', 
+    #     'HOST':'aws-0-ap-southeast-1.pooler.supabase.com',
+    #     'PORT':'6543',
+    # }
+
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres', 
-        'USER': 'postgres.rkkmlbftlwglvcbcyufl', 
-        'PASSWORD': 'SnBZzPjqg@yqgp5', 
-        'HOST':'aws-0-ap-southeast-1.pooler.supabase.com',
-        'PORT':'6543',
+        'ENGINE': 'django.db.backends.mysql',  # MariaDB uses MySQL backend
+        'NAME': 'logisticsdb',  # Your database name
+        'USER': 'root',  # Your database user
+        'PASSWORD': '090500',  # Your database password
+        'HOST': 'host.docker.internal',  # Localhost (or use 'localhost' without quotes)
+        'PORT': '3306',  # Default MariaDB port
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 } 
 
